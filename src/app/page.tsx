@@ -1,101 +1,85 @@
-import Image from "next/image";
+import { LucideArrowRight, LucidePlus } from "lucide-react";
+import { App } from "./types";
+import Link from "next/link";
+import { formatTime } from "./utils/utils";
+import { useUser } from "@clerk/nextjs";
+import HomePageRoute from "./home/page";
+import { currentUser } from "@clerk/nextjs/server";
 
-export default function Home() {
+const APPS: App[] = [
+  {
+    id: "1",
+    name: "Task Manager",
+    updatedAt: new Date("2024-12-01T10:00:00Z"),
+    createdAt: new Date("2024-09-01T10:00:00Z"),
+  },
+  {
+    id: "2",
+    name: "Note Keeper",
+    updatedAt: new Date("2024-11-02T11:00:00Z"),
+    createdAt: new Date("2024-09-02T11:00:00Z"),
+  },
+  {
+    id: "3",
+    name: "Budget Tracker",
+    updatedAt: new Date("2024-10-03T12:00:00Z"),
+    createdAt: new Date("2024-09-03T12:00:00Z"),
+  },
+];
+
+export default async function Home() {
+  const user = await currentUser();
+  if (!user) {
+    return <HomePageRoute />;
+  }
+
+  // const { isLoaded, isSignedIn } = useUser();
+  // if (!isLoaded || (isLoaded && !isSignedIn)) {
+  //   return <HomePageRoute />;
+  // }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="container space-y-10">
+      <h3 className="mt-8 scroll-m-20 text-2xl font-[family-name:var(--font-geist-sans)] text-primary font-semibold tracking-tight">
+        Applications
+      </h3>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 font-[family-name:var(--font-geist-mono)] ">
+        <Link
+          href="/apps/create"
+          className="flex flex-col items-center justify-center border border-dashed rounded-lg min-h-[200px] bg-neutral-100 dark:bg-neutral-900 cursor-pointer border-neutral-300 dark:border-neutral-700 group hover:shadow-xl duration-100"
+        >
+          <LucidePlus
+            className="group-hover:rotate-180 duration-150"
+            size={16}
+          />
+          <span className="text-sm">Create application</span>
+        </Link>
+
+        {APPS.map((app) => (
+          <Link
+            href={`/apps/${app.id}`}
+            key={app.id}
+            className="flex flex-col border rounded-lg min-h-[200px] bg-neutral-100 dark:bg-neutral-900 cursor-pointer border-neutral-100 dark:border-neutral-700 group p-1 gap-1 hover:shadow-xl duration-100"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            <div className="flex-1 bg-white dark:bg-neutral-950 flex flex-col rounded-md  shadow">
+              <h1 className="text-sm font-bold mt-auto p-3 text-primary">
+                {app.name}
+              </h1>
+            </div>
+
+            <div className="px-2 py-1 text-[10px] flex flex-row items-center justify-between">
+              <div className=" font-medium text-neutral-700 dark:text-neutral-400">
+                Updated {formatTime(app.updatedAt)}
+              </div>
+
+              <div className="inline-flex items-center  gap-2">
+                <span>Go to app</span> <LucideArrowRight size={10} />
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
