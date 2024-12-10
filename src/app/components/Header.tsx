@@ -37,9 +37,7 @@ export const Header = () => {
   const params = useParams();
 
   const appId = params.appId;
-  const apps = (user?.publicMetadata.applications ?? [
-    { id: "1", name: "ok" },
-  ]) as App[];
+  const apps = (user?.publicMetadata.apps ?? []) as App[];
 
   const app = useMemo(() => {
     if (appId && user) {

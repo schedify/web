@@ -7,31 +7,30 @@ export const metadata: Metadata = {
 
 export default function TermsAndServicesPage() {
   return (
-    <div className="container py-10 space-y-4 font-geist-sans">
+    <div className="container py-10  font-geist-sans">
       <h1 className="text-3xl font-bold uppercase">
         Schedify Terms of Service
       </h1>
 
-      <p className="text-zinc-700 text-sm">
+      <p className="text-zinc-700 text-sm py-2">
         <b>Effective Date:</b> December 10, 2024
       </p>
 
-      <p>
-        These Terms of Service (<b>“Terms”</b>) constitute a legally binding
-        agreement between you (<b>“you,” “your,”</b> or <b>“User”</b>) and
-        Schedify Inc., a subsidiary of SamSwe Pvt Ltd (
-        <b>“Schedify,” “Company,” “we,” “our,”</b> or <b>“us”</b>), governing
-        your access to and use of our webhook scheduling services (
-        <b>“Services”</b>).
+      <p className="py-4">
+        These Terms of Service (“<b>Terms</b>”) constitute a legally binding
+        agreement between you (“<b>you</b>,” “<b>your</b>,” or “<b>User</b>”)
+        and Schedify, a proprietorship (“<b>Schedify</b>,” “<b>Company</b>,” “
+        <b>we</b>,” “<b>our</b>,” or “<b>us</b>”), governing your access to and
+        use of our webhook scheduling services (“<b>Services</b>”).
       </p>
-      <p>
+      <p className="py-4">
         By accessing or using our Services, you acknowledge that you have read,
         understood, and agree to be bound by these <b>Terms</b>, as well as our
         Privacy Policy. If you do not agree to these <b>Terms</b>, you may not
         access or use the <b>Services</b>.
       </p>
 
-      <h2 className="text-lg font-bold uppercase">1. Eligibility</h2>
+      <h2 className="text-lg font-bold uppercase py-3">1. Eligibility</h2>
       <ul className="list-decimal pl-10 space-y-2">
         <li>
           You must be at least 18 years of age to access or use the{" "}
@@ -48,7 +47,9 @@ export default function TermsAndServicesPage() {
           organization to these <b>Terms</b>.
         </li>
       </ul>
-      <h2 className="text-lg font-bold uppercase">2. Account Registration</h2>
+      <h2 className="text-lg font-bold uppercase py-3">
+        2. Account Registration
+      </h2>
       <ul className="list-decimal pl-10 space-y-2">
         <li>
           Access to the <b>Services</b> requires an account authenticated via
@@ -65,7 +66,9 @@ export default function TermsAndServicesPage() {
           account if any unauthorized or prohibited activity is detected.
         </li>
       </ul>
-      <h2 className="text-lg font-bold uppercase">3. Use of the Services</h2>
+      <h2 className="text-lg font-bold uppercase py-3">
+        3. Use of the Services
+      </h2>
       <ul className="list-decimal pl-10 space-y-2">
         <li>
           The <b>Services</b> allow <b>Users</b> to schedule HTTP requests (
@@ -94,7 +97,7 @@ export default function TermsAndServicesPage() {
         </li>
       </ul>
 
-      <h2 className="text-lg font-bold uppercase">4. Fees and Payment</h2>
+      <h2 className="text-lg font-bold uppercase py-3">4. Fees and Payment</h2>
       <ul className="list-decimal pl-10 space-y-2">
         <li>
           Certain features of the <b>Services</b> may be subject to fees.
@@ -110,7 +113,9 @@ export default function TermsAndServicesPage() {
           terms with reasonable notice to <b>Users</b>.
         </li>
       </ul>
-      <h2 className="text-lg font-bold uppercase">5. Service Availability</h2>
+      <h2 className="text-lg font-bold uppercase py-3">
+        5. Service Availability
+      </h2>
       <ul className="list-decimal pl-10 space-y-2">
         <li>
           The <b>Company</b> strives to provide reliable and continuous access
@@ -124,7 +129,7 @@ export default function TermsAndServicesPage() {
           <b>Users</b> of planned outages.
         </li>
       </ul>
-      <h2 className="text-lg font-bold uppercase">6. Termination</h2>
+      <h2 className="text-lg font-bold uppercase py-3">6. Termination</h2>
       <ul className="list-decimal pl-10 space-y-2">
         <li>
           The <b>Company</b> may suspend or terminate your access to the{" "}
@@ -136,7 +141,9 @@ export default function TermsAndServicesPage() {
           closing your account.
         </li>
       </ul>
-      <h2 className="text-lg font-bold uppercase">7. Intellectual Property</h2>
+      <h2 className="text-lg font-bold uppercase py-3">
+        7. Intellectual Property
+      </h2>
       <ul className="list-decimal pl-10 space-y-2">
         <li>
           The <b>Services</b> and all related intellectual property are owned by
@@ -144,7 +151,7 @@ export default function TermsAndServicesPage() {
           any ownership rights to the <b>Services</b> or underlying technology.
         </li>
       </ul>
-      <h2 className="text-lg font-bold uppercase">8. Disclaimers</h2>
+      <h2 className="text-lg font-bold uppercase py-3">8. Disclaimers</h2>
       <ul className="list-decimal pl-10 space-y-2">
         <li>
           The <b>Services</b> are provided “as is” without warranties of any
@@ -157,7 +164,7 @@ export default function TermsAndServicesPage() {
           interruptions in the <b>Services</b>.
         </li>
       </ul>
-      <h2 className="text-lg font-bold uppercase">
+      <h2 className="text-lg font-bold uppercase py-3">
         9. Limitation of Liability
       </h2>
       <ul className="list-decimal pl-10 space-y-2">
@@ -168,7 +175,7 @@ export default function TermsAndServicesPage() {
           <b>Services</b>.
         </li>
       </ul>
-      <h2 className="text-lg font-bold uppercase">10. Governing Law</h2>
+      <h2 className="text-lg font-bold uppercase py-3">10. Governing Law</h2>
       <ul className="list-decimal pl-10 space-y-2">
         <li>
           These <b>Terms</b> shall be governed by and construed in accordance
@@ -177,16 +184,16 @@ export default function TermsAndServicesPage() {
           jurisdiction of the courts located in [Insert Jurisdiction].
         </li>
       </ul>
-      <h2 className="text-lg font-bold uppercase">11. Contact Information</h2>
+      <h2 className="text-lg font-bold uppercase py-3">
+        11. Contact Information
+      </h2>
       <p>
         If you have any questions about these <b>Terms</b>, please contact us
         at:
       </p>
 
       <p className="pl-10">
-        <b>Schedify Inc.</b>
-        <br />
-        [Insert Address]
+        <b>Schedify</b>
         <br />
         Email:{" "}
         <a

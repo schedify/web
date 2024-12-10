@@ -13,42 +13,101 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 
+import { useToast, toast } from "@/hooks/use-toast";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+
 const CreateAppModal = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const appName = formData.get("appName")?.toString() as string;
+    if (!appName) {
+      return toast({
+        title: "Oops!",
+        description: "App name is required",
+        variant: "destructive",
+      });
+    }
+
+    setLoading(true);
+    const resp = await fetch("/api/apps", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        name: appName,
+      }),
+    });
+
+    const res = await resp.json();
+    if (!res.status) {
+      setLoading(false);
+      return toast({
+        title: "Oops!",
+        description: res.message,
+        variant: "destructive",
+      });
+    }
+
+    toast({
+      title: "Success!",
+      description: "App created successfully",
+    });
+
+    window.location.href = `/apps/${res.appId}`;
+  };
+
   return (
     <Dialog open onOpenChange={() => router.back()}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Scheduefy your app</DialogTitle>
           <DialogDescription>
-            Provide your app's name and webhook URL to set up seamless
-            integrations.
+            Provide your app's name to set up seamless integrations.
           </DialogDescription>
         </DialogHeader>
-        <div className="space-y-4">
-          <div className="space-y-1">
-            <Label htmlFor="appName">App Name</Label>
-            <Input
-              id="appName"
-              type="text"
-              placeholder="Enter your app's name"
-            />
+        <form onSubmit={handleFormSubmit}>
+          <div className="space-y-4">
+            <div className="space-y-1">
+              <Label htmlFor="appName">App Name</Label>
+              <Input
+                id="appName"
+                name="appName"
+                type="text"
+                placeholder="Enter your app's name"
+                maxLength={200}
+                required
+                disabled={loading}
+              />
+            </div>
           </div>
-          <div className="space-y-1">
-            <Label htmlFor="webhookUrl">Webhook URL</Label>
-            <Input
-              id="webhookUrl"
-              type="url"
-              placeholder="https://your-webhook-url.com"
-            />
+          <div className="mt-6 gap-3 flex justify-end">
+            <Button
+              type="button"
+              onClick={() => router.back()}
+              variant="secondary"
+              disabled={loading}
+            >
+              Cancel
+            </Button>
+            <Button disabled={loading} type="submit">
+              {loading ? (
+                <>
+                  Creating <Loader2 className="animate-spin" />{" "}
+                </>
+              ) : (
+                "Create"
+              )}
+            </Button>
           </div>
-        </div>
-        <div className="mt-6 gap-3 flex justify-end">
-          <Button onClick={() => router.back()} variant="secondary">
-            Cancel
-          </Button>
-          <Button>Save</Button>
-        </div>
+        </form>
       </DialogContent>
     </Dialog>
   );

@@ -1,8 +1,9 @@
 import { db } from "@/db/drizzle";
 import { userTable } from "@/db/schema";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { Webhook } from "svix";
 
 export async function POST(req: NextRequest) {
@@ -45,37 +46,56 @@ export async function POST(req: NextRequest) {
   }
 
   const eventType = evt.type;
-  console.log(`Received webhook event type of ${eventType}`);
-  console.log("Webhook payload:", body);
 
-  if (eventType === "user.created") {
-    const {
-      id,
-      banned,
-      username,
-      last_name,
-      first_name,
-      created_at,
-      updated_at,
-      email_addresses,
-      primary_email_address_id,
-    } = evt.data;
+  try {
+    if (eventType === "user.created") {
+      const {
+        id,
+        banned,
+        username,
+        last_name,
+        first_name,
+        created_at,
+        updated_at,
+        email_addresses,
+        primary_email_address_id,
+      } = evt.data;
 
-    const email = email_addresses.find(
-      (email) => email.id === primary_email_address_id
-    );
+      const email = email_addresses.find(
+        (email) => email.id === primary_email_address_id
+      );
 
-    await db.insert(userTable).values({
-      id,
-      username,
-      emailAddress: email?.email_address ?? "",
-      firstName: first_name,
-      lastName: last_name,
-      banned,
-      createdAt: created_at,
-      updatedAt: updated_at,
-    });
-  }
+      await db.insert(userTable).values({
+        id,
+        username,
+        emailAddress: email?.email_address ?? "",
+        firstName: first_name,
+        lastName: last_name,
+        banned,
+        createdAt: created_at,
+        updatedAt: updated_at,
+      });
+    } else if (eventType === "user.updated") {
+      const { id, banned, username, last_name, first_name, updated_at } =
+        evt.data;
+
+      await db
+        .update(userTable)
+        .set({
+          username,
+          firstName: first_name,
+          lastName: last_name,
+          banned,
+          updatedAt: updated_at,
+        })
+        .where(eq(userTable.id, id));
+    } else if (eventType === "user.deleted") {
+      const { id, deleted } = evt.data;
+      if (id && deleted) {
+        await db.delete(userTable).where(eq(userTable.id, id));
+      }
+    }
+  } catch {}
 
   return new Response("Webhook received", { status: 200 });
 }

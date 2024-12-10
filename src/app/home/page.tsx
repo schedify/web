@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { EnhancedButton } from "@/components/ui/enhanced-btn";
 import {
   ClerkLoaded,
@@ -121,13 +122,30 @@ export default async function HomePageRoute() {
         </span> */}
 
         <div className="container">
-          <div className="text-white">
+          <div className="text-white flex flex-row justify-between">
             <div className="flex flex-row items-center gap-2">
               <LucideCalendarRange size={18} />
               <h1 className="font-bold font-geist-mono text-lg">Schedify</h1>
             </div>
 
-            <div></div>
+            <div className="flex flex-col gap-3">
+              <h1 className="text-gray-300 font-geist-sans">Legal</h1>
+
+              <div className="text-sm flex flex-col font-geist-sans gap-1">
+                <Link
+                  className="hover:underline underline-offset-2 "
+                  href="/legal/terms"
+                >
+                  Terms of Service
+                </Link>
+                <Link
+                  className="hover:underline underline-offset-2 "
+                  href="/legal/privacy"
+                >
+                  Privacy Policy
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </footer>

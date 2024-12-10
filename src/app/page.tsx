@@ -33,11 +33,6 @@ export default async function Home() {
     return <HomePageRoute />;
   }
 
-  // const { isLoaded, isSignedIn } = useUser();
-  // if (!isLoaded || (isLoaded && !isSignedIn)) {
-  //   return <HomePageRoute />;
-  // }
-
   return (
     <div className="container space-y-10">
       <h3 className="mt-8 scroll-m-20 text-2xl font-[family-name:var(--font-geist-sans)] text-primary font-semibold tracking-tight">
@@ -56,7 +51,7 @@ export default async function Home() {
           <span className="text-sm">Create application</span>
         </Link>
 
-        {APPS.map((app) => (
+        {((user.publicMetadata.apps ?? []) as App[]).map((app) => (
           <Link
             href={`/apps/${app.id}`}
             key={app.id}

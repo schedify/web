@@ -1,12 +1,4 @@
-import { unique } from "drizzle-orm/mysql-core";
-import {
-  bigint,
-  boolean,
-  index,
-  pgTable,
-  text,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { text, bigint, boolean, pgTable, varchar } from "drizzle-orm/pg-core";
 
 export const userTable = pgTable("users", {
   id: varchar("id", { length: 50 }).primaryKey(),
@@ -17,4 +9,27 @@ export const userTable = pgTable("users", {
   emailAddress: text("email_address").default(""),
   createdAt: bigint("created_at", { mode: "number" }),
   updatedAt: bigint("updated_at", { mode: "number" }),
+});
+
+export const appTable = pgTable("apps", {
+  id: varchar("id", { length: 50 }).primaryKey(),
+  name: varchar("name", { length: 200 }).notNull(),
+  createdAt: bigint("created_at", { mode: "number" }),
+  updatedAt: bigint("updated_at", { mode: "number" }),
+  userId: varchar("user_id", { length: 50 })
+    .notNull()
+    .references(() => userTable.id),
+});
+export type App = typeof appTable.$inferSelect;
+
+export const webhookTable = pgTable("webhooks", {
+  id: varchar("id", { length: 50 }).primaryKey(),
+  url: text("url"),
+  secret: text("secret"),
+  secretRevealed: boolean("secret_revealed").default(false),
+  createdAt: bigint("created_at", { mode: "number" }),
+  updatedAt: bigint("updated_at", { mode: "number" }),
+  appId: varchar("app_id", { length: 50 })
+    .references(() => appTable.id)
+    .notNull(),
 });

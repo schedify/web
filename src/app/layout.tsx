@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Header } from "./components/Header";
 import React from "react";
 import { Karla as FontKarla, Poppins as FontPoppins } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -49,8 +50,9 @@ export default function RootLayout({
         >
           <Header />
           {children}
-
           {modal}
+
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
