@@ -44,6 +44,7 @@ export const webhookTable = pgTable("webhooks", {
 
 export const webhookEventTable = pgTable("webhook_events", {
   id: varchar("id", { length: 50 }).primaryKey(),
+  isTest: boolean("is_test").default(false),
   event: varchar("event", { length: 50 }).notNull(),
   status: varchar("status", {
     length: 50,
@@ -53,6 +54,10 @@ export const webhookEventTable = pgTable("webhook_events", {
   createdAt: bigint("created_at", { mode: "number" }).$defaultFn(() =>
     Date.now()
   ),
+  updatedAt: bigint("updated_at", { mode: "number" }).$defaultFn(() =>
+    Date.now()
+  ),
+  scheduledFor: bigint("scheduled_for", { mode: "number" }),
   processedAt: bigint("processed_at", { mode: "number" }),
   errorMessage: varchar("error_message", { length: 255 }),
   retryCount: integer("retry_count").default(0),

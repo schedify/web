@@ -15,6 +15,27 @@
       "when": 1733997049613,
       "tag": "0001_simple_mole_man",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1734022991742,
+      "tag": "0002_simple_red_skull",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1734023435774,
+      "tag": "0003_curvy_roulette",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1734023662034,
+      "tag": "0004_windy_legion",
+      "breakpoints": true
     }
   ]
 }
