@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { EnhancedButton } from "@/components/ui/enhanced-btn";
+import { cn } from "@/lib/utils";
 import {
   ClerkLoaded,
   ClerkLoading,
@@ -100,18 +101,18 @@ export default async function HomePageRoute() {
           </h1>
 
           <a
-            href="mailto:email@schedify.dev"
+            href="mailto:support@schedify.dev"
             className="inline-flex items-center gap-1 text-white"
           >
             <LucideMail size={16} className="" />
             <span className="underline font-karla underline-offset-8 text-sm md:text-base">
-              email@schedify.dev
+              support@schedify.dev
             </span>
           </a>
         </div>
       </section>
       <footer className="bg-black min-h-[400px] relative flex py-10 overflow-hidden">
-        {/* <span
+        <span
           className={cn(
             "absolute -bottom-20 left-0 right-0  font-bold select-none font-poppins text-center",
 
@@ -119,9 +120,9 @@ export default async function HomePageRoute() {
           )}
         >
           Schedify
-        </span> */}
+        </span>
 
-        <div className="container">
+        <div className="container h-full">
           <div className="text-white flex flex-row justify-between">
             <div className="flex flex-row items-center gap-2">
               <LucideCalendarRange size={18} />
@@ -147,6 +148,19 @@ export default async function HomePageRoute() {
               </div>
             </div>
           </div>
+
+          <span className="text-white mt-auto text-sm font-medium font-geist-mono">
+            Crafted with <span className="text-red-500">❤️</span> by{" "}
+            <a
+              href="https://github.com/ksamirdev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:text-blue-600 transition-colors duration-300"
+            >
+              Samir
+            </a>
+            !
+          </span>
         </div>
       </footer>
     </>

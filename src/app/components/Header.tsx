@@ -19,6 +19,7 @@ import {
   LucideClock12,
   LucidePlusCircle,
   LucideSettings,
+  LucideTriangleAlert,
 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -48,115 +49,136 @@ export const Header = () => {
   const [appModalActive, setAppModalActive] = useState(false);
 
   return (
-    <div className="px-5 h-[70px] border-b flex flex-row items-center justify-between sticky top-0 z-50 bg-white dark:bg-black">
-      <div className="inline-flex items-center font-geist-mono">
-        <Link
-          href="/"
-          className="flex flex-row items-center gap-2 hover:bg-secondary px-2 py-1 rounded-xl cursor-pointer duration-150"
-        >
-          <LucideCalendarRange />
-          <h1 className="font-bold text-lg">Schedify</h1>
-        </Link>
+    <div className="px-5 min-h-[70px] border-b flex flex-col sticky top-0 gap-3 z-50 bg-white dark:bg-black py-3">
+      <div className="bg-red-100 text-red-700 flex flex-col items-center px-4 py-2 rounded-xl font-geist-mono">
+        <p className="inline-flex items-center text-center">
+          This project is still under development. Full release is expected in
+          2-3 weeks. Features may not work as intended.
+        </p>
 
-        {app ? (
-          <>
-            <svg
-              width="8"
-              height="16"
-              viewBox="0 0 8 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="max-md:hidden mx-3"
-            >
-              <path
-                d="M7 1L1 15"
-                className="stroke-gray-600"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-
-            <Popover
-              open={appModalActive}
-              onOpenChange={(open) => setAppModalActive(open)}
-            >
-              <PopoverTrigger asChild>
-                <div
-                  className={cn(
-                    "max-md:hidden text-sm tracking-wider inline-flex items-center gap-3 dark:hover:bg-neutral-900 dark:hover:border-neutral-500 dark:hover:shadow cursor-pointer min-w-16 justify-center p-1 rounded-md",
-                    appModalActive && "dark:bg-neutral-900 shadow"
-                  )}
-                >
-                  {app.name} <LucideChevronsUpDown size={14} />
-                </div>
-              </PopoverTrigger>
-              <PopoverContent
-                align="start"
-                className="rounded-lg p-0 overflow-hidden bg-neutral-100"
-              >
-                <div className="bg-white border-b border-neutral-200 dark:border-neutral-700">
-                  <div className="p-1 pl-3 flex items-center gap-2">
-                    <LucideClock12 size={14} />
-                    <h1 className="font-bold text-sm">{app.name}</h1>
-                    <button
-                      title="Setting"
-                      className="ml-auto hover:bg-secondary p-2 rounded-lg hover:shadow"
-                    >
-                      <LucideSettings size={14} />
-                    </button>
-                  </div>
-                </div>
-
-                {apps.filter((app) => app.id !== appId).length > 0 ? (
-                  <div className="flex flex-col gap-1 bg-white rounded-b-lg border-b-2">
-                    {apps
-                      .filter((app) => app.id !== appId)
-                      .map((app) => (
-                        <a
-                          key={app.id}
-                          href={`/apps/${app.id}`}
-                          className="p-2 pl-3 hover:bg-neutral-50 dark:hover:bg-neutral-900 inline-flex items-center justify-between dark:hover:text-neutral-500 group text-sm"
-                        >
-                          {app.name}
-
-                          <LucideArrowRight
-                            className="group-hover:block hidden"
-                            size={14}
-                          />
-                        </a>
-                      ))}
-                  </div>
-                ) : null}
-
-                <Link
-                  href="/apps/create"
-                  className="cursor-pointer inline-flex items-center gap-2 p-2 px-3  w-full focus-within:outline-none group"
-                >
-                  <LucidePlusCircle size={14} />
-                  <span className="text-xs font-geist-sans group-hover:underline">
-                    Create Application
-                  </span>
-                </Link>
-              </PopoverContent>
-            </Popover>
-          </>
-        ) : null}
+        <p>
+          Want to know about project? Contact{" "}
+          <a
+            href="mailto:samir@schedify.dev"
+            className="underline underline-offset-4"
+          >
+            samir@schedify.dev
+          </a>
+        </p>
       </div>
 
-      <div>
-        <ClerkLoading>
-          <Skeleton className="min-h-[28px] min-w-[28px] rounded-full" />
-        </ClerkLoading>
-        <ClerkLoaded>
-          <SignedOut>
-            <SignInButton mode="modal">
-              <Button className="rounded-full font-semibold">Join Now!</Button>
-            </SignInButton>
-          </SignedOut>
-          <SignedIn>
-            <UserButton userProfileMode="modal" />
-          </SignedIn>
-        </ClerkLoaded>
+      <div className="flex flex-row items-center justify-between">
+        <div className="inline-flex items-center font-geist-mono">
+          <Link
+            href="/"
+            className="flex flex-row items-center gap-2 hover:bg-secondary px-2 py-1 rounded-xl cursor-pointer duration-150"
+          >
+            <LucideCalendarRange />
+            <h1 className="font-bold text-lg">Schedify</h1>
+          </Link>
+
+          {app ? (
+            <>
+              <svg
+                width="8"
+                height="16"
+                viewBox="0 0 8 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="max-md:hidden mx-3"
+              >
+                <path
+                  d="M7 1L1 15"
+                  className="stroke-gray-600"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+
+              <Popover
+                open={appModalActive}
+                onOpenChange={(open) => setAppModalActive(open)}
+              >
+                <PopoverTrigger asChild>
+                  <div
+                    className={cn(
+                      "max-md:hidden text-sm tracking-wider inline-flex items-center gap-3 dark:hover:bg-neutral-900 dark:hover:border-neutral-500 dark:hover:shadow cursor-pointer min-w-16 justify-center p-1 rounded-md",
+                      appModalActive && "dark:bg-neutral-900 shadow"
+                    )}
+                  >
+                    {app.name} <LucideChevronsUpDown size={14} />
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent
+                  align="start"
+                  className="rounded-lg p-0 overflow-hidden bg-neutral-100"
+                >
+                  <div className="bg-white border-b border-neutral-200 dark:border-neutral-700">
+                    <div className="p-1 pl-3 flex items-center gap-2">
+                      <LucideClock12 size={14} />
+                      <h1 className="font-bold text-sm">{app.name}</h1>
+                      <button
+                        title="Setting"
+                        className="ml-auto hover:bg-secondary p-2 rounded-lg hover:shadow"
+                      >
+                        <LucideSettings size={14} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {apps.filter((app) => app.id !== appId).length > 0 ? (
+                    <div className="flex flex-col gap-1 bg-white rounded-b-lg border-b-2">
+                      {apps
+                        .filter((app) => app.id !== appId)
+                        .map((app) => (
+                          <a
+                            key={app.id}
+                            href={`/apps/${app.id}`}
+                            className="p-2 pl-3 hover:bg-neutral-50 dark:hover:bg-neutral-900 inline-flex items-center justify-between dark:hover:text-neutral-500 group text-sm"
+                          >
+                            {app.name}
+
+                            <LucideArrowRight
+                              className="group-hover:block hidden"
+                              size={14}
+                            />
+                          </a>
+                        ))}
+                    </div>
+                  ) : null}
+
+                  <Link
+                    href="/apps/create"
+                    className="cursor-pointer inline-flex items-center gap-2 p-2 px-3  w-full focus-within:outline-none group"
+                  >
+                    <LucidePlusCircle size={14} />
+                    <span className="text-xs font-geist-sans group-hover:underline">
+                      Create Application
+                    </span>
+                  </Link>
+                </PopoverContent>
+              </Popover>
+            </>
+          ) : null}
+        </div>
+
+        <div>
+          <ClerkLoading>
+            <Skeleton className="min-h-[28px] min-w-[28px] rounded-full" />
+          </ClerkLoading>
+          <ClerkLoaded>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <Button className="rounded-full font-semibold">
+                  Join Now!
+                </Button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton userProfileMode="modal" />
+            </SignedIn>
+          </ClerkLoaded>
+        </div>
       </div>
     </div>
   );
