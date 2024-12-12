@@ -5,6 +5,7 @@ import {
   pgTable,
   varchar,
   json,
+  integer,
 } from "drizzle-orm/pg-core";
 
 export const userTable = pgTable("users", {
@@ -44,10 +45,38 @@ export const webhookTable = pgTable("webhooks", {
 export const webhookEventTable = pgTable("webhook_events", {
   id: varchar("id", { length: 50 }).primaryKey(),
   event: varchar("event", { length: 50 }).notNull(),
-  status: varchar("status", { length: 50 }).notNull(),
+  status: varchar("status", {
+    length: 50,
+    enum: ["COMPLETED", "ERROR", "PENDING", "IN_PROGRESS", "CANCELED"],
+  }).notNull(),
   payload: json("payload"),
-  createdAt: bigint("created_at", { mode: "number" }),
+  createdAt: bigint("created_at", { mode: "number" }).$defaultFn(() =>
+    Date.now()
+  ),
+  processedAt: bigint("processed_at", { mode: "number" }),
+  errorMessage: varchar("error_message", { length: 255 }),
+  retryCount: integer("retry_count").default(0),
   webhookId: varchar("webhook_id", { length: 50 })
     .references(() => webhookTable.id)
+    .notNull(),
+});
+
+export const retriesTable = pgTable("retries", {
+  id: varchar("id", { length: 50 }).primaryKey(),
+  retryAt: bigint("retry_at", { mode: "number" }).notNull(),
+  retryMethod: varchar("retry_method", {
+    length: 50,
+    enum: ["MANUAL", "AUTOMATIC"],
+  }).notNull(),
+  retryStatus: varchar("retry_status", {
+    length: 50,
+    enum: ["SUCCESS", "FAILURE"],
+  }).notNull(),
+  errorMessage: varchar("error_message", { length: 255 }),
+  createdAt: bigint("created_at", { mode: "number" }).$defaultFn(() =>
+    Date.now()
+  ),
+  webhookEventId: varchar("webhook_event_id", { length: 50 })
+    .references(() => webhookEventTable.id)
     .notNull(),
 });
