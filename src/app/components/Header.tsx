@@ -50,10 +50,13 @@ export const Header = () => {
   return (
     <div className="px-5 h-[70px] border-b flex flex-row items-center justify-between sticky top-0 z-50 bg-white dark:bg-black">
       <div className="inline-flex items-center font-geist-mono">
-        <div className="flex flex-row items-center gap-2">
+        <Link
+          href="/"
+          className="flex flex-row items-center gap-2 hover:bg-secondary px-2 py-1 rounded-xl cursor-pointer duration-150"
+        >
           <LucideCalendarRange />
           <h1 className="font-bold text-lg">Schedify</h1>
-        </div>
+        </Link>
 
         {app ? (
           <>

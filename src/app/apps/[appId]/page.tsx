@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import {
+  LucideAlertTriangle,
   LucideChevronDown,
   LucideCircleAlert,
   LucideCircleSlash,
@@ -128,6 +129,28 @@ const ACTIVITIES: Activity[] = [
   },
 ];
 
+import { fetchAppWebhooks } from "@/app/utils/get-apps";
+import { FC } from "react";
+
+const AppWebhookAlert: FC<{ appId: string }> = async ({ appId }) => {
+  const webhook = await fetchAppWebhooks(appId);
+  if (webhook.length > 0) return null;
+
+  return (
+    <div className="flex flex-row w-full items-center border rounded-xl p-5 gap-5">
+      <LucideAlertTriangle className="h-6 w-6" />
+      <div className="p-0 my-auto">
+        <h1 className="font-bold">No Webhook Found</h1>
+        <p className="text-sm">To proceed, please create a webhook.</p>
+      </div>
+
+      <Link href={`${appId}/webhooks/create`} className="ml-auto">
+        <Button size="sm">Create Webhook</Button>
+      </Link>
+    </div>
+  );
+};
+
 export default async function App({
   params,
 }: {
@@ -136,6 +159,8 @@ export default async function App({
   const id = (await params).appId;
   return (
     <div className="container mt-10 space-y-10">
+      <AppWebhookAlert appId={id} />
+
       <div className="grid grid-cols-4 border rounded-lg p-5 relative">
         <div className="absolute top-[-15px] right-5">
           <Button size="sm" variant="outline">

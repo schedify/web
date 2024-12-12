@@ -1,16 +1,19 @@
-import { fetchApps } from "@/app/utils/get-apps";
 import { db } from "@/db/drizzle";
-import { appTable } from "@/db/schema";
+import { appTable, webhookTable } from "@/db/schema";
 import { cuid } from "@/lib/crypto";
 import { createClerkClient, currentUser } from "@clerk/nextjs/server";
 import { eq, sql } from "drizzle-orm";
 import { NextResponse } from "next/server";
+import crypto from "node:crypto";
 
-const clerkClient = createClerkClient({
-  secretKey: process.env.CLERK_SECRET_KEY,
-});
-
-export async function POST(req: Request) {
+export async function POST(
+  req: Request,
+  {
+    params,
+  }: {
+    params: Promise<{ [key: string]: string }>;
+  }
+) {
   let body = null;
 
   try {
@@ -25,9 +28,8 @@ export async function POST(req: Request) {
     );
   }
 
-  const name = body.name;
-
-  if (!name) {
+  const destination = body.destination;
+  if (!destination) {
     return NextResponse.json(
       {
         status: 0,
@@ -48,61 +50,51 @@ export async function POST(req: Request) {
     );
   }
 
-  const count = await db
-    .select({ count: sql`count(*)`.mapWith(Number) })
-    .from(appTable)
-    .where(eq(appTable.userId, user.id));
+  const p = await params;
+  const appId = p.appId;
 
-  if ((count.at(0)?.count ?? 0) > 2) {
-    return NextResponse.json(
-      {
-        status: 0,
-        message: "You have reached the maximum number of apps",
-      },
-      {
-        status: 400,
-      }
-    );
-  }
+  const webhookId = `we_${cuid()}`;
 
-  const appId = `app_${cuid()}`;
-  let app = {
-    id: appId,
-    name: name,
-    userId: user.id,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-  };
+  const n = Date.now();
   try {
-    await db.insert(appTable).values(app);
+    await db.insert(webhookTable).values({
+      appId,
+      id: webhookId,
+      enabled: true,
+      url: destination,
+      secret: `wh_${crypto.randomBytes(32).toString("hex")}`,
+      createdAt: n,
+      updatedAt: n,
+    });
   } catch (e) {
     return NextResponse.json(
       {
         status: 0,
-        message: "Failed to create app",
+        message: "Failed to create webhook",
         debug: String(e),
       },
       { status: 500 }
     );
   }
 
-  await clerkClient.users.updateUserMetadata(user.id, {
-    publicMetadata: {
-      apps: [...((user.publicMetadata?.apps ?? []) as (typeof app)[]), app],
-    },
-  });
-
   return NextResponse.json(
     {
       status: 1,
-      message: "App created",
+      message: "Webhook created",
       appId,
     },
     { status: 200 }
   );
 }
 
-export async function GET() {
+export async function GET(
+  _: Request,
+  {
+    params,
+  }: {
+    params: Promise<{ [key: string]: string }>;
+  }
+) {
   try {
     const user = await currentUser();
     if (!user) {
@@ -115,11 +107,23 @@ export async function GET() {
       );
     }
 
-    const apps = await fetchApps(user.id);
+    const p = await params;
+    const appId = p.appId;
+
+    const webhooks = await db
+      .select({
+        id: webhookTable.id,
+        url: webhookTable.url,
+        enabled: webhookTable.enabled,
+        createdAt: webhookTable.createdAt,
+        updatedAt: webhookTable.updatedAt,
+      })
+      .from(webhookTable)
+      .where(eq(webhookTable.appId, appId));
 
     return NextResponse.json({
       status: 1,
-      data: apps,
+      data: webhooks,
     });
   } catch (e) {
     return NextResponse.json(
