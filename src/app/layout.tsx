@@ -56,7 +56,6 @@ export default function RootLayout({
           <Header />
           {children}
           {modal}
-
           <Toaster />
         </body>
       </html>

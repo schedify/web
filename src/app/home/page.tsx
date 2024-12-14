@@ -23,8 +23,8 @@ import { Suspense } from "react";
 export default async function HomePageRoute() {
   return (
     <>
-      <section className="hero pt-[20vh] flex flex-col items-center">
-        <h1 className="text-2xl md:text-6xl font-bold text-center text-gray-900 leading-tight mb-6 font-poppins">
+      <section className="hero pt-[20vh] flex flex-col items-center ">
+        <h1 className="text-2xl md:text-6xl font-bold text-center text-gray-900 mb-6 font-poppins">
           Automate Your System.
           <br />
           <span className="text-blue-600 font-bold">Schedule</span> Them with

@@ -12,8 +12,8 @@ const TABS = [
   },
   {
     id: "2",
-    label: "Activities",
-    links: ["/activities", new RegExp("/activities/[a-zA-Z0-9-]+")],
+    label: "Schedules",
+    links: ["/schedules", new RegExp("/schedules/[a-zA-Z0-9-]+")],
   },
   {
     id: "3",

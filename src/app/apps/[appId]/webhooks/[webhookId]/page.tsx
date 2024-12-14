@@ -269,8 +269,6 @@ const WebhookLogs: FC<{
                         clipRule="evenodd"
                       />
                     </svg>
-                  ) : log.status === "IN_PROGRESS" ? (
-                    <LucideDot size={18} />
                   ) : log.status === "COMPLETED" ? (
                     <LucideCheckCircle size={16} className="text-green-600" />
                   ) : null}

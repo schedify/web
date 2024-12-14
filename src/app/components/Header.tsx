@@ -22,7 +22,7 @@ import {
   LucideTriangleAlert,
 } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { FC, use, useMemo, useState } from "react";
 import type { App } from "../types";
 
 import {
@@ -33,12 +33,13 @@ import {
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-export const Header = () => {
+export const Header: FC = () => {
   const { user } = useUser();
   const params = useParams();
 
   const appId = params.appId;
-  const apps = (user?.publicMetadata.apps ?? []) as App[];
+
+  const apps = user?.publicMetadata.apps ?? [];
 
   const app = useMemo(() => {
     if (appId && user) {
@@ -50,14 +51,14 @@ export const Header = () => {
 
   return (
     <div className="px-5 min-h-[70px] border-b flex flex-col sticky top-0 gap-3 z-50 bg-white dark:bg-black py-3">
-      <div className="bg-red-100 text-red-700 flex flex-col items-center px-4 py-2 rounded-xl font-geist-mono">
-        <p className="inline-flex items-center text-center">
+      <div className="text-center gap-1 bg-red-100 text-red-700 flex flex-col items-center px-4 py-2 rounded-xl font-geist-mono">
+        <p className="text-sm">
           This project is still under development. Full release is expected in
           2-3 weeks. Features may not work as intended.
         </p>
 
-        <p>
-          Want to know about project? Contact{" "}
+        <p className="text-xs">
+          Want to know about project? Reach at{" "}
           <a
             href="mailto:samir@schedify.dev"
             className="underline underline-offset-4"

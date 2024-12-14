@@ -41,6 +41,7 @@ export const webhookTable = pgTable("webhooks", {
     .references(() => appTable.id)
     .notNull(),
 });
+export type Webhook = typeof webhookTable.$inferSelect;
 
 export const webhookEventTable = pgTable("webhook_events", {
   id: varchar("id", { length: 50 }).primaryKey(),
@@ -48,7 +49,7 @@ export const webhookEventTable = pgTable("webhook_events", {
   event: varchar("event", { length: 50 }).notNull(),
   status: varchar("status", {
     length: 50,
-    enum: ["COMPLETED", "ERROR", "PENDING", "IN_PROGRESS", "CANCELED"],
+    enum: ["COMPLETED", "ERROR", "PENDING", "CANCELED"],
   }).notNull(),
   payload: json("payload"),
   createdAt: bigint("created_at", { mode: "number" }).$defaultFn(() =>

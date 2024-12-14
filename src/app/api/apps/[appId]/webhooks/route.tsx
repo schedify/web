@@ -6,6 +6,10 @@ import { eq, sql } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import crypto from "node:crypto";
 
+const clerkClient = createClerkClient({
+  secretKey: process.env.CLERK_SECRET_KEY,
+});
+
 export async function POST(
   req: Request,
   {
@@ -53,19 +57,19 @@ export async function POST(
   const p = await params;
   const appId = p.appId;
 
-  const webhookId = `we_${cuid()}`;
-
   const n = Date.now();
+
+  const webhook = {
+    appId,
+    id: `we_${cuid()}`,
+    enabled: true,
+    url: destination,
+    secret: `wh_${crypto.randomBytes(32).toString("hex")}`,
+    createdAt: n,
+    updatedAt: n,
+  };
   try {
-    await db.insert(webhookTable).values({
-      appId,
-      id: webhookId,
-      enabled: true,
-      url: destination,
-      secret: `wh_${crypto.randomBytes(32).toString("hex")}`,
-      createdAt: n,
-      updatedAt: n,
-    });
+    await db.insert(webhookTable).values(webhook);
   } catch (e) {
     return NextResponse.json(
       {
@@ -77,11 +81,33 @@ export async function POST(
     );
   }
 
+  try {
+    const apps = user.publicMetadata.apps ?? [];
+
+    const app = apps.find((a) => a.id === appId);
+    if (app) {
+      app.webhooks.unshift({
+        id: webhook.id,
+        url: webhook.url,
+        enabled: webhook.enabled,
+        createdAt: webhook.createdAt,
+        updatedAt: webhook.updatedAt,
+      });
+    }
+
+    await clerkClient.users.updateUserMetadata(user.id, {
+      publicMetadata: {
+        apps,
+      },
+    });
+  } catch {}
+
   return NextResponse.json(
     {
       status: 1,
       message: "Webhook created",
       appId,
+      webhookId: webhook.id,
     },
     { status: 200 }
   );

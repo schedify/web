@@ -7,13 +7,12 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useParams, useRouter } from "next/navigation";
 
-import { useToast, toast } from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 
@@ -63,7 +62,7 @@ const CreateWebhookModal = () => {
       description: res.message,
     });
 
-    window.location.href = `/apps/${res.appId}/webhooks`;
+    window.location.href = `/apps/${res.appId}/webhooks/${res.webhookId}`;
   };
 
   return (

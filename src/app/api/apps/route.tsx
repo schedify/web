@@ -66,6 +66,7 @@ export async function POST(req: Request) {
   }
 
   const appId = `app_${cuid()}`;
+
   let app = {
     id: appId,
     name: name,
@@ -86,11 +87,22 @@ export async function POST(req: Request) {
     );
   }
 
-  await clerkClient.users.updateUserMetadata(user.id, {
-    publicMetadata: {
-      apps: [...((user.publicMetadata?.apps ?? []) as (typeof app)[]), app],
-    },
-  });
+  try {
+    await clerkClient.users.updateUserMetadata(user.id, {
+      publicMetadata: {
+        apps: [
+          {
+            id: app.id,
+            name: app.name,
+            createdAt: app.createdAt,
+            updatedAt: app.updatedAt,
+            webhooks: [],
+          },
+          ...(user.publicMetadata.apps ?? []),
+        ],
+      },
+    });
+  } catch {}
 
   return NextResponse.json(
     {
