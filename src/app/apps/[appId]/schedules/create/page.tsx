@@ -168,8 +168,8 @@ const CreateScheduleModal = () => {
                     initialFocus
                   />
 
-                  <div className="flex flex-col items-center py-4 gap-1">
-                    <label className="text-sm font-semibold text-muted-foreground">
+                  <div className="flex flex-col items-center py-5 gap-1">
+                    <label className="text-xs font-medium tracking-wide text-muted-foreground">
                       HH
                     </label>
                     <ScrollArea
@@ -205,8 +205,8 @@ const CreateScheduleModal = () => {
                     </ScrollArea>
                   </div>
 
-                  <div className="flex flex-col items-center py-4 gap-1">
-                    <label className="text-sm font-semibold text-muted-foreground">
+                  <div className="flex flex-col items-center py-5 gap-1">
+                    <label className="text-xs font-medium tracking-wide text-muted-foreground">
                       MM
                     </label>
                     <ScrollArea
@@ -240,12 +240,12 @@ const CreateScheduleModal = () => {
                     </ScrollArea>
                   </div>
 
-                  <div className="flex flex-col items-center py-4 gap-2 pr-4">
-                    <label className="text-sm font-semibold text-muted-foreground">
+                  <div className="flex flex-col items-center py-5 gap-1 pr-4">
+                    <label className="text-xs font-medium tracking-wide text-muted-foreground">
                       PERIOD
                     </label>
 
-                    <div className="flex flex-col">
+                    <div className="flex flex-col gap-1">
                       <Button
                         variant={
                           moment(processAt).hour() < 12 ? "secondary" : "ghost"
