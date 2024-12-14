@@ -30,6 +30,7 @@ import { webhookEventTable } from "@/db/schema";
 import { cuid } from "@/lib/crypto";
 import moment from "moment";
 import { revalidatePath } from "next/cache";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default async function WebhookRoute({
   params,
@@ -37,11 +38,6 @@ export default async function WebhookRoute({
 }: PageProps) {
   const p = await params;
   const s = await searchParams;
-
-  const webhook = await fetchAppWebhook(p.appId, p.webhookId);
-  if (!webhook) {
-    redirect(`/apps/${p.appId}/webhooks`);
-  }
 
   const logStatus =
     (Array.isArray(s.status) ? s.status.at(0) : s.status) || "all";
@@ -58,74 +54,109 @@ export default async function WebhookRoute({
       </Link>
 
       <div className="p-5 border rounded-xl grid grid-rows-4 gap-2 text-sm w-full">
-        <div className="space-x-2 flex flex-row items-center">
-          <span className="text-gray-600 font-poppins">Webhook</span>
-
-          <CopyTextComponent
-            text={webhook.id}
-            className="font-semibold hover:bg-secondary duration-150 px-2 py-0.5 rounded-lg cursor-pointer font-geist-mono"
-          />
-        </div>
-
-        <div className="space-x-2 flex flex-row items-center">
-          <span className="text-gray-600 font-poppins">Status</span>
-          <Status enabled={!!webhook.enabled} className="mx-0 font-karla" />
-
-          <div className="flex-1"></div>
-
-          <Button
-            variant="link"
-            size="sm"
-            className="[&_svg]:size-3 h-0 text-red-500"
-          >
-            {webhook.enabled ? <LucideToggleLeft /> : <LucideToggleRight />}
-            {webhook.enabled ? "Disable" : "Enable"}
-          </Button>
-        </div>
-
-        <div className="space-x-2 flex flex-row items-center w-full">
-          <div className="text-gray-600 text-sm font-poppins">
-            Signing Secret
-          </div>
-
-          <CopyTextComponent
-            hidden
-            text={webhook.secret ?? ""}
-            className="font-karla hover:bg-secondary duration-150 px-2 py-0.5 rounded-lg cursor-pointer"
-          />
-
-          <div className="flex-1"></div>
-
-          <Button
-            variant="link"
-            size="sm"
-            className="[&_svg]:size-3 text-red-500"
-          >
-            <LucideRotateCw /> Rotate
-          </Button>
-        </div>
-
-        <div className="space-x-2 flex flex-row items-center">
-          <span className="text-gray-600 text-sm font-poppins">
-            Created at{" "}
-          </span>
-          <div className="font-karla">{formatDate(webhook.createdAt)}</div>
-        </div>
-
-        <div className="space-x-2 flex flex-row items-center">
-          <span className="text-gray-600 text-sm font-poppins">Updated at</span>
-          <div className="font-karla">{formatDate(webhook.updatedAt)}</div>
-        </div>
+        <Suspense
+          fallback={
+            <>
+              <Skeleton className="min-h-[30px]" />
+              <Skeleton className="min-h-[30px]" />
+              <Skeleton className="min-h-[30px]" />
+              <Skeleton className="min-h-[30px]" />
+              <Skeleton className="min-h-[30px]" />
+            </>
+          }
+        >
+          <WebhookMeta appId={p.appId} webhookId={p.webhookId} />
+        </Suspense>
       </div>
 
-      <WebhookLogs
-        logStatus={logStatus}
-        webhookId={webhook.id}
-        eventId={eventId}
-      />
+      <Suspense
+        fallback={
+          <>
+            <div className="grid grid-cols-2 p-5 border rounded-xl gap-3 text-sm w-full divide-x">
+              <Skeleton className="min-h-[100px]" />
+              <Skeleton className="min-h-[100px]" />
+            </div>
+          </>
+        }
+      >
+        <WebhookLogs
+          logStatus={logStatus}
+          webhookId={p.webhookId}
+          eventId={eventId}
+        />
+      </Suspense>
     </div>
   );
 }
+
+const WebhookMeta: FC<{
+  appId: string;
+  webhookId: string;
+}> = async ({ appId, webhookId }) => {
+  const webhook = await fetchAppWebhook(appId, webhookId);
+  if (!webhook) {
+    redirect(`/apps/${appId}/webhooks`);
+  }
+
+  return (
+    <>
+      <div className="space-x-2 flex flex-row items-center">
+        <span className="text-gray-600 font-poppins">Webhook</span>
+
+        <CopyTextComponent
+          text={webhook.id}
+          className="font-semibold hover:bg-secondary duration-150 px-2 py-0.5 rounded-lg cursor-pointer font-geist-mono"
+        />
+      </div>
+
+      <div className="space-x-2 flex flex-row items-center">
+        <span className="text-gray-600 font-poppins">Status</span>
+        <Status enabled={!!webhook.enabled} className="mx-0 font-karla" />
+
+        <div className="flex-1"></div>
+
+        <Button
+          variant="link"
+          size="sm"
+          className="[&_svg]:size-3 h-0 text-red-500"
+        >
+          {webhook.enabled ? <LucideToggleLeft /> : <LucideToggleRight />}
+          {webhook.enabled ? "Disable" : "Enable"}
+        </Button>
+      </div>
+
+      <div className="space-x-2 flex flex-row items-center w-full">
+        <div className="text-gray-600 text-sm font-poppins">Signing Secret</div>
+
+        <CopyTextComponent
+          hidden
+          text={webhook.secret ?? ""}
+          className="font-karla hover:bg-secondary duration-150 px-2 py-0.5 rounded-lg cursor-pointer"
+        />
+
+        <div className="flex-1"></div>
+
+        <Button
+          variant="link"
+          size="sm"
+          className="[&_svg]:size-3 text-red-500"
+        >
+          <LucideRotateCw /> Rotate
+        </Button>
+      </div>
+
+      <div className="space-x-2 flex flex-row items-center">
+        <span className="text-gray-600 text-sm font-poppins">Created at </span>
+        <div className="font-karla">{formatDate(webhook.createdAt)}</div>
+      </div>
+
+      <div className="space-x-2 flex flex-row items-center">
+        <span className="text-gray-600 text-sm font-poppins">Updated at</span>
+        <div className="font-karla">{formatDate(webhook.updatedAt)}</div>
+      </div>
+    </>
+  );
+};
 
 const WebhookLogs: FC<{
   logStatus: string;

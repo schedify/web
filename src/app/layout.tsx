@@ -40,6 +40,8 @@ export const metadata: Metadata = {
   ],
 };
 
+import ProgressBarProvider from "./components/ProgressBarProvider";
+
 export default function RootLayout({
   children,
   modal,
@@ -53,10 +55,12 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} ${fontKarla.variable} ${fontPoppins.variable} antialiased bg-background`}
         >
-          <Header />
-          {children}
-          {modal}
-          <Toaster />
+          <ProgressBarProvider>
+            <Header />
+            {children}
+            {modal}
+            <Toaster />
+          </ProgressBarProvider>
         </body>
       </html>
     </ClerkProvider>

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
-import { useState } from "react";
 
 const TABS = [
   {
@@ -27,7 +26,7 @@ const TABS = [
   },
 ] as const;
 
-export const DashboardNav = () => {
+export default function DashboardNav() {
   const param = useParams();
   const pathname = usePathname();
 
@@ -63,4 +62,4 @@ export const DashboardNav = () => {
       })}
     </div>
   );
-};
+}

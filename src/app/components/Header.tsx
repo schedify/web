@@ -23,7 +23,6 @@ import {
 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { FC, use, useMemo, useState } from "react";
-import type { App } from "../types";
 
 import {
   Popover,

@@ -2,7 +2,7 @@ import { db } from "@/db/drizzle";
 import { appTable, webhookTable } from "@/db/schema";
 import { cuid } from "@/lib/crypto";
 import { createClerkClient, currentUser } from "@clerk/nextjs/server";
-import { eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import crypto from "node:crypto";
 
@@ -57,6 +57,23 @@ export async function POST(
   const p = await params;
   const appId = p.appId;
 
+  const w = await db
+    .select({})
+    .from(webhookTable)
+    .where(
+      and(eq(webhookTable.url, destination), eq(webhookTable.appId, appId))
+    );
+
+  if (w.length > 0) {
+    return NextResponse.json(
+      {
+        status: 0,
+        message: "Webhook already exists",
+      },
+      { status: 400 }
+    );
+  }
+
   const n = Date.now();
 
   const webhook = {
@@ -68,6 +85,7 @@ export async function POST(
     createdAt: n,
     updatedAt: n,
   };
+
   try {
     await db.insert(webhookTable).values(webhook);
   } catch (e) {

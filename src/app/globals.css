@@ -71,9 +71,3 @@ body {
   }
 }
 
-
-@variants responsive {
-  .scrollbar-none::-webkit-scrollbar {
-      display: none;
-  }
-}

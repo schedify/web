@@ -20,6 +20,14 @@ import {
 import Link from "next/link";
 import { FC, Suspense } from "react";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
+
 export default async function Webhooks({
   params,
 }: {
@@ -78,14 +86,6 @@ export default async function Webhooks({
     </div>
   );
 }
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const WebhookEndpointsTable: FC<{ appId: string }> = async ({ appId }) => {
   const webhooks = await fetchAppWebhooks(appId);
