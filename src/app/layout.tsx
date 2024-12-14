@@ -40,6 +40,9 @@ export const metadata: Metadata = {
   ],
 };
 
+// import "ace-builds/src-noconflict/mode-json";
+// import "ace-builds/src-noconflict/theme-xcode";
+
 import ProgressBarProvider from "./components/ProgressBarProvider";
 
 export default function RootLayout({

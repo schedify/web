@@ -14,6 +14,7 @@ const ProgressBarProvider: FC<{ children: React.ReactNode }> = ({
         color="#000"
         options={{ showSpinner: false }}
         shallowRouting
+        disableSameURL
       />
     </>
   );

@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-static";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import { useParams, useRouter } from "next/navigation";
 
 import { toast } from "@/hooks/use-toast";
-import { useMemo, useState } from "react";
+import { FC, use, useMemo, useState } from "react";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import {
   Popover,
@@ -38,35 +40,45 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-xcode";
 
-const CreateScheduleModal = () => {
+const CreateScheduleModal: FC<{
+  params: Promise<{
+    [key: string]: string;
+  }>;
+}> = ({ params }) => {
+  const { appId } = use(params);
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const { user, isLoaded } = useUser();
-  const { appId } = useParams();
+
+  const [processAt, setProcessAt] = useState<Date>(
+    moment().add(1, "d").toDate()
+  );
+
+  const [payload, setPayload] = useState(`{\n\t"key": "value"\n}`);
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const destination = formData.get("destination")?.toString() as string;
-    if (!destination) {
-      return toast({
-        title: "Oops!",
-        description: "Destination is required",
-        variant: "destructive",
-      });
-    }
+
+    const eventName = formData.get("event") as string;
+
+    const destination = formData.get("destination") as string;
 
     setLoading(true);
-    const resp = await fetch(`/api/apps/${appId}/webhooks`, {
+    const resp = await fetch(`/api/apps/${appId}/schedules`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
       body: JSON.stringify({
+        event: eventName,
+        payload,
         destination,
+        scheduledFor: processAt.toISOString(),
       }),
     });
 
@@ -85,12 +97,8 @@ const CreateScheduleModal = () => {
       description: res.message,
     });
 
-    window.location.href = `/apps/${res.appId}/webhooks/${res.webhookId}`;
+    window.location.href = `/apps/${res.appId}/schedules`;
   };
-
-  const [processAt, setProcessAt] = useState<Date>(
-    moment().add(1, "d").toDate()
-  );
 
   const webhooks = useMemo(() => {
     if (!isLoaded || !user?.publicMetadata.apps) return [];
@@ -297,7 +305,8 @@ const CreateScheduleModal = () => {
                   wrapEnabled
                   highlightActiveLine={false}
                   name="payload"
-                  defaultValue={`{\n\t"key": "value"\n}`}
+                  onChange={(value) => setPayload(value)}
+                  value={payload}
                   showGutter={false}
                   editorProps={{ $blockScrolling: true }}
                 />
@@ -307,7 +316,7 @@ const CreateScheduleModal = () => {
             <div className="gap-2 flex flex-col">
               <Label htmlFor="destination">Destination</Label>
 
-              <Select>
+              <Select name="destination" required>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select a webhook" />
                 </SelectTrigger>

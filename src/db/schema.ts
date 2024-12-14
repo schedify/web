@@ -65,6 +65,9 @@ export const webhookEventTable = pgTable("webhook_events", {
   webhookId: varchar("webhook_id", { length: 50 })
     .references(() => webhookTable.id)
     .notNull(),
+  appId: varchar("app_id", { length: 50 })
+    .references(() => appTable.id)
+    .notNull(),
 });
 
 export const retriesTable = pgTable("retries", {

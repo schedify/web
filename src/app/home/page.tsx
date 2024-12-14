@@ -1,12 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { EnhancedButton } from "@/components/ui/enhanced-btn";
 import { cn } from "@/lib/utils";
-import {
-  ClerkLoaded,
-  ClerkLoading,
-  SignInButton,
-  useUser,
-} from "@clerk/nextjs";
+import { ClerkLoaded, ClerkLoading, SignInButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import {
   LucideCable,

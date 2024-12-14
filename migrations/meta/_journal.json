@@ -36,6 +36,13 @@
       "when": 1734023662034,
       "tag": "0004_windy_legion",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1734203543307,
+      "tag": "0005_plain_inertia",
+      "breakpoints": true
     }
   ]
 }

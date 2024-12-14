@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-static";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,17 +12,21 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { toast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { FC, use, useState } from "react";
 import { Loader2 } from "lucide-react";
 
-const CreateWebhookModal = () => {
+const CreateWebhookModal: FC<{
+  params: Promise<{
+    [key: string]: string;
+  }>;
+}> = ({ params }) => {
+  const { appId } = use(params);
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
-  const { appId } = useParams();
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -86,6 +92,10 @@ const CreateWebhookModal = () => {
                 maxLength={200}
                 required
                 disabled={loading}
+                autoComplete="off"
+                autoCapitalize="off"
+                autoCorrect="off"
+                autoFocus
               />
             </div>
           </div>

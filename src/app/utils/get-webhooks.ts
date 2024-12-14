@@ -75,3 +75,27 @@ export const fetchWebhookEventPayload = cache(
     return logs.at(0) ?? null;
   }
 );
+
+export const fetchWebhookEvents = cache(async (appId: string) => {
+  try {
+    const logs = await db
+      .select({
+        id: webhookEventTable.id,
+        event: webhookEventTable.event,
+        status: webhookEventTable.status,
+        payload: webhookEventTable.payload,
+        createdAt: webhookEventTable.createdAt,
+        updatedAt: webhookEventTable.updatedAt,
+        processedAt: webhookEventTable.processedAt,
+        errorMessage: webhookEventTable.errorMessage,
+        retryCount: webhookEventTable.retryCount,
+      })
+      .from(webhookEventTable)
+      .where(and(eq(webhookEventTable.appId, appId)))
+      .limit(100);
+
+    return logs;
+  } catch {
+    return [];
+  }
+});

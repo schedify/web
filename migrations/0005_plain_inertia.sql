@@ -1,0 +1,2 @@
+ALTER TABLE "webhook_events" ADD COLUMN "app_id" varchar(50) NOT NULL;--> statement-breakpoint
+ALTER TABLE "webhook_events" ADD CONSTRAINT "webhook_events_app_id_apps_id_fk" FOREIGN KEY ("app_id") REFERENCES "public"."apps"("id") ON DELETE no action ON UPDATE no action;
