@@ -18,7 +18,7 @@ import {
   LucideTrash2,
 } from "lucide-react";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, Suspense } from "react";
 
 export default async function Webhooks({
   params,
@@ -44,7 +44,36 @@ export default async function Webhooks({
           </Link>
         </div>
 
-        <WebhookEndpointsTable appId={appId} />
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-full">Destination</TableHead>
+              <TableHead className="min-w-[100px] text-center">
+                Status
+              </TableHead>
+              <TableHead className="text-right">Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <Suspense
+              fallback={
+                <TableRow>
+                  <TableCell>
+                    <Skeleton className="min-h-[20px]" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="min-h-[20px]" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="min-h-[20px]" />
+                  </TableCell>
+                </TableRow>
+              }
+            >
+              <WebhookEndpointsTable appId={appId} />
+            </Suspense>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );
@@ -54,63 +83,49 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const WebhookEndpointsTable: FC<{ appId: string }> = async ({ appId }) => {
   const webhooks = await fetchAppWebhooks(appId);
 
-  return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-full">Destination</TableHead>
-          <TableHead className="min-w-[100px] text-center">Status</TableHead>
-          <TableHead className="text-right">Action</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {webhooks.map((webhook) => (
-          <TableRow key={webhook.id} className="relative">
-            <TableCell className="truncate font-semibold font-geist-mono hover:text-blue-500 hover:underline underline-offset-4">
-              <Link href={`webhooks/${webhook.id}`} className="w-full">
-                {webhook.url}
-              </Link>
-            </TableCell>
-            <TableCell>
-              <Status enabled={!!webhook.enabled} />
-            </TableCell>
-            <TableCell className="text-right">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button size="icon" variant="outline" className="h-7">
-                    <LucideMenu size={14} />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem className="text-sm cursor-pointer py-1">
-                    {webhook.enabled ? (
-                      <LucideToggleLeft size={14} />
-                    ) : (
-                      <LucideToggleRight size={14} />
-                    )}
+  return webhooks.map((webhook) => (
+    <TableRow key={webhook.id} className="relative">
+      <TableCell className="truncate font-semibold font-geist-mono hover:text-blue-500 hover:underline underline-offset-4">
+        <Link href={`webhooks/${webhook.id}`} className="w-full">
+          {webhook.url}
+        </Link>
+      </TableCell>
+      <TableCell>
+        <Status enabled={!!webhook.enabled} />
+      </TableCell>
+      <TableCell className="text-right">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="icon" variant="outline" className="h-7">
+              <LucideMenu size={14} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem className="text-sm cursor-pointer py-1">
+              {webhook.enabled ? (
+                <LucideToggleLeft size={14} />
+              ) : (
+                <LucideToggleRight size={14} />
+              )}
 
-                    {webhook.enabled ? "Disable" : "Enable"}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-sm cursor-pointer py-1 text-red-500 focus:text-red-500">
-                    <LucideTrash2 size={14} />
-                    Delete
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  );
+              {webhook.enabled ? "Disable" : "Enable"}
+            </DropdownMenuItem>
+            <DropdownMenuItem className="text-sm cursor-pointer py-1 text-red-500 focus:text-red-500">
+              <LucideTrash2 size={14} />
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </TableCell>
+    </TableRow>
+  ));
 };
 
 export const Status: FC<{ enabled: boolean; className?: string }> = ({
