@@ -128,7 +128,7 @@ const WebhookEndpointsTable: FC<{ appId: string }> = async ({ appId }) => {
   ));
 };
 
-export const Status: FC<{ enabled: boolean; className?: string }> = ({
+const Status: FC<{ enabled: boolean; className?: string }> = ({
   enabled,
   className,
 }) => (

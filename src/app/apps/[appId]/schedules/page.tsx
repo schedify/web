@@ -94,6 +94,8 @@ import {
 } from "@/components/ui/dialog";
 
 import { JSONCodeBlock } from "@/app/components/JSONCodeBlock";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 const ScheduleEventTable: FC<{ appId: string }> = async ({ appId }) => {
   const events = await fetchWebhookEvents(appId);
@@ -109,7 +111,7 @@ const ScheduleEventTable: FC<{ appId: string }> = async ({ appId }) => {
       <Dialog>
         <DialogTrigger asChild>
           <TableCell className="truncate cursor-pointer font-geist-mono text-sm text-center max-w-[100px]">
-            {JSON.stringify(webhook.payload).repeat(100)}
+            {JSON.stringify(webhook.payload)}
           </TableCell>
         </DialogTrigger>
         <DialogContent>
@@ -120,10 +122,22 @@ const ScheduleEventTable: FC<{ appId: string }> = async ({ appId }) => {
           <JSONCodeBlock code={JSON.stringify(webhook.payload, null, 2)} />
         </DialogContent>
       </Dialog>
-      <TableCell className="">
-        <div className="font-geist-mono text-[10px] text-center bg-black text-white rounded-full  w-min mx-auto h-min px-2 py-0.5">
+      <TableCell className="text-center">
+        <Badge
+          variant="outline"
+          className="gap-1.5 mx-auto tracking-tight text-xs rounded-full"
+        >
+          <span
+            className={cn(
+              "size-1.5 rounded-full",
+              webhook.status === "PENDING" && "bg-amber-500",
+              webhook.status === "COMPLETED" && "bg-green-500",
+              ["ERROR", "CANCELED"].includes(webhook.status) && "bg-red-500"
+            )}
+            aria-hidden="true"
+          ></span>
           {webhook.status}
-        </div>
+        </Badge>
       </TableCell>
       <TableCell
         className="truncate text-sm text-center"

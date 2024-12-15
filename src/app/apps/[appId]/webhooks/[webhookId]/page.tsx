@@ -5,7 +5,6 @@ import {
   fetchWebhookLogs,
 } from "@/app/utils/get-webhooks";
 import { redirect } from "next/navigation";
-import { Status } from "../page";
 import { formatDate, formatTime } from "@/app/utils/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -45,6 +44,8 @@ export default async function WebhookRoute({
   const eventId =
     (Array.isArray(s.eventId) ? s.eventId.at(0) : s.eventId) ?? "";
 
+  const appId = p.appId;
+
   return (
     <div className="container mt-10 space-y-10">
       <Link href={`/apps/${p.appId}/webhooks`}>
@@ -83,6 +84,7 @@ export default async function WebhookRoute({
           logStatus={logStatus}
           webhookId={p.webhookId}
           eventId={eventId}
+          appId={appId}
         />
       </Suspense>
     </div>
@@ -162,7 +164,8 @@ const WebhookLogs: FC<{
   logStatus: string;
   webhookId: string;
   eventId: string;
-}> = async ({ logStatus, webhookId, eventId }) => {
+  appId: string;
+}> = async ({ logStatus, webhookId, eventId, appId }) => {
   const logs = await fetchWebhookLogs(webhookId, logStatus);
 
   const groupedLogs = logs.reduce<{ [key: string]: typeof logs }>(
@@ -231,6 +234,7 @@ const WebhookLogs: FC<{
                   event: "schedify:test",
                   status: "COMPLETED",
                   webhookId: webhookId,
+                  appId: appId,
                   scheduledFor: moment().add(2, "day").startOf("day").valueOf(),
                   payload: {
                     name: "Schedify",
@@ -379,3 +383,18 @@ const WebhookEventPayload: FC<{ webhookId: string; eventId: string }> = async ({
     </div>
   );
 };
+
+const Status: FC<{ enabled: boolean; className?: string }> = ({
+  enabled,
+  className,
+}) => (
+  <div
+    className={cn(
+      "text-center rounded text-sm font-semibold w-min px-2 mx-auto font-geist-sans",
+      enabled ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-500",
+      className
+    )}
+  >
+    {enabled ? "Enabled" : "Disabled"}
+  </div>
+);
