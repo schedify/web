@@ -49,7 +49,7 @@ export const Header: FC = () => {
   const [appModalActive, setAppModalActive] = useState(false);
 
   return (
-    <div className="px-5 min-h-[70px] border-b flex flex-col sticky top-0 gap-3 z-50 bg-white dark:bg-black py-3">
+    <div className="px-5 min-h-[70px] border-b-2 border-black flex flex-col sticky top-0 gap-3 z-50 bg-background dark:bg-background py-3">
       <div className="text-center gap-1 bg-red-100 text-red-700 flex flex-col items-center px-4 py-2 rounded-xl font-geist-mono">
         <p className="text-sm">
           This project is still under development. Full release is expected in
