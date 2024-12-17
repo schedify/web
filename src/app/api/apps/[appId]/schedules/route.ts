@@ -1,8 +1,10 @@
 import { db } from "@/db/drizzle";
 import { webhookEventTable, webhookTable } from "@/db/schema";
 import { cuid } from "@/lib/crypto";
+import { sentToQueue } from "@/lib/rabbitmq";
 import { validateScheduleBody } from "@/lib/zod";
 import { and, eq } from "drizzle-orm";
+import moment from "moment";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 export async function POST(
@@ -51,14 +53,15 @@ export async function POST(
   const p = await params;
   const appId = p.appId;
 
-  const webhooks = await db
+  const [webhook] = await db
     .select()
     .from(webhookTable)
     .where(
       and(eq(webhookTable.appId, appId), eq(webhookTable.id, body.destination))
-    );
+    )
+    .limit(1);
 
-  if (webhooks.length === 0) {
+  if (!webhook) {
     return NextResponse.json(
       {
         status: 0,
@@ -69,15 +72,23 @@ export async function POST(
   }
 
   const eventId = `ev_${cuid()}`;
+  const payload = JSON.parse(body.payload);
 
   await db.insert(webhookEventTable).values({
     id: eventId,
     event: body.event,
     status: "PENDING",
     webhookId: body.destination,
-    payload: JSON.parse(body.payload),
+    payload,
     scheduledFor: body.scheduledFor.valueOf(),
     appId: appId,
+  });
+
+  await sentToQueue({
+    webhookURL: webhook.url,
+    webhookSecret: webhook.secret,
+    delay: moment(body.scheduledFor).diff(moment(), "seconds"),
+    payload,
   });
 
   return NextResponse.json({
