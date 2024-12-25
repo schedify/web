@@ -23,9 +23,6 @@ export const sentToQueue = async (message: Object) => {
 
   channel.sendToQueue(QUEUE_NAME, Buffer.from(JSON.stringify(message)), {
     persistent: true,
-    headers: {
-      "x-delay": 5000,
-    },
   });
 
   console.log(`Message sent to queue`);

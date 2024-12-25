@@ -88,7 +88,11 @@ export async function POST(
     webhookURL: webhook.url,
     webhookSecret: webhook.secret,
     delay: moment(body.scheduledFor).diff(moment(), "seconds"),
-    payload,
+    event: {
+      eventId,
+      eventName: body.event,
+      payload,
+    },
   });
 
   return NextResponse.json({

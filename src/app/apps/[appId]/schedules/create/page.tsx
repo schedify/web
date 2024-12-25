@@ -172,7 +172,7 @@ const CreateScheduleModal: FC<{
                       if (date) return setProcessAt(date);
                       setProcessAt(moment().add(1, "d").toDate());
                     }}
-                    disabled={(date) => date < new Date()}
+                    // disabled={(date) => date < new Date()}
                     initialFocus
                   />
 
