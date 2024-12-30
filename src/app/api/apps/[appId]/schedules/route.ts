@@ -84,16 +84,28 @@ export async function POST(
     appId: appId,
   });
 
-  await sentToQueue({
-    webhookURL: webhook.url,
-    webhookSecret: webhook.secret,
-    delay: moment(body.scheduledFor).diff(moment(), "seconds"),
-    event: {
-      eventId,
-      eventName: body.event,
-      payload,
-    },
-  });
+  // send 2 rabbitmq
+  await Promise.all([
+    await sentToQueue({
+      webhookURL: webhook.url,
+      webhookSecret: webhook.secret,
+      delay: moment(body.scheduledFor).diff(moment(), "seconds"),
+      event: {
+        eventId,
+        eventName: body.event,
+        payload,
+      },
+    }),
+    await sentToQueue({
+      webhookURL: `${process.env.APP_URL}/api/webhooks/schedify`,
+      webhookSecret: process.env.SCHEDIFY_WEBHOOK_SECRET,
+      delay: moment(body.scheduledFor).diff(moment(), "seconds"),
+      event: {
+        eventId,
+        eventName: "task:completed",
+      },
+    }),
+  ]);
 
   return NextResponse.json({
     status: 1,

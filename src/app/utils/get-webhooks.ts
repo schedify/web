@@ -92,6 +92,7 @@ export const fetchWebhookEvents = cache(async (appId: string) => {
       })
       .from(webhookEventTable)
       .where(and(eq(webhookEventTable.appId, appId)))
+      .orderBy(desc(webhookEventTable.updatedAt))
       .limit(100);
 
     return logs;

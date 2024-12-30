@@ -1,166 +1,10 @@
 import { Button } from "@/components/ui/button";
-import {
-  LucideAlertTriangle,
-  LucideChevronDown,
-  LucideCircleAlert,
-  LucideCircleSlash,
-  LucideClock,
-  LucideClockAlert,
-  LucideDot,
-} from "lucide-react";
-import moment from "moment";
-import Link from "next/link";
-enum ActivityStatus {
-  Completed = 1,
-  Retried = 2,
-  Failed = 3,
-  Active = 4,
-  Pending = 5,
-}
+import { Skeleton } from "@/components/ui/skeleton";
+import { LucideChevronDown, LucideClock, LucideClockAlert } from "lucide-react";
 
-type RetryLog = {
-  retryId: string;
-  timestamp: Date;
-  triggeredBy: "manual" | "automatic";
-  reason?: string;
-};
-
-type ActivityLog = {
-  logId: string;
-  timestamp: Date;
-  message: string;
-  metadata?: Record<string, any>;
-};
-
-type Activity = {
-  id: string;
-  status: ActivityStatus;
-  createdAt: Date;
-  updatedAt: Date;
-  retries: RetryLog[];
-  logs: ActivityLog[];
-  triggeredBy: "system" | "user";
-  taskId: string;
-  taskDescription: string;
-  metadata?: Record<string, any>;
-};
-const ACTIVITIES: Activity[] = [
-  {
-    id: "1",
-    status: ActivityStatus.Completed,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    retries: [],
-    logs: [
-      {
-        logId: "log1",
-        timestamp: new Date(),
-        message: "Task completed successfully",
-      },
-    ],
-    triggeredBy: "system",
-    taskId: "task1",
-    taskDescription: "Data backup",
-  },
-  {
-    id: "2",
-    status: ActivityStatus.Failed,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    retries: [
-      {
-        retryId: "retry1",
-        timestamp: new Date(),
-        triggeredBy: "automatic",
-        reason: "Network error",
-      },
-    ],
-    logs: [
-      {
-        logId: "log2",
-        timestamp: new Date(),
-        message: "Task failed due to network error",
-      },
-    ],
-    triggeredBy: "user",
-    taskId: "task2",
-    taskDescription: "File upload",
-  },
-  {
-    id: "3",
-    status: ActivityStatus.Active,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    retries: [],
-    logs: [
-      {
-        logId: "log3",
-        timestamp: new Date(),
-        message: "Task is currently running",
-      },
-    ],
-    triggeredBy: "system",
-    taskId: "task3",
-    taskDescription: "Data processing",
-  },
-  {
-    id: "4",
-    status: ActivityStatus.Retried,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    retries: [
-      {
-        retryId: "retry2",
-        timestamp: new Date(),
-        triggeredBy: "manual",
-        reason: "User requested retry",
-      },
-    ],
-    logs: [
-      {
-        logId: "log4",
-        timestamp: new Date(),
-        message: "Task retried by user",
-      },
-    ],
-    triggeredBy: "user",
-    taskId: "task4",
-    taskDescription: "Email sending",
-  },
-];
-
-import { fetchAppWebhooks } from "@/app/utils/get-apps";
-import { FC } from "react";
-
-const AppWebhookAlert: FC<{ appId: string }> = async ({ appId }) => {
-  const webhook = await fetchAppWebhooks(appId);
-  if (webhook.length > 0) return null;
-
-  return (
-    <div className="flex flex-row w-full items-center border rounded-xl p-5 gap-5">
-      <LucideAlertTriangle className="h-6 w-6" />
-      <div className="p-0 my-auto">
-        <h1 className="font-bold">No Webhook Found</h1>
-        <p className="text-sm">To proceed, please create a webhook.</p>
-      </div>
-
-      <Link href={`${appId}/webhooks/create`} className="ml-auto">
-        <Button size="sm">Create Webhook</Button>
-      </Link>
-    </div>
-  );
-};
-
-export default async function App({
-  params,
-}: {
-  params: Promise<{ appId: string }>;
-}) {
-  const id = (await params).appId;
+export default function Loading() {
   return (
     <div className="container mt-10 space-y-10">
-      <AppWebhookAlert appId={id} />
-
       <div className="grid grid-cols-4 border rounded-lg p-5 relative">
         <div className="absolute top-[-15px] right-5">
           <Button size="sm" variant="outline">
@@ -174,7 +18,9 @@ export default async function App({
             Total Tasks
           </h1>
 
-          <h1 className="text-3xl mt-2">1</h1>
+          <Skeleton className="min-h-[30px] w-[30px] mt-3" />
+
+          {/* <h1 className="text-3xl mt-2">1</h1> */}
         </div>
 
         <div>
@@ -219,7 +65,7 @@ export default async function App({
           <h1 className="text-3xl mt-2">1</h1>
         </div>
 
-        <div className="">
+        <div className="place-items-end">
           <h1 className="font-semibold inline-flex items-center gap-2">
             <LucideClockAlert size={18} />
             Errored Tasks
@@ -229,6 +75,7 @@ export default async function App({
         </div>
       </div>
 
+      {/*
       <div className="grid grid-cols-2">
         <div className="border rounded-lg p-5 relative">
           <h1 className="font-semibold text-lg">Recent activity</h1>
@@ -279,22 +126,7 @@ export default async function App({
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
-}
-
-function activityStatusLabel(status: ActivityStatus) {
-  switch (status) {
-    case ActivityStatus.Completed:
-      return "Completed";
-    case ActivityStatus.Retried:
-      return "Retried";
-    case ActivityStatus.Failed:
-      return "Failed";
-    case ActivityStatus.Active:
-      return "Active";
-    case ActivityStatus.Pending:
-      return "Pending";
-  }
 }
