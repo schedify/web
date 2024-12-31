@@ -1,7 +1,6 @@
-Dockerfile
-.dockerignore
-node_modules
-npm-debug.log
-README.md
-.next
-.git
+# Ignore everything by default
+*
+
+# Exclude the directories you want to keep
+!public/
+!.next/
