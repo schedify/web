@@ -20,7 +20,7 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
-COPY .env.prod .env.production
+COPY .env .env
 
 RUN corepack enable pnpm && pnpm run build
 

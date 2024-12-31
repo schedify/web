@@ -13,9 +13,6 @@ export async function POST(req: Request) {
     return new Response("Missing signature", { status: 400 });
   }
 
-  console.log("Signature:", signature);
-  console.log("Signature:", payload);
-
   const isValidSignature = verifySignature(signature, payload);
   if (!isValidSignature) {
     return new Response("Invalid signature", { status: 401 });
