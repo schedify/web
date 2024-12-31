@@ -23,6 +23,16 @@ export async function GET(
     const p = await params;
     const appId = p.appid;
 
+    if (!user.publicMetadata.apps.some((app) => app.id === appId)) {
+      return NextResponse.json(
+        {
+          status: 0,
+          message: "Unauthorized access",
+        },
+        { status: 401 }
+      );
+    }
+
     const [app] = await db
       .select({
         name: appTable.name,

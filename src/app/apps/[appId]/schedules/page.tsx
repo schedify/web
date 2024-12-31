@@ -26,8 +26,13 @@ export default async function Schedules({
   params: Promise<{ [key: string]: string }>;
 }) {
   const p = await params;
-
   const appId = p.appId;
+
+  const user = await currentUser();
+  if (!user) throw redirect("/");
+
+  if (!user.publicMetadata.apps.some((app) => app.id === appId))
+    throw redirect("/");
 
   return (
     <div className="container mt-10 space-y-10">
@@ -96,6 +101,8 @@ import {
 import { JSONCodeBlock } from "@/app/components/JSONCodeBlock";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const ScheduleEventTable: FC<{ appId: string }> = async ({ appId }) => {
   const events = await fetchWebhookEvents(appId);

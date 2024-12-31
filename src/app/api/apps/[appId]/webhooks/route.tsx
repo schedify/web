@@ -57,8 +57,18 @@ export async function POST(
   const p = await params;
   const appId = p.appId;
 
+  if (!user.publicMetadata.apps.some((app) => app.id === appId)) {
+    return NextResponse.json(
+      {
+        status: 0,
+        message: "Unauthorized access",
+      },
+      { status: 401 }
+    );
+  }
+
   const w = await db
-    .select({})
+    .select()
     .from(webhookTable)
     .where(
       and(eq(webhookTable.url, destination), eq(webhookTable.appId, appId))
@@ -142,6 +152,16 @@ export async function GET(
   try {
     const user = await currentUser();
     if (!user) {
+      return NextResponse.json(
+        {
+          status: 0,
+          message: "Unauthorized access",
+        },
+        { status: 401 }
+      );
+    }
+
+    if (!user.publicMetadata.apps.some((app) => app.id === appId)) {
       return NextResponse.json(
         {
           status: 0,

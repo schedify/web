@@ -1,6 +1,7 @@
 import { fetchApp } from "@/app/utils/get-apps";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cuid } from "@/lib/crypto";
+import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 export default async function Configure({
@@ -10,6 +11,13 @@ export default async function Configure({
 }) {
   const p = await params;
   const appId = p.appId;
+
+  const user = await currentUser();
+  if (!user) throw redirect("/");
+
+  if (!user.publicMetadata.apps.some((app) => app.id === appId))
+    throw redirect("/");
+
   const app = await fetchApp(appId);
   if (!app) throw redirect("/");
 

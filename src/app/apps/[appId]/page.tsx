@@ -16,8 +16,16 @@ import { fetchAppWebhooks } from "@/app/utils/get-apps";
 import { FC } from "react";
 import { fetchStats } from "@/app/utils/get-stats";
 import { titleCase } from "@/app/utils/utils";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const AppWebhookAlert: FC<{ appId: string }> = async ({ appId }) => {
+  const user = await currentUser();
+  if (!user) throw redirect("/");
+
+  if (!user.publicMetadata.apps.some((app) => app.id === appId))
+    throw redirect("/");
+
   const webhook = await fetchAppWebhooks(appId);
   if (webhook.length > 0) return null;
 

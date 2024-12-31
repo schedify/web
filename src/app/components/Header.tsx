@@ -162,7 +162,20 @@ export const Header: FC = () => {
           ) : null}
         </div>
 
-        <div>
+        <div className="inline-flex items-center gap-5">
+          <button className="font-normal text-sm font-geist-mono hover:text-blue-500 hover:underline underline-offset-4">
+            API
+          </button>
+
+          <Link
+            href="https://github.com/schedify"
+            passHref
+            target="_blank"
+            className="font-normal text-sm font-geist-mono hover:text-blue-500 hover:underline underline-offset-4"
+          >
+            GitHub
+          </Link>
+
           <ClerkLoading>
             <Skeleton className="min-h-[28px] min-w-[28px] rounded-full" />
           </ClerkLoading>

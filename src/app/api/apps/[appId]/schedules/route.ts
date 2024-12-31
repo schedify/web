@@ -3,6 +3,7 @@ import { webhookEventTable, webhookTable } from "@/db/schema";
 import { cuid } from "@/lib/crypto";
 import { sentToQueue } from "@/lib/rabbitmq";
 import { validateScheduleBody } from "@/lib/zod";
+import { currentUser } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
 import moment from "moment";
 import { NextResponse } from "next/server";
@@ -50,8 +51,29 @@ export async function POST(
     );
   }
 
+  const user = await currentUser();
+  if (!user) {
+    return NextResponse.json(
+      {
+        status: 0,
+        message: "Unauthorized access",
+      },
+      { status: 401 }
+    );
+  }
+
   const p = await params;
   const appId = p.appId;
+
+  if (!user.publicMetadata.apps.some((app) => app.id === appId)) {
+    return NextResponse.json(
+      {
+        status: 0,
+        message: "Unauthorized access",
+      },
+      { status: 401 }
+    );
+  }
 
   const [webhook] = await db
     .select()

@@ -64,7 +64,6 @@ const CreateScheduleModal: FC<{
     const formData = new FormData(event.currentTarget);
 
     const eventName = formData.get("event") as string;
-
     const destination = formData.get("destination") as string;
 
     setLoading(true);
