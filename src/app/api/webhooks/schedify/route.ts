@@ -5,17 +5,22 @@ import { headers } from "next/headers";
 import crypto from "node:crypto";
 
 export async function POST(req: Request) {
-  const payload = await req.json();
+  let payload = null;
+  try {
+    payload = await req.json();
+  } catch {
+    return new Response("Webhook received", { status: 200 });
+  }
   const headerPayload = await headers();
   const signature = headerPayload.get("X-Schedify-Signature");
 
   if (!signature) {
-    return new Response("Missing signature", { status: 400 });
+    return new Response("Webhook received", { status: 200 });
   }
 
   const isValidSignature = verifySignature(signature, payload);
   if (!isValidSignature) {
-    return new Response("Invalid signature", { status: 401 });
+    return new Response("Webhook received", { status: 200 });
   }
 
   switch (payload.eventName) {

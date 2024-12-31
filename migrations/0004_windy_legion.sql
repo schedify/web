@@ -1,1 +1,0 @@
-ALTER TABLE "webhook_events" ADD COLUMN "is_test" boolean DEFAULT false;

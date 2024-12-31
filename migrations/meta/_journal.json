@@ -5,43 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1733943433434,
-      "tag": "0000_brief_salo",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1733997049613,
-      "tag": "0001_simple_mole_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1734022991742,
-      "tag": "0002_simple_red_skull",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1734023435774,
-      "tag": "0003_curvy_roulette",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1734023662034,
-      "tag": "0004_windy_legion",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1734203543307,
-      "tag": "0005_plain_inertia",
+      "when": 1735648175365,
+      "tag": "0000_productive_pet_avengers",
       "breakpoints": true
     }
   ]
