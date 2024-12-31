@@ -13,6 +13,7 @@ RUN adduser --system --uid 1001 nextjs
 COPY ./public ./public
 COPY ./.next/standalone ./.next/standalone
 COPY ./.next/static ./.next/static
+COPY ./server.js ./server.js
 
 # Switch to the non-root user
 USER nextjs

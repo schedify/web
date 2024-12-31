@@ -45,23 +45,17 @@ jobs:
           echo "CLERK_WEBHOOK_SECRET=${{ secrets.CLERK_WEBHOOK_SECRET }}" >> .env
           echo "RABBITMQ_URL=${{ secrets.RABBITMQ_URL }}" >> .env
           echo "SCHEDIFY_WEBHOOK_SECRET=${{ secrets.SCHEDIFY_WEBHOOK_SECRET }}" >> .env
-
           echo "DB_USERNAME=${{ secrets.DB_HOSTNAME }}" >> .env
           echo "DB_PASSWORD=${{ secrets.DB_HOSTNAME }}" >> .env
           echo "DB_HOSTNAME=${{ secrets.DB_HOSTNAME }}" >> .env
           echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
           echo "DATABASE=${{ secrets.DATABASE }}" >> .env
           echo "CA_CERT=${{ secrets.CA_CERT }}" >> .env
-
           echo "Environment variables have been written to .env file."
 
       - name: Build Next.js app
         run: |
           pnpm run build
-
-      - name: Verify directories
-        run: |
-          ls -la .
 
       - name: Login to GitHub Container Registry
         run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin

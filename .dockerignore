@@ -1,6 +1,5 @@
-# Ignore everything by default
-*
+* 
 
-# Exclude the directories you want to keep
 !public/
 !.next/
+!server.js
