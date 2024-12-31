@@ -50,9 +50,12 @@
 
 
 # Stage 1: Runner
-FROM node:18 AS runner
+FROM node:20 AS runner
 
 WORKDIR /app
+
+
+RUN echo "Listing contents" && ls -la .
 
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1

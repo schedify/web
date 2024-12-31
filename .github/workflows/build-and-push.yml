@@ -22,9 +22,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Login to GitHub Container Registry
-        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -41,6 +38,7 @@ jobs:
 
       - name: Create env file
         run: |
+          echo "NEXT_TELEMETRY_DISABLED=1" >> .env
           echo "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}" >> .env
           echo "APP_URL=${{ secrets.APP_URL }}" >> .env
           echo "CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }}" >> .env
@@ -60,6 +58,13 @@ jobs:
       - name: Build Next.js app
         run: |
           pnpm run build
+
+      - name: Verify directories
+        run: |
+          ls -la .
+
+      - name: Login to GitHub Container Registry
+        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build and push Docker image
         run: |
