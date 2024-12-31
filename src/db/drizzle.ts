@@ -9,7 +9,7 @@ export const db = drizzle({
     password: process.env.DB_PASSWORD,
     port: Number(process.env.DB_PORT),
     ssl: {
-      rejectUnauthorized: true,
+      rejectUnauthorized: false,
       ca: process.env.CA_CERT,
     },
   }),
