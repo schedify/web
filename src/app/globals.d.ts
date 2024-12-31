@@ -4,7 +4,7 @@ export {};
 
 declare global {
   interface UserPublicMetadata {
-    apps: (Omit<App, "userId"> & {
+    apps: (Omit<App, "userId" | "secret"> & {
       webhooks: {
         id: string;
         url: string;
