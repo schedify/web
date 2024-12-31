@@ -11,7 +11,7 @@ RUN adduser --system --uid 1001 nextjs
 
 # Copy the build output and public files from the GitHub Action
 COPY ./public ./public
-COPY ./.next/standalone ./.next/standalone
+COPY ./.next/standalone ./
 COPY ./.next/static ./.next/static
 COPY server.js server.js
 
