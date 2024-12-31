@@ -64,7 +64,7 @@ export default async function Webhooks({
           </TableHeader>
           <TableBody>
             <Suspense
-              fallback={
+              fallback={new Array(5).fill(0).map((_, index) => (
                 <TableRow>
                   <TableCell>
                     <Skeleton className="min-h-[20px]" />
@@ -76,7 +76,7 @@ export default async function Webhooks({
                     <Skeleton className="min-h-[20px]" />
                   </TableCell>
                 </TableRow>
-              }
+              ))}
             >
               <WebhookEndpointsTable appId={appId} />
             </Suspense>

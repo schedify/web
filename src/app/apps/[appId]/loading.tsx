@@ -42,7 +42,7 @@ export default function Loading() {
             Active Tasks
           </h1>
 
-          <h1 className="text-3xl mt-2">1</h1>
+          <Skeleton className="min-h-[30px] w-[30px] mt-3" />
         </div>
 
         <div>
@@ -62,7 +62,7 @@ export default function Loading() {
             Retry Tasks
           </h1>
 
-          <h1 className="text-3xl mt-2">1</h1>
+          <Skeleton className="min-h-[30px] w-[30px] mt-3" />
         </div>
 
         <div className="place-items-end">
@@ -71,7 +71,7 @@ export default function Loading() {
             Errored Tasks
           </h1>
 
-          <h1 className="text-3xl mt-2">1</h1>
+          <Skeleton className="min-h-[30px] w-[30px] mt-3" />
         </div>
       </div>
 

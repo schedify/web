@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import {
   LucideAlertTriangle,
+  LucideCat,
   LucideChevronDown,
   LucideCircleAlert,
   LucideCircleSlash,
@@ -10,127 +11,11 @@ import {
 } from "lucide-react";
 import moment from "moment";
 import Link from "next/link";
-enum ActivityStatus {
-  Completed = 1,
-  Retried = 2,
-  Failed = 3,
-  Active = 4,
-  Pending = 5,
-}
-
-type RetryLog = {
-  retryId: string;
-  timestamp: Date;
-  triggeredBy: "manual" | "automatic";
-  reason?: string;
-};
-
-type ActivityLog = {
-  logId: string;
-  timestamp: Date;
-  message: string;
-  metadata?: Record<string, any>;
-};
-
-type Activity = {
-  id: string;
-  status: ActivityStatus;
-  createdAt: Date;
-  updatedAt: Date;
-  retries: RetryLog[];
-  logs: ActivityLog[];
-  triggeredBy: "system" | "user";
-  taskId: string;
-  taskDescription: string;
-  metadata?: Record<string, any>;
-};
-const ACTIVITIES: Activity[] = [
-  {
-    id: "1",
-    status: ActivityStatus.Completed,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    retries: [],
-    logs: [
-      {
-        logId: "log1",
-        timestamp: new Date(),
-        message: "Task completed successfully",
-      },
-    ],
-    triggeredBy: "system",
-    taskId: "task1",
-    taskDescription: "Data backup",
-  },
-  {
-    id: "2",
-    status: ActivityStatus.Failed,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    retries: [
-      {
-        retryId: "retry1",
-        timestamp: new Date(),
-        triggeredBy: "automatic",
-        reason: "Network error",
-      },
-    ],
-    logs: [
-      {
-        logId: "log2",
-        timestamp: new Date(),
-        message: "Task failed due to network error",
-      },
-    ],
-    triggeredBy: "user",
-    taskId: "task2",
-    taskDescription: "File upload",
-  },
-  {
-    id: "3",
-    status: ActivityStatus.Active,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    retries: [],
-    logs: [
-      {
-        logId: "log3",
-        timestamp: new Date(),
-        message: "Task is currently running",
-      },
-    ],
-    triggeredBy: "system",
-    taskId: "task3",
-    taskDescription: "Data processing",
-  },
-  {
-    id: "4",
-    status: ActivityStatus.Retried,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    retries: [
-      {
-        retryId: "retry2",
-        timestamp: new Date(),
-        triggeredBy: "manual",
-        reason: "User requested retry",
-      },
-    ],
-    logs: [
-      {
-        logId: "log4",
-        timestamp: new Date(),
-        message: "Task retried by user",
-      },
-    ],
-    triggeredBy: "user",
-    taskId: "task4",
-    taskDescription: "Email sending",
-  },
-];
 
 import { fetchAppWebhooks } from "@/app/utils/get-apps";
 import { FC } from "react";
+import { fetchStats } from "@/app/utils/get-stats";
+import { titleCase } from "@/app/utils/utils";
 
 const AppWebhookAlert: FC<{ appId: string }> = async ({ appId }) => {
   const webhook = await fetchAppWebhooks(appId);
@@ -157,6 +42,9 @@ export default async function App({
   params: Promise<{ appId: string }>;
 }) {
   const id = (await params).appId;
+
+  const stats = await fetchStats(id);
+
   return (
     <div className="container mt-10 space-y-10">
       <AppWebhookAlert appId={id} />
@@ -174,7 +62,7 @@ export default async function App({
             Total Tasks
           </h1>
 
-          <h1 className="text-3xl mt-2">1</h1>
+          <h1 className="text-3xl mt-2">{stats.total}</h1>
         </div>
 
         <div>
@@ -193,10 +81,10 @@ export default async function App({
                 d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122"
               />
             </svg>
-            Active Tasks
+            Pending Tasks
           </h1>
 
-          <h1 className="text-3xl mt-2">1</h1>
+          <h1 className="text-3xl mt-2">{stats.pending}</h1>
         </div>
 
         <div>
@@ -216,7 +104,7 @@ export default async function App({
             Retry Tasks
           </h1>
 
-          <h1 className="text-3xl mt-2">1</h1>
+          <h1 className="text-3xl mt-2">{stats.retry}</h1>
         </div>
 
         <div className="">
@@ -225,26 +113,33 @@ export default async function App({
             Errored Tasks
           </h1>
 
-          <h1 className="text-3xl mt-2">1</h1>
+          <h1 className="text-3xl mt-2">{stats.error}</h1>
         </div>
       </div>
 
       <div className="grid grid-cols-2">
         <div className="border rounded-lg p-5 relative">
-          <h1 className="font-semibold text-lg">Recent activity</h1>
+          <h1 className="font-semibold text-lg">Recent events</h1>
 
           <div className="mt-5">
-            {ACTIVITIES.map((activity) => (
+            {stats.events.length === 0 ? (
+              <p className="text-sm flex-1 text-muted-foreground text-center inline-flex items-center mx-auto gap-3">
+                Looks empty here <LucideCat size={18} />
+              </p>
+            ) : null}
+
+            {stats.events.map((event) => (
               <Link
                 className="flex items-center gap-2 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-900 duration-100 p-3 rounded-lg"
-                key={activity.id}
-                href={`/apps/${id}/activities/${activity.id}`}
+                key={event.id}
+                href={`/apps/${id}/event/${event.id}`}
               >
-                {activity.status === ActivityStatus.Completed ? (
+                {event.status === "COMPLETED" ? (
                   <LucideCircleSlash size={18} />
-                ) : activity.status === ActivityStatus.Failed ? (
-                  <LucideCircleAlert size={18} />
-                ) : activity.status === ActivityStatus.Retried ? (
+                ) : event.status === "ERROR" ? (
+                  <LucideCircleAlert
+                    size={18}
+                  /> /*: event.status === ActivityStatus.Retried ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -257,22 +152,21 @@ export default async function App({
                       clipRule="evenodd"
                     />
                   </svg>
-                ) : activity.status === ActivityStatus.Active ? (
+                )*/
+                ) : event.status === "PENDING" ? (
                   <LucideDot size={18} />
                 ) : null}
 
                 <div className="flex flex-col flex-1">
                   <h1 className="font-semibold text-sm">
-                    Task {activityStatusLabel(activity.status)}
+                    Task {titleCase(event.status)}
                   </h1>
-                  <h1 className="text-sm text-gray-500">{activity.id}</h1>
+                  <h1 className="text-sm text-gray-500">{event.id}</h1>
                 </div>
 
                 <div>
                   <h1 className="text-xs text-gray-500">
-                    {moment(activity.updatedAt).format(
-                      "MMM Do YYYY, h:mm:ss a"
-                    )}{" "}
+                    {moment(event.updatedAt).format("MMM Do YYYY, h:mm:ss a")}{" "}
                   </h1>
                 </div>
               </Link>
@@ -282,19 +176,4 @@ export default async function App({
       </div>
     </div>
   );
-}
-
-function activityStatusLabel(status: ActivityStatus) {
-  switch (status) {
-    case ActivityStatus.Completed:
-      return "Completed";
-    case ActivityStatus.Retried:
-      return "Retried";
-    case ActivityStatus.Failed:
-      return "Failed";
-    case ActivityStatus.Active:
-      return "Active";
-    case ActivityStatus.Pending:
-      return "Pending";
-  }
 }

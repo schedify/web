@@ -17,6 +17,20 @@ export const fetchApps = cache(async (userId: string) => {
   return apps;
 });
 
+export const fetchApp = cache(async (appId: string) => {
+  const [app] = await db
+    .select({
+      id: appTable.id,
+      name: appTable.name,
+      createdAt: appTable.createdAt,
+      updatedAt: appTable.updatedAt,
+    })
+    .from(appTable)
+    .where(eq(appTable.id, appId));
+
+  return app;
+});
+
 export const fetchAppWebhooks = cache(async (appId: string) => {
   const webhooks = await db
     .select({

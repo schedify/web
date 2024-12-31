@@ -56,8 +56,8 @@ export default async function Schedules({
           </TableHeader>
           <TableBody>
             <Suspense
-              fallback={
-                <TableRow>
+              fallback={new Array(5).fill(0).map((_, index) => (
+                <TableRow key={index.toString()}>
                   <TableCell>
                     <Skeleton className="min-h-[20px]" />
                   </TableCell>
@@ -74,7 +74,7 @@ export default async function Schedules({
                     <Skeleton className="min-h-[20px]" />
                   </TableCell>
                 </TableRow>
-              }
+              ))}
             >
               <ScheduleEventTable appId={appId} />
             </Suspense>
