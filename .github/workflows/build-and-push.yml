@@ -39,10 +39,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build Next.js app
-        run: |
-          pnpm run build
-
       - name: Create env file
         run: |
           echo "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}" >> .env
@@ -60,6 +56,10 @@ jobs:
           echo "CA_CERT=${{ secrets.CA_CERT }}" >> .env
 
           echo "Environment variables have been written to .env file."
+
+      - name: Build Next.js app
+        run: |
+          pnpm run build
 
       - name: Build and push Docker image
         run: |
