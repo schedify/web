@@ -49,24 +49,7 @@ export const Header: FC = () => {
   const [appModalActive, setAppModalActive] = useState(false);
 
   return (
-    <div className="px-5 min-h-[70px] border-b-2 border-black flex flex-col sticky top-0 gap-3 z-50 bg-background dark:bg-background py-3">
-      <div className="text-center gap-1 bg-red-100 text-red-700 flex flex-col items-center px-4 py-2 rounded-xl font-geist-mono">
-        <p className="text-sm">
-          This project is still under development. Full release is expected in
-          2-3 weeks. Features may not work as intended.
-        </p>
-
-        <p className="text-xs">
-          Want to know about project? Reach at{" "}
-          <a
-            href="mailto:samir@schedify.dev"
-            className="underline underline-offset-4"
-          >
-            samir@schedify.dev
-          </a>
-        </p>
-      </div>
-
+    <div className="px-5  border-b-2 border-black flex flex-col sticky top-0 gap-3 z-50 bg-background dark:bg-background py-3">
       <div className="flex flex-row items-center justify-between">
         <div className="inline-flex items-center font-geist-mono">
           <Link

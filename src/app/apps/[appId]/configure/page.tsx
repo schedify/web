@@ -1,4 +1,6 @@
+import { CopyTextComponent } from "@/app/components/CopyText";
 import { fetchApp } from "@/app/utils/get-apps";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cuid } from "@/lib/crypto";
 import { currentUser } from "@clerk/nextjs/server";
@@ -28,18 +30,29 @@ export default async function Configure({
           App
         </h3>
 
-        <div className="p-5 border rounded-xl grid grid-rows-3 gap-2 text-sm w-full">
-          <div className="flex justify-between">
+        <div className="p-5 border rounded-xl grid grid-rows-3 gap-5 text-sm w-full shadow-md">
+          <div className="flex justify-between items-center">
             <span>App Name</span>
             <b>{app.name}</b>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <span>App ID</span>
-            <b>{app.id}</b>
+
+            <CopyTextComponent
+              className="cursor-pointer hover:underline underline-offset-4 font-geist-mono hover:text-blue-500"
+              text={app.id}
+            />
+            {/* <b></b> */}
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <span>App Secret</span>
-            {/* <span>{cuid()}</span> */}
+
+            {!app.secret ? (
+              <button className="font-normal text-xs font-geist-mono hover:text-blue-500 hover:underline underline-offset-4 ">
+                Generate
+              </button>
+            ) : null}
+            {/* <span>{  cuid()}</span> */}
           </div>
         </div>
       </div>

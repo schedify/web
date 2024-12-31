@@ -22,6 +22,7 @@ export const userTable = pgTable("users", {
 export const appTable = pgTable("apps", {
   id: varchar("id", { length: 50 }).primaryKey(),
   name: varchar("name", { length: 200 }).notNull(),
+  secret: text("secret"),
   createdAt: bigint("created_at", { mode: "number" }),
   updatedAt: bigint("updated_at", { mode: "number" }),
   userId: varchar("user_id", { length: 50 })

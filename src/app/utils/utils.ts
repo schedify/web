@@ -16,3 +16,8 @@ export function titleCase(str: string) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
 }
+
+export function extractSearchParam(searchparam: string | string[] | undefined) {
+  if (!searchparam) return null;
+  return Array.isArray(searchparam) ? searchparam.at(0) : searchparam || null;
+}
