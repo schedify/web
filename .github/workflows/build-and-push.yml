@@ -54,15 +54,11 @@ jobs:
           echo "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}" >> .env
           echo "APP_URL=${{ secrets.APP_URL }}" >> .env
           echo "CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }}" >> .env
+          echo "CLERK_ENCRYPTION_KEY=${{ secrets.CLERK_ENCRYPTION_KEY }}" >> .env
           echo "CLERK_WEBHOOK_SECRET=${{ secrets.CLERK_WEBHOOK_SECRET }}" >> .env
           echo "RABBITMQ_URL=${{ secrets.RABBITMQ_URL }}" >> .env
           echo "SCHEDIFY_WEBHOOK_SECRET=${{ secrets.SCHEDIFY_WEBHOOK_SECRET }}" >> .env
-          echo "DB_USERNAME=${{ secrets.DB_HOSTNAME }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.DB_HOSTNAME }}" >> .env
-          echo "DB_HOSTNAME=${{ secrets.DB_HOSTNAME }}" >> .env
-          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
-          echo "DATABASE=${{ secrets.DATABASE }}" >> .env
-          echo "CA_CERT=${{ secrets.CA_CERT }}" >> .env
+          echo "DB_URL=${{ secrets.DB_URL }}" >> .env
           echo "Environment variables have been written to .env file."
 
       - name: Build Next.js app
