@@ -54,10 +54,10 @@ export default async function App({
   const stats = await fetchStats(id);
 
   return (
-    <div className="container mt-10 space-y-10">
+    <div className="container my-10 space-y-10">
       <AppWebhookAlert appId={id} />
 
-      <div className="grid grid-cols-4 border rounded-lg p-5 relative">
+      <div className="grid grid-cols-2 gap-5 md:grid-cols-4 border rounded-lg p-5 relative">
         <div className="absolute top-[-15px] right-5">
           <Button size="sm" variant="outline">
             All time <LucideChevronDown />
@@ -125,7 +125,7 @@ export default async function App({
         </div>
       </div>
 
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 ">
         <div className="border rounded-lg p-5 relative">
           <h1 className="font-semibold text-lg">Recent events</h1>
 
@@ -138,7 +138,7 @@ export default async function App({
 
             {stats.events.map((event) => (
               <Link
-                className="flex items-center gap-2 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-900 duration-100 p-3 rounded-lg"
+                className="flex items-center gap-5 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-900 duration-100 p-3 rounded-lg"
                 key={event.id}
                 href={`/apps/${id}/event/${event.id}`}
               >
@@ -169,10 +169,10 @@ export default async function App({
                   <h1 className="font-semibold text-sm">
                     Task {titleCase(event.status)}
                   </h1>
-                  <h1 className="text-sm text-gray-500">{event.id}</h1>
+                  <h1 className="text-sm text-gray-500">{event.event}</h1>
                 </div>
 
-                <div>
+                <div className="hidden md:block">
                   <h1 className="text-xs text-gray-500">
                     {moment(event.updatedAt).format("MMM Do YYYY, h:mm:ss a")}{" "}
                   </h1>

@@ -5,7 +5,7 @@ import { LucideChevronDown, LucideClock, LucideClockAlert } from "lucide-react";
 export default function Loading() {
   return (
     <div className="container mt-10 space-y-10">
-      <div className="grid grid-cols-4 border rounded-lg p-5 relative">
+      <div className="grid grid-cols-2 gap-5 md:grid-cols-4 border rounded-lg p-5 relative">
         <div className="absolute top-[-15px] right-5">
           <Button size="sm" variant="outline">
             All time <LucideChevronDown />

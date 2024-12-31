@@ -18,8 +18,8 @@ export default function Loading() {
   return (
     <div className="container mt-10 space-y-10">
       <div className="space-y-5">
-        <div className="flex flex-row justify-between">
-          <div>
+        <div className="flex flex-col md:flex-row text-center md:text-left justify-between items-stretch md:items-start gap-5 md:gap-0">
+          <div className="self-center">
             <h3 className="scroll-m-20 text-2xl font-[family-name:var(--font-geist-sans)] text-primary font-semibold tracking-tight">
               Schedules
             </h3>
@@ -28,7 +28,7 @@ export default function Loading() {
               Manage and view your scheduled events below.
             </p>
           </div>
-          <Link href="schedules/create">
+          <Link href="schedules/create" className="max-md:self-end">
             <Button size={"sm"} variant={"secondary"}>
               <LucidePlus />
               Create custom schedule
