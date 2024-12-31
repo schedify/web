@@ -35,8 +35,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install
+
+      - name: Build Next.js app
+        run: |
+          pnpm run build
 
       - name: Create env file
         run: |
