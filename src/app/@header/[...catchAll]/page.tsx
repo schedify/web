@@ -25,9 +25,14 @@ export default async function Header() {
         </div>
 
         <div className="inline-flex items-center gap-5">
-          <button className=" text-sm font-inconsolata hover:text-blue-500 hover:underline underline-offset-4">
+          <Link
+            href="https://docs.schedify.dev/docs/introduction"
+            passHref
+            target="_blank"
+            className=" text-sm font-inconsolata hover:text-blue-500 hover:underline underline-offset-4"
+          >
             API
-          </button>
+          </Link>
 
           <Link
             href="https://github.com/schedify"
