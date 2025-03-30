@@ -42,12 +42,26 @@ const fontInconsolata = FontInconsolata({
 export const metadata: Metadata = {
   title: "Scheduling made easier.",
   description: "The scheduling system your apps can depend on",
-  icons: [
-    {
-      url: "/schedify.png",
-    },
-  ],
+  openGraph: {
+    title: "Scheduling made easier.",
+    description: "The scheduling system your apps can depend on",
+    images: [
+      {
+        url: "/schedify.png",
+        width: 1200,
+        height: 630,
+        alt: "Schedify Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Scheduling made easier.",
+    description: "The scheduling system your apps can depend on",
+    images: ["/schedify.png"],
+  },
 };
+
 // import "ace-builds/src-noconflict/mode-json";
 // import "ace-builds/src-noconflict/theme-xcode";
 
