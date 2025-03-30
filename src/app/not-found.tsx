@@ -33,7 +33,7 @@ export default function NotFound() {
         </button>
 
         <Link
-          href="/"
+          href="mailto:support@schedify.dev"
           className="inline-flex items-center gap-2 underline underline-offset-2 mt-4 pl-4 md:pl-8"
         >
           <LucideAtSign size={14} />
