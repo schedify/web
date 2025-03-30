@@ -57,11 +57,9 @@ import QueryProvider from "./query-provider";
 
 export default function RootLayout({
   children,
-  modal,
   header,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
   header: React.ReactNode;
 }>) {
   return (
@@ -74,7 +72,6 @@ export default function RootLayout({
             <ProgressBarProvider>
               {header}
               {children}
-              {modal}
               <Toaster />
             </ProgressBarProvider>
           </body>
