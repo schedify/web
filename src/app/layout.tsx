@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     description: "The scheduling system your apps can depend on",
     images: [
       {
-        url: "/schedify.png",
+        url: "https://schedify.dev/schedify.png",
         width: 1200,
         height: 630,
         alt: "Schedify Logo",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Scheduling made easier.",
     description: "The scheduling system your apps can depend on",
-    images: ["/schedify.png"],
+    images: ["https://schedify.dev/schedify.png"],
   },
 };
 
