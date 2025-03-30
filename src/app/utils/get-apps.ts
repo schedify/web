@@ -1,68 +1,124 @@
-import { db } from "@/db/drizzle";
-import { appTable, webhookTable } from "@/db/schema";
-import { desc, eq, sql } from "drizzle-orm";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { cache } from "react";
 
-export const fetchApps = cache(async (userId: string) => {
-  const apps = await db
-    .select({
-      id: appTable.id,
-      name: appTable.name,
-      createdAt: appTable.createdAt,
-      updatedAt: appTable.updatedAt,
-    })
-    .from(appTable)
-    .where(eq(appTable.userId, userId));
+export const getAccessToken = async () => {
+  return (await cookies()).get("__session")?.value || null;
+};
 
-  return apps;
-});
+type Pagination = {
+  page: number;
+  limit: number;
+};
 
-export const fetchApp = cache(async (appId: string) => {
-  const [app] = await db
-    .select({
-      id: appTable.id,
-      name: appTable.name,
-      secret: appTable.secret,
-      createdAt: appTable.createdAt,
-      updatedAt: appTable.updatedAt,
-    })
-    .from(appTable)
-    .where(eq(appTable.id, appId));
+export const makeRequest = async <T extends unknown>(
+  url: string,
+  method: string,
+  query: Record<string, string> = {},
+): Promise<T> => {
+  const tkn = await getAccessToken();
+  if (!tkn) throw redirect("/login");
 
-  return app;
-});
+  const u = new URL(process.env.NEXT_PUBLIC_API_URL + url);
 
-export const fetchAppWebhooks = cache(async (appId: string) => {
-  try {
-    const webhooks = await db
-      .select({
-        id: webhookTable.id,
-        url: webhookTable.url,
-        enabled: webhookTable.enabled,
-        createdAt: webhookTable.createdAt,
-        updatedAt: webhookTable.updatedAt,
-      })
-      .from(webhookTable)
-      .orderBy(desc(webhookTable.updatedAt))
-      .where(eq(webhookTable.appId, appId));
-
-    return webhooks;
-  } catch {
-    return [];
+  for (const key in query) {
+    if (Object.prototype.hasOwnProperty.call(query, key)) {
+      const value = query[key];
+      u.searchParams.set(key, value);
+    }
   }
-});
 
-export const fetchAppWebhooksTotalCount = cache(async (appId: string) => {
   try {
-    const [{ count }] = await db
-      .select({
-        count: sql<number>`COUNT(*)`,
-      })
-      .from(webhookTable)
-      .where(eq(webhookTable.appId, appId));
+    const resp = await fetch(u, {
+      method,
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${tkn}`,
+      },
+    });
 
-    return count > 0 ? count : 1;
-  } catch {
-    return 1;
+    // unauthenticated, go to login
+    if (resp.status === 401) {
+      redirect("/login");
+    }
+
+    return resp.json() as T;
+  } catch (e) {
+    console.log(e);
+
+    return {
+      status: 0,
+      message: "Schedify API is not responding",
+      code: "api_unaccessabile",
+    } as T;
   }
+};
+
+export const fetchWebhooks = cache(async () => {
+  const res = await makeRequest(`/webhooks/`, "GET");
+  return res as
+    | {
+        status: 0;
+        message: string;
+        debug: string;
+        code: string;
+      }
+    | {
+        status: 1;
+        webhooks: {
+          id: string;
+          name: string;
+          url: string;
+          created_at: number;
+          updated_at: number;
+        }[];
+        count: number;
+      };
 });
+
+export const fetchMe = cache(async () => {
+  const res = await makeRequest(`/me/`, "GET");
+  return res as
+    | {
+        status: 0;
+        message: string;
+        debug: string;
+        code: string;
+      }
+    | {
+        status: 1;
+        data: {
+          id: string;
+          clerk_id: string;
+          full_name: string;
+          email: string;
+          api_key: string;
+          created_at: number;
+          updated_at: number;
+          deleted_at: number;
+        };
+      };
+});
+
+export const fetchAppWebhooks = cache(
+  async (appId: string, { page, limit }: Pagination) => {
+    return makeRequest<
+      | {
+          status: 0;
+          message: string;
+          debug?: string;
+          code: string;
+        }
+      | {
+          status: 1;
+          webhooks: {
+            id: string;
+            url: string;
+            created_at: string;
+            updated_at: string;
+          }[];
+          count: number;
+        }
+    >(`/apps/${appId}/webhooks?page=${page}&limit=${limit}`, "GET");
+  },
+);

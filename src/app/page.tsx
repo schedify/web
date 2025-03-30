@@ -1,79 +1,293 @@
-import { LucideArrowRight, LucidePlus, User } from "lucide-react";
-
-import Link from "next/link";
-import { formatTime } from "./utils/utils";
-
-import HomePageRoute from "./home/page";
+import { EnhancedButton } from "@/components/ui/enhanced-btn";
+import { InfiniteSlider } from "@/components/ui/infinite-slider";
+import { TextLoop } from "@/components/ui/text-loop";
+import { cn } from "@/lib/utils";
+import { ClerkLoaded, ClerkLoading, SignInButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
+import {
+  LucideCable,
+  LucideCalendarRange,
+  LucideClock,
+  LucideCloud,
+  LucideLock,
+  LucideMail,
+  LucideZap,
+} from "lucide-react";
+import Link from "next/link";
+import { Suspense } from "react";
 
-import { FC, Suspense } from "react";
-
-export default async function Home() {
-  const user = await currentUser();
-  if (!user) {
-    return <HomePageRoute />;
-  }
-
+export default async function HomePageRoute() {
   return (
-    <div className="container space-y-10">
-      <h3 className="mt-8 scroll-m-20 text-2xl font-[family-name:var(--font-geist-sans)] text-primary font-semibold tracking-tight">
-        Applications
-      </h3>
+    <>
+      <section className="hero pt-[20vh] flex flex-col items-center">
+        <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-[500] text-center tracking-tight text-gray-900 mb-6 font-poppins">
+          <TextLoop
+            className="text-blue-600 font-bold animate-fade animate-delay-[600ms] text-center"
+            interval={5}
+          >
+            <span>Scheduling</span>
+            <span>Delaying</span>
+            <span>Postponing</span>
+            <span>Tasking</span>
+          </TextLoop>
+        </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 font-[family-name:var(--font-geist-mono)] ">
-        <Link
-          href="/apps/create"
-          className="flex flex-col items-center justify-center border border-dashed gap-3 rounded-lg min-h-[200px] bg-primary dark:bg-neutral-900 text-secondary cursor-pointer border-primary group hover:shadow-xl duration-100"
-        >
-          <LucidePlus
-            className="group-hover:rotate-180 duration-150"
-            size={18}
-          />
-          <span>Create application</span>
-        </Link>
+        <h1 className="text-lg animate-fade animate-delay-[900ms] sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl text-center tracking-tight mb-6 font-poppins font-medium ">
+          Made Easier
+        </h1>
 
-        <Suspense
-          fallback={
-            <>
-              <Skeleton className="min-h-[200px]" />
-              <Skeleton className="min-h-[200px]" />
-            </>
-          }
-        >
-          <UserApps userId={user.id} />
+        <p className="text-xs w-11/12 animate-fade-up animate-delay-[1200ms] md:w-full md:text-base font-karla text-center text-gray-600 mb-8">
+          Effortlessly schedule and send webhooks at the perfect time—secure,
+          reliable, and automated.
+        </p>
+
+        <Suspense fallback={<div></div>}>
+          <JoinNowButton />
         </Suspense>
-      </div>
-    </div>
+      </section>
+
+      <section className="container  font-geist-mono space-y-5 py-5 mt-10 border rounded-lg">
+        <h1 className="text-lg">Trusted by</h1>
+        <hr />
+
+        <InfiniteSlider gap={24} reverse duration={10}>
+          <Link
+            href="https://schedify.dev"
+            className="flex flex-row items-center gap-2 px-2 py-1 rounded-xl cursor-pointer duration-150"
+          >
+            <LucideCalendarRange />
+            <h1 className="font-bold text-lg">Schedify</h1>
+          </Link>
+
+          <Link
+            href="https://schedify.dev"
+            className="flex flex-row items-center gap-2 px-2 py-1 rounded-xl cursor-pointer duration-150"
+          >
+            <LucideCalendarRange />
+            <h1 className="font-bold text-lg">Schedify</h1>
+          </Link>
+
+          <Link
+            href="https://schedify.dev"
+            className="flex flex-row items-center gap-2 px-2 py-1 rounded-xl cursor-pointer duration-150"
+          >
+            <LucideCalendarRange />
+            <h1 className="font-bold text-lg">Schedify</h1>
+          </Link>
+
+          <Link
+            href="https://schedify.dev"
+            className="flex flex-row items-center gap-2 px-2 py-1 rounded-xl cursor-pointer duration-150"
+          >
+            <LucideCalendarRange />
+            <h1 className="font-bold text-lg">Schedify</h1>
+          </Link>
+          <Link
+            href="https://schedify.dev"
+            className="flex flex-row items-center gap-2 px-2 py-1 rounded-xl cursor-pointer duration-150"
+          >
+            <LucideCalendarRange />
+            <h1 className="font-bold text-lg">Schedify</h1>
+          </Link>
+          <Link
+            href="https://schedify.dev"
+            className="flex flex-row items-center gap-2 px-2 py-1 rounded-xl cursor-pointer duration-150"
+          >
+            <LucideCalendarRange />
+            <h1 className="font-bold text-lg">Schedify</h1>
+          </Link>
+
+          <Link
+            href="https://schedify.dev"
+            className="flex flex-row items-center gap-2 px-2 py-1 rounded-xl cursor-pointer duration-150"
+          >
+            <LucideCalendarRange />
+            <h1 className="font-bold text-lg">Schedify</h1>
+          </Link>
+          <Link
+            href="https://schedify.dev"
+            className="flex flex-row items-center gap-2 px-2 py-1 rounded-xl cursor-pointer duration-150"
+          >
+            <LucideCalendarRange />
+            <h1 className="font-bold text-lg">Schedify</h1>
+          </Link>
+          <Link
+            href="https://schedify.dev"
+            className="flex flex-row items-center gap-2 px-2 py-1 rounded-xl cursor-pointer duration-150"
+          >
+            <LucideCalendarRange />
+            <h1 className="font-bold text-lg">Schedify</h1>
+          </Link>
+        </InfiniteSlider>
+      </section>
+
+      <section className="container pt-10 grid grid-cols-1 sm:grid-cols-2  gap-8">
+        <div className="flex flex-col items-center justify-center border md:border-2 border-dashed border-neutral-500 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out relative bg-secondary">
+          <div className="mb-6 text-center">
+            <h3 className="text-lg md:text-2xl font-semibold text-primary mb-3 inline-flex items-center gap-2 md:gap-3">
+              <LucideClock className="size-5 md:size-6" />
+              <span>Scheduled Webhooks</span>
+            </h3>
+            <p className="text-gray-700 text-xs md:text-sm">
+              Schedule webhooks to be sent at specific times to automate your
+              processes and improve efficiency.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center justify-center border md:border-2 border-dashed border-neutral-500 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out relative bg-secondary">
+          <div className="mb-6 text-center">
+            <h3 className="text-lg md:text-2xl font-semibold text-primary mb-3 inline-flex items-center gap-2 md:gap-3">
+              <LucideLock className="size-5 md:size-6" />
+              <span>Secure Authentication</span>
+            </h3>
+            <p className="text-gray-700 text-xs md:text-sm">
+              We rely on Clerk for robust authentication, ensuring your account
+              and data are secure at all times.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center justify-center border md:border-2 border-dashed border-neutral-500 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out relative bg-secondary">
+          <div className="mb-6 text-center">
+            <h3 className="text-lg md:text-2xl font-semibold text-primary mb-3 inline-flex items-center gap-2 md:gap-3">
+              <LucideCable className="size-5 md:size-6" />
+              <span>Flexible Integration</span>
+            </h3>
+            <p className="text-gray-700 text-xs md:text-sm">
+              Seamlessly integrate with your system using our API and easily
+              manage scheduled requests.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center justify-center border md:border-2 border-dashed border-neutral-500 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out relative bg-secondary">
+          <div className="mb-6 text-center">
+            <h3 className="text-lg md:text-2xl font-semibold text-primary mb-3 inline-flex items-center gap-2 md:gap-3">
+              <LucideCloud className="size-5 md:size-6" />
+              <span>Cloud-Based Reliability</span>
+            </h3>
+            <p className="text-gray-700 text-xs md:text-sm">
+              Our platform is cloud-based, ensuring scalability, reliability,
+              and uptime, so you never miss a webhook.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="container py-[20vh]">
+        <div className="bg-indigo-900 min-h-[200px] md:min-h-[300px] rounded-xl flex flex-col items-center justify-center shadow-2xl shadow-blue-500/50 space-y-5">
+          <h1 className="text-white font-bold font-poppins text-2xl md:text-5xl">
+            Need help? Contact us
+          </h1>
+
+          <a
+            href="mailto:support@schedify.dev"
+            className="inline-flex items-center gap-1 text-white"
+          >
+            <LucideMail size={16} className="" />
+            <span className="underline font-karla underline-offset-8 text-sm md:text-base">
+              support@schedify.dev
+            </span>
+          </a>
+        </div>
+      </section>
+      <footer className="bg-primary min-h-[400px] relative flex py-10 overflow-hidden">
+        <span
+          className={cn(
+            "absolute -bottom-20 left-0 right-0 font-bold select-none font-poppins text-center",
+            "text-center text-5xl md:text-9xl lg:text-[12rem] xl:text-[13rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-primary dark:from-neutral-950 to-background dark:to-neutral-800 inset-x-0",
+          )}
+        >
+          Schedify
+        </span>
+
+        <div className="container h-full">
+          <div className="text-background flex flex-row justify-between">
+            <div className="flex flex-row items-center gap-2">
+              <LucideCalendarRange size={18} />
+              <h1 className="font-bold font-geist-mono text-lg">Schedify</h1>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <h1 className="text-gray-300 font-geist-sans">Legal</h1>
+
+              <div className="text-sm flex flex-col font-geist-sans gap-1">
+                <Link
+                  className="hover:underline underline-offset-2 "
+                  href="/legal/terms"
+                >
+                  Terms of Service
+                </Link>
+                <Link
+                  className="hover:underline underline-offset-2 "
+                  href="/legal/privacy"
+                >
+                  Privacy Policy
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <span className="text-white mt-auto text-sm font-medium font-geist-mono">
+            Crafted with <span className="text-red-500">❤️</span> by{" "}
+            <a
+              href="https://github.com/ksamirdev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:text-blue-600 transition-colors duration-300"
+            >
+              Samir
+            </a>
+            !
+          </span>
+        </div>
+      </footer>
+    </>
   );
 }
 
-import { fetchApps } from "./utils/get-apps";
-import { Skeleton } from "@/components/ui/skeleton";
+const JoinNowButton = async () => {
+  const user = await currentUser();
 
-const UserApps: FC<{ userId: string }> = async ({ userId }) => {
-  const apps = await fetchApps(userId);
-
-  return apps.map((app) => (
-    <Link
-      href={`/apps/${app.id}`}
-      key={app.id}
-      className="flex flex-col border rounded-lg min-h-[200px] bg-primary  cursor-pointer border-neutral-100 dark:border-neutral-700 group p-1 gap-1 hover:shadow-xl duration-100"
-    >
-      <div className="flex-1 bg-white dark:bg-neutral-950 flex flex-col rounded-md  shadow">
-        <h1 className="text-sm font-bold mt-auto p-3 text-primary">
-          {app.name}
-        </h1>
-      </div>
-
-      <div className="px-2 py-1 text-[10px] flex flex-row items-center justify-between">
-        <div className=" font-medium text-secondary">
-          Updated {formatTime(app.updatedAt)}
-        </div>
-
-        <div className="inline-flex items-center  gap-2">
-          <span>Go to app</span> <LucideArrowRight size={10} />
-        </div>
-      </div>
+  return user ? (
+    <Link href="/webhooks">
+      <EnhancedButton
+        size="lg"
+        className="rounded-full font-semibold hover:bg-blue-500 animate-fade-up animate-delay-[1000ms]"
+        variant="expandIcon"
+        Icon={LucideZap}
+        iconPlacement="right"
+      >
+        Take me to webhooks!
+      </EnhancedButton>
     </Link>
-  ));
+  ) : (
+    <>
+      <ClerkLoading>
+        <EnhancedButton
+          size="lg"
+          className="rounded-full font-semibold hover:bg-blue-500 animate-fade-up animate-delay-[1000ms]"
+          variant="expandIcon"
+          Icon={LucideZap}
+          iconPlacement="right"
+        >
+          Join now!
+        </EnhancedButton>
+      </ClerkLoading>
+      <ClerkLoaded>
+        <SignInButton mode="modal" fallbackRedirectUrl="/" forceRedirectUrl="/">
+          <EnhancedButton
+            size="lg"
+            className="rounded-full font-semibold hover:bg-blue-500 animate-fade-up animate-delay-[1000ms]"
+            variant="expandIcon"
+            Icon={LucideZap}
+            iconPlacement="right"
+          >
+            Join now!
+          </EnhancedButton>
+        </SignInButton>
+      </ClerkLoaded>
+    </>
+  );
 };

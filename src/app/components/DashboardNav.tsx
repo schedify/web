@@ -6,16 +6,6 @@ import { useParams, usePathname } from "next/navigation";
 const TABS = [
   {
     id: "1",
-    label: "Overview",
-    links: ["/"],
-  },
-  {
-    id: "2",
-    label: "Schedules",
-    links: ["/schedules", new RegExp("/schedules/[a-zA-Z0-9-]+")],
-  },
-  {
-    id: "3",
     label: "Webhooks",
     links: ["/webhooks", new RegExp("/webhooks/[a-zA-Z0-9-]+")],
   },
@@ -36,7 +26,7 @@ export default function DashboardNav() {
     <div className="flex flex-row items-center gap-5 px-5 text-sm font-[family-name:var(--font-geist-mono)] relative">
       {TABS.map((tab) => {
         const isActive = tab.links.some((link) =>
-          typeof link === "string" ? link === activeTab : link.test(activeTab)
+          typeof link === "string" ? link === activeTab : link.test(activeTab),
         );
 
         return (
@@ -47,7 +37,7 @@ export default function DashboardNav() {
                 ? "text-black dark:text-gray-100 font-bold"
                 : "text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-gray-100"
             }`}
-            href={`/apps/${param.appId}${tab.links[0]}`}
+            href={tab.links[0]}
           >
             {tab.label}
             {/* Animated border */}

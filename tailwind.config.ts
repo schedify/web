@@ -66,6 +66,7 @@ export default {
       fontFamily: {
         "geist-mono": ["var(--font-geist-mono)"],
         "geist-sans": ["var(--font-geist-sans)"],
+        inconsolata: ["var(--font-inconsolata)"],
         karla: ["var(--font-karla)"],
         poppins: ["var(--font-poppins)"],
       },

@@ -19,5 +19,5 @@ export function titleCase(str: string) {
 
 export function extractSearchParam(searchparam: string | string[] | undefined) {
   if (!searchparam) return null;
-  return Array.isArray(searchparam) ? searchparam.at(0) : searchparam || null;
+  return (Array.isArray(searchparam) ? searchparam.at(0) : searchparam) || null;
 }

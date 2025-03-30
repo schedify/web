@@ -1,120 +1,36 @@
-import { db } from "@/db/drizzle";
-import { webhookEventTable, webhookTable } from "@/db/schema";
-import { and, desc, eq, sql } from "drizzle-orm";
 import { cache } from "react";
+import { makeRequest } from "./get-apps";
+import { Webhook, WebhookEvent } from "../types";
 
-export const fetchAppWebhook = cache(
-  async (appId: string, webhookId: string) => {
-    const webhooks = await db
-      .select({
-        id: webhookTable.id,
-        url: webhookTable.url,
-        enabled: webhookTable.enabled,
-        secret: webhookTable.secret,
-        createdAt: webhookTable.createdAt,
-        updatedAt: webhookTable.updatedAt,
-      })
-      .from(webhookTable)
-      .where(and(eq(webhookTable.appId, appId), eq(webhookTable.id, webhookId)))
-      .limit(1);
-
-    return webhooks.at(0) ?? null;
-  }
-);
+export const fetchWebhook = cache(async (webhookId: string) => {
+  const res = await makeRequest(`/webhooks/${webhookId}/`, "GET");
+  return res as
+    | {
+        status: 0;
+        message: string;
+        debug: string;
+        code: string;
+      }
+    | {
+        status: 1;
+        data: Webhook;
+      };
+});
 
 export const fetchWebhookLogs = cache(
   async (webhookId: string, status: string) => {
-    const logs = await db
-      .select({
-        id: webhookEventTable.id,
-        event: webhookEventTable.event,
-        status: webhookEventTable.status,
-        payload: webhookEventTable.payload,
-        createdAt: webhookEventTable.createdAt,
-        updatedAt: webhookEventTable.updatedAt,
-        processedAt: webhookEventTable.processedAt,
-        errorMessage: webhookEventTable.errorMessage,
-        retryCount: webhookEventTable.retryCount,
-      })
-      .from(webhookEventTable)
-      .where(eq(webhookEventTable.webhookId, webhookId))
-      .orderBy(desc(webhookEventTable.updatedAt))
-      .limit(10);
-
-    if (status !== "all") {
-      return logs.filter((log) => log.status === status);
-    }
-
-    return logs;
-  }
+    const res = await makeRequest(`/webhooks/${webhookId}/events`, "GET");
+    return res as
+      | {
+          status: 0;
+          message: string;
+          debug: string;
+          code: string;
+        }
+      | {
+          status: 1;
+          events: WebhookEvent[];
+          count: number;
+        };
+  },
 );
-
-export const fetchWebhookEventPayload = cache(
-  async (webhookId: string, eventId: string) => {
-    const logs = await db
-      .select({
-        // id: webhookEventTable.id,
-        // event: webhookEventTable.event,
-        // status: webhookEventTable.status,
-        payload: webhookEventTable.payload,
-        // createdAt: webhookEventTable.createdAt,
-        // updatedAt: webhookEventTable.updatedAt,
-        // processedAt: webhookEventTable.processedAt,
-        // errorMessage: webhookEventTable.errorMessage,
-        // retryCount: webhookEventTable.retryCount,
-      })
-      .from(webhookEventTable)
-      .where(
-        and(
-          eq(webhookEventTable.webhookId, webhookId),
-          eq(webhookEventTable.id, eventId)
-        )
-      )
-      .limit(1);
-
-    return logs.at(0) ?? null;
-  }
-);
-export const fetchWebhookEvents = cache(
-  async (appId: string, page: number, pageSize: number) => {
-    try {
-      const offset = (page - 1) * pageSize;
-      const logs = await db
-        .select({
-          id: webhookEventTable.id,
-          event: webhookEventTable.event,
-          status: webhookEventTable.status,
-          payload: webhookEventTable.payload,
-          createdAt: webhookEventTable.createdAt,
-          updatedAt: webhookEventTable.updatedAt,
-          processedAt: webhookEventTable.processedAt,
-          errorMessage: webhookEventTable.errorMessage,
-          retryCount: webhookEventTable.retryCount,
-        })
-        .from(webhookEventTable)
-        .where(eq(webhookEventTable.appId, appId))
-        .orderBy(desc(webhookEventTable.updatedAt))
-        .limit(pageSize)
-        .offset(offset);
-
-      return logs;
-    } catch {
-      return [];
-    }
-  }
-);
-
-export const fetchWebhookEventsTotalCount = cache(async (appId: string) => {
-  try {
-    const [{ count }] = await db
-      .select({
-        count: sql<number>`COUNT(*)`,
-      })
-      .from(webhookEventTable)
-      .where(eq(webhookEventTable.appId, appId));
-
-    return count > 0 ? count : 1;
-  } catch {
-    return 1;
-  }
-});

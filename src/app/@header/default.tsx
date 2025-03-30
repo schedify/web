@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -9,51 +7,32 @@ import {
   SignedOut,
   SignInButton,
   UserButton,
-  useUser,
 } from "@clerk/nextjs";
-import {
-  LucideArrowRight,
-  LucideCalendarRange,
-  LucideChevronsUpDown,
-  LucideClock12,
-  LucidePlusCircle,
-  LucideSettings,
-} from "lucide-react";
-import { useParams } from "next/navigation";
-import { FC, useMemo, useState } from "react";
+import { LucideCalendarRange } from "lucide-react";
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { App } from "../types";
 
-export const Header = () => {
+import { PageProps } from "@/app/types";
+
+export default async function Header({ params }: PageProps) {
   return (
     <div className="px-5 border-b-2 border-black flex flex-col sticky top-0 gap-3 z-50 bg-background dark:bg-background py-3">
       <div className="flex flex-row items-center justify-between">
-        <div className="inline-flex items-center font-inconsolata">
+        <div className="inline-flex items-center font-geist-mono">
           <Link
             href="/"
             className="flex flex-row items-center gap-2 hover:bg-secondary px-2 py-1 rounded-xl cursor-pointer duration-150"
           >
-            <img src="/schedify.png" alt="Schedify" height={24} width={24} />
+            <LucideCalendarRange />
             <h1 className="font-bold text-lg">Schedify</h1>
           </Link>
         </div>
 
         <div className="inline-flex items-center gap-5">
-          <Link
-            href="https://docs.schedify.dev"
-            passHref
-            target="_blank"
-            className="font-normal text-sm font-geist-mono hover:text-blue-500 hover:underline underline-offset-4"
-          >
+          <button className="font-normal text-sm font-geist-mono hover:text-blue-500 hover:underline underline-offset-4">
             API
-          </Link>
+          </button>
+
           <Link
             href="https://github.com/schedify"
             passHref
@@ -82,4 +61,4 @@ export const Header = () => {
       </div>
     </div>
   );
-};
+}
