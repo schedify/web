@@ -9,7 +9,6 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import Link from "next/link";
-import { LucideCalendarRange } from "lucide-react";
 
 import { currentUser } from "@clerk/nextjs/server";
 
