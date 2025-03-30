@@ -48,14 +48,14 @@ export const metadata: Metadata = {
     images: [
       {
         url: "https://schedify.dev/schedify.png",
-        width: 1200,
-        height: 630,
+        width: 200,
+        height: 200,
         alt: "Schedify Logo",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Scheduling made easier.",
     description: "The scheduling system your apps can depend on",
     images: ["https://schedify.dev/schedify.png"],
