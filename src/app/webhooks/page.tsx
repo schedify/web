@@ -1,6 +1,10 @@
 import { redirect } from "next/navigation";
 
 export default async function WebhooksRoute() {
+  // export const getAccessToken = async () => {
+  //   return (await cookies()).get("__session")?.value || null;
+  // };
+
   const user = await currentUser();
   if (!user) {
     redirect("/");
@@ -13,16 +17,7 @@ export default async function WebhooksRoute() {
       </h3>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 font-[family-name:var(--font-geist-mono)] ">
-        <Link
-          href="/webhooks/create"
-          className="flex flex-col items-center justify-center border border-dashed gap-3 rounded-lg min-h-[200px] bg-primary dark:bg-neutral-900 text-secondary cursor-pointer border-primary group hover:shadow-xl duration-100"
-        >
-          <LucidePlus
-            className="group-hover:rotate-180 duration-150"
-            size={18}
-          />
-          <span>Create webhook</span>
-        </Link>
+        <CreateWebhookModel accessToken={(await getAccessToken()) || ""} />
 
         <Suspense
           fallback={
@@ -44,8 +39,9 @@ import Link from "next/link";
 import { LucideArrowRight, LucidePlus } from "lucide-react";
 import { FC, Suspense } from "react";
 import { currentUser } from "@clerk/nextjs/server";
-import { fetchWebhooks } from "../utils/get-apps";
+import { fetchWebhooks, getAccessToken } from "../utils/get-apps";
 import { formatTime } from "../utils/utils";
+import { CreateWebhookModel } from "./_components/CreateWebhookModel";
 
 const UserWebhooks = async () => {
   const webhookRes = await fetchWebhooks();
