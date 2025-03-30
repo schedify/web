@@ -10,12 +10,7 @@ import {
 } from "@clerk/nextjs";
 import Link from "next/link";
 
-import { currentUser } from "@clerk/nextjs/server";
-
 export default async function Header() {
-  const user = await currentUser();
-  if (!user) return null;
-
   return (
     <div className="px-5 border-b-2 border-black flex flex-col sticky top-0 gap-3 z-50 bg-background dark:bg-background py-3">
       <div className="flex flex-row items-center justify-between">
