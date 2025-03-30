@@ -47,7 +47,7 @@ export const Header = () => {
 
         <div className="inline-flex items-center gap-5">
           <Link
-            href="https://docs.schedify.dev"
+            href="https://docs.schedify.dev/introduction"
             passHref
             target="_blank"
             className="font-normal text-sm font-geist-mono hover:text-blue-500 hover:underline underline-offset-4"
