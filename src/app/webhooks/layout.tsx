@@ -4,11 +4,10 @@ import React from "react";
 
 export const metadata: Metadata = {
   title: "Scheduling made easier.",
-  description:
-    "Effortlessly schedule and send webhooks at the perfect time—secure, reliable, and automated.",
+  description: "The scheduling system your apps can depend on",
   icons: [
     {
-      url: "/favicon.svg",
+      url: "/schedify.svg",
     },
   ],
 };
