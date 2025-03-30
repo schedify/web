@@ -8,13 +8,9 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/nextjs";
-import { LucideCalendarRange } from "lucide-react";
-
 import Link from "next/link";
 
-import { PageProps } from "@/app/types";
-
-export default async function Header({ params }: PageProps) {
+export default async function Header() {
   return (
     <div className="px-5 border-b-2 border-black flex flex-col sticky top-0 gap-3 z-50 bg-background dark:bg-background py-3">
       <div className="flex flex-row items-center justify-between">
@@ -23,16 +19,20 @@ export default async function Header({ params }: PageProps) {
             href="/"
             className="flex flex-row items-center gap-2 hover:bg-secondary px-2 py-1 rounded-xl cursor-pointer duration-150"
           >
-            <LucideCalendarRange />
+            <img src="/schedify.png" alt="Schedify" height={24} width={24} />
             <h1 className="font-bold text-lg">Schedify</h1>
           </Link>
         </div>
 
         <div className="inline-flex items-center gap-5">
-          <button className="font-normal text-sm font-geist-mono hover:text-blue-500 hover:underline underline-offset-4">
+          <Link
+            href="https://docs.schedify.dev/introduction"
+            passHref
+            target="_blank"
+            className="font-normal text-sm font-geist-mono hover:text-blue-500 hover:underline underline-offset-4"
+          >
             API
-          </button>
-
+          </Link>
           <Link
             href="https://github.com/schedify"
             passHref
