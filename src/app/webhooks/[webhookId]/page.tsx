@@ -1,18 +1,9 @@
 import { CopyTextComponent } from "@/app/components/CopyText";
-import { PageProps, Webhook, WebhookEvent } from "@/app/types";
+import { PageProps, WebhookEvent } from "@/app/types";
 import { fetchWebhook, fetchWebhookLogs } from "@/app/utils/get-webhooks";
 import { extractSearchParam, formatTime } from "@/app/utils/utils";
 import { Button } from "@/components/ui/button";
 import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
-import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import {
   LucideCat,
@@ -22,14 +13,12 @@ import {
   LucideCircleSlash,
   LucideDot,
   LucideEllipsis,
-  LucideLoader2,
-  LucideMenu,
   LucidePlus,
 } from "lucide-react";
 import moment from "moment";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { FC, Suspense } from "react";
+import { type FC } from "react";
 
 export default async function WebhookPage({ searchParams, params }: PageProps) {
   const [p, s] = await Promise.all([params, searchParams]);
@@ -37,12 +26,13 @@ export default async function WebhookPage({ searchParams, params }: PageProps) {
   const webhookIdParams = Array.isArray(p.webhookId)
     ? p.webhookId.at(0)
     : p.webhookId;
-
   if (!webhookIdParams) {
     throw redirect("/webhooks");
   }
 
-  const [status, eventId] = [s.status, s.eventId].map(extractSearchParam);
+  const [status, eventId, page] = [s.status, s.eventId, s.page].map(
+    extractSearchParam,
+  );
 
   const webhookRes = await fetchWebhook(webhookIdParams);
   if (!webhookRes.status) {
@@ -96,11 +86,9 @@ export default async function WebhookPage({ searchParams, params }: PageProps) {
                 (Array.isArray(p.webhookId)
                   ? p.webhookId.at(0)
                   : p.webhookId) || "",
+              page: Number(page) || 0,
             }}
           />
-        </div>
-        <div>
-          <PaginationWithLinks page={0} pageSize={100} totalCount={0} />
         </div>
       </div>
     </div>
@@ -114,6 +102,7 @@ const Logs = async ({
     webhookId: string;
     status: string | null;
     eventId: string | null;
+    page: number;
   };
 }) => {
   const logsRes = await fetchWebhookLogs(params.webhookId, "");
@@ -133,49 +122,50 @@ const Logs = async ({
   }
 
   return (
-    <div className="grid grid-cols-3 p-5 border rounded-xl gap-3 text-sm w-full divide-x shadow-md">
-      <div className="col-span-2">
-        <ul className="flex flex-row items-center gap-3 pb-3">
-          <li
-            className={cn(
-              "pb-1 font-[500] font-poppins relative",
-              params.status === null || params.status === "all"
-                ? "border-black text-black"
-                : "text-gray-500",
-            )}
-          >
-            <Link href="?">All</Link>
+    <>
+      <div className="grid grid-cols-3 p-5 border rounded-xl gap-3 text-sm w-full divide-x shadow-md">
+        <div className="col-span-2">
+          <ul className="flex flex-row items-center gap-3 pb-3">
+            <li
+              className={cn(
+                "pb-1 font-[500] font-poppins relative",
+                params.status === null || params.status === "all"
+                  ? "border-black text-black"
+                  : "text-gray-500",
+              )}
+            >
+              <Link href="?">All</Link>
 
-            {params.status === null || params.status === "all" ? (
-              <div className="h-[2px] bg-black absolute bottom-0 w-full animate-in fade-in duration-500"></div>
-            ) : null}
-          </li>
-          <li
-            className={cn(
-              "pb-1 font-[500] font-poppins relative",
-              params.status === "success" ? "text-black" : "text-gray-500",
-            )}
-          >
-            <Link href="?status=success">Succeeded</Link>
+              {params.status === null || params.status === "all" ? (
+                <div className="h-[2px] bg-black absolute bottom-0 w-full animate-in fade-in duration-500"></div>
+              ) : null}
+            </li>
+            <li
+              className={cn(
+                "pb-1 font-[500] font-poppins relative",
+                params.status === "success" ? "text-black" : "text-gray-500",
+              )}
+            >
+              <Link href="?status=success">Succeeded</Link>
 
-            {params.status === "success" ? (
-              <div className="h-[2px] bg-black absolute bottom-0 w-full animate-in fade-in duration-500"></div>
-            ) : null}
-          </li>
-          <li
-            className={cn(
-              "pb-1 font-[500] font-poppins relative ",
-              params.status === "error" ? "text-black" : "text-gray-500",
-            )}
-          >
-            <Link href="?status=error">Error</Link>
+              {params.status === "success" ? (
+                <div className="h-[2px] bg-black absolute bottom-0 w-full animate-in fade-in duration-500"></div>
+              ) : null}
+            </li>
+            <li
+              className={cn(
+                "pb-1 font-[500] font-poppins relative ",
+                params.status === "error" ? "text-black" : "text-gray-500",
+              )}
+            >
+              <Link href="?status=error">Error</Link>
 
-            {params.status === "error" ? (
-              <div className="h-[2px] bg-black absolute bottom-0 w-full animate-in fade-in duration-500"></div>
-            ) : null}
-          </li>
+              {params.status === "error" ? (
+                <div className="h-[2px] bg-black absolute bottom-0 w-full animate-in fade-in duration-500"></div>
+              ) : null}
+            </li>
 
-          <li className="ml-auto">
+            {/* <li className="ml-auto">
             <form
             // action={async () => {
             //   "use server";
@@ -207,44 +197,44 @@ const Logs = async ({
                 Simulate
               </Button>
             </form>
-          </li>
-        </ul>
+          </li> */}
+          </ul>
 
-        <div className="flex flex-col">
-          {logsRes.events.length === 0 ? (
-            <p className="text-sm flex-1 text-muted-foreground text-center inline-flex items-center mx-auto gap-3">
-              Looks empty here <LucideCat size={18} />
-            </p>
-          ) : null}
+          <div className="flex flex-col">
+            {logsRes.events.length === 0 ? (
+              <p className="text-sm flex-1 text-muted-foreground text-center inline-flex items-center mx-auto gap-3">
+                Looks empty here <LucideCat size={18} />
+              </p>
+            ) : null}
 
-          {Array.from(grouped.entries()).map(([time, logs]) => (
-            <div className="space-y-3" key={time}>
-              <span className="font-semibold text-xs">
-                {moment().format("YYYY-MM-DD") === time
-                  ? "Today"
-                  : moment().subtract(1, "day").format("YYYY-MM-DD") === time
-                    ? "Yesterday"
-                    : formatTime(time)}
-              </span>
+            {Array.from(grouped.entries()).map(([time, logs]) => (
+              <div className="space-y-3" key={time}>
+                <span className="font-semibold text-xs">
+                  {moment().format("YYYY-MM-DD") === time
+                    ? "Today"
+                    : moment().subtract(1, "day").format("YYYY-MM-DD") === time
+                      ? "Yesterday"
+                      : formatTime(time)}
+                </span>
 
-              {logs.map((log: WebhookEvent, index: number) => (
-                <Link
-                  href={`?eventId=${log.id}`}
-                  key={log.id}
-                  className={cn(
-                    "flex flex-row items-center gap-3 cursor-pointer duration-100 p-1 rounded-lg hover:bg-secondary/50",
-                    log.id === params.eventId ||
-                      (!params.eventId && index === 0)
-                      ? "bg-secondary/50 shadow"
-                      : "",
-                  )}
-                >
-                  {log.status === "ERRORED" ? (
-                    <LucideCircleSlash size={18} />
-                  ) : log.status === "CANCELLED" ? (
-                    <LucideCircleAlert
-                      size={18}
-                    /> /*: (log.retryCount ?? 0) > 0 ? (
+                {logs.map((log: WebhookEvent, index: number) => (
+                  <Link
+                    href={`?eventId=${log.id}`}
+                    key={log.id}
+                    className={cn(
+                      "flex flex-row items-center gap-3 cursor-pointer duration-100 p-1 rounded-lg hover:bg-secondary/50",
+                      log.id === params.eventId ||
+                        (!params.eventId && index === 0)
+                        ? "bg-secondary/50 shadow"
+                        : "",
+                    )}
+                  >
+                    {log.status === "ERRORED" ? (
+                      <LucideCircleSlash size={18} />
+                    ) : log.status === "CANCELLED" ? (
+                      <LucideCircleAlert
+                        size={18}
+                      /> /*: (log.retryCount ?? 0) > 0 ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -258,50 +248,61 @@ const Logs = async ({
                       />
                     </svg>
                     )*/
-                  ) : log.status === "DELIVERED" ? (
-                    <LucideCheckCircle size={16} className="text-green-600" />
-                  ) : log.status === "PENDING" ? (
-                    <LucideDot size={16} />
-                  ) : null}
+                    ) : log.status === "DELIVERED" ? (
+                      <LucideCheckCircle size={16} className="text-green-600" />
+                    ) : log.status === "PENDING" ? (
+                      <LucideDot size={16} />
+                    ) : null}
 
-                  <h1
-                    className="text-sm font-karla truncate"
-                    title={log.event_name}
-                  >
-                    {log.event_name}
-                  </h1>
+                    <h1
+                      className="text-sm font-karla truncate"
+                      title={log.event_name}
+                    >
+                      {log.event_name}
+                    </h1>
 
-                  <p className="ml-auto text-xs text-neutral-500 font-poppins">
-                    {moment(log.updated_at).format("HH:mm:ss")}
-                  </p>
+                    <p className="ml-auto text-xs text-neutral-500 font-poppins">
+                      {moment(log.updated_at).format("HH:mm:ss")}
+                    </p>
+                    {/*
+                    <Button size="icon" variant="ghost">
+                      <LucideEllipsis className="h-3 w-3" />
+                    </Button> */}
+                  </Link>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
 
-                  <Button size="icon" variant="ghost">
-                    <LucideEllipsis className="h-3 w-3" />
-                  </Button>
-                </Link>
-              ))}
-            </div>
-          ))}
+        <div className="relative">
+          {/* if we have event ud, show its payload */}
+          {params.eventId ? (
+            <WebhookEventPayload
+              payload={
+                logsRes.events.find((log) => log.id === params.eventId)
+                  ?.payload || ""
+              }
+            />
+          ) : null}
+
+          {/* if we dont have any event id, show the first payload */}
+          {!params.eventId && logsRes.events.at(0) ? (
+            <WebhookEventPayload
+              payload={logsRes.events.at(0)?.payload || ""}
+            />
+          ) : null}
         </div>
       </div>
 
-      <div className="relative">
-        {/* if we have event ud, show its payload */}
-        {params.eventId ? (
-          <WebhookEventPayload
-            payload={
-              logsRes.events.find((log) => log.id === params.eventId)
-                ?.payload || ""
-            }
-          />
-        ) : null}
-
-        {/* if we dont have any event id, show the first payload */}
-        {!params.eventId && logsRes.events.at(0) ? (
-          <WebhookEventPayload payload={logsRes.events.at(0)?.payload || ""} />
-        ) : null}
+      <div>
+        <PaginationWithLinks
+          page={Number(logsRes.count) || 0}
+          pageSize={20}
+          totalCount={logsRes.count}
+        />
       </div>
-    </div>
+    </>
   );
 };
 
@@ -332,7 +333,7 @@ const WebhookEventPayload: FC<{ payload: string }> = async ({ payload }) => {
 
   return (
     <div className="p-5 break-all flex flex-col h-full">
-      {payload === "" ? (
+      {payload == null || payload === "" ? (
         <p className="text-sm flex-1 text-muted-foreground text-center inline-flex items-center mx-auto gap-3 m-auto">
           No Payload <LucideCat size={18} />
         </p>

@@ -6,27 +6,24 @@ import { useParams, usePathname } from "next/navigation";
 const TABS = [
   {
     id: "1",
-    label: "Webhooks",
-    links: ["/webhooks", new RegExp("/webhooks/[a-zA-Z0-9-]+")],
+    label: "Overview",
+    links: ["/webhooks/", new RegExp("/webhooks/[a-zA-Z0-9-]+")],
   },
   {
     id: "4",
-    label: "Configure",
-    links: ["/configure"],
+    label: "Settings",
+    links: ["/settings"],
   },
 ] as const;
 
 export default function DashboardNav() {
-  const param = useParams();
   const pathname = usePathname();
-
-  const activeTab = pathname.replace(/\/apps\/[^/]+/, "") || "/";
 
   return (
     <div className="flex flex-row items-center gap-5 px-5 text-sm font-[family-name:var(--font-geist-mono)] relative">
       {TABS.map((tab) => {
         const isActive = tab.links.some((link) =>
-          typeof link === "string" ? link === activeTab : link.test(activeTab),
+          typeof link === "string" ? link === pathname : link.test(pathname),
         );
 
         return (

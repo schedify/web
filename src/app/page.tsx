@@ -32,13 +32,12 @@ export default async function HomePageRoute() {
           </TextLoop>
         </h1>
 
-        <h1 className="text-lg animate-fade animate-delay-[900ms] sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl text-center tracking-tight mb-6 font-poppins font-medium ">
+        <h1 className="text-lg animate-fade animate-delay-[900ms] sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl text-center tracking-tight mb-6 font-poppins font-medium ">
           Made Easier
         </h1>
 
         <p className="text-xs w-11/12 animate-fade-up animate-delay-[1200ms] md:w-full md:text-base font-karla text-center text-gray-600 mb-8">
-          Effortlessly schedule and send webhooks at the perfect time—secure,
-          reliable, and automated.
+          The scheduling system your apps can depend on
         </p>
 
         <Suspense fallback={<div></div>}>
