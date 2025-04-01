@@ -19,6 +19,8 @@ import moment from "moment";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { type FC } from "react";
+import { ScheduleEventDialog } from "./_component/ScheduleEventDialog";
+import { getAccessToken } from "@/app/utils/get-apps";
 
 export default async function WebhookPage({ searchParams, params }: PageProps) {
   const [p, s] = await Promise.all([params, searchParams]);
@@ -66,18 +68,13 @@ export default async function WebhookPage({ searchParams, params }: PageProps) {
             </div>
           </div>
 
-          <Link
-            href={`webhooks/${webhookRes.data.id}/create`}
-            className="max-md:self-end"
-          >
-            <Button size={"sm"} variant={"secondary"}>
-              <LucidePlus />
-              Schedule Event
-            </Button>
-          </Link>
+          <ScheduleEventDialog
+            accessToken={(await getAccessToken()) || ""}
+            webhookId={webhookIdParams}
+          />
         </div>
 
-        <div>
+        <div className="space-y-5">
           <Logs
             params={{
               eventId: eventId,
@@ -164,43 +161,9 @@ const Logs = async ({
                 <div className="h-[2px] bg-black absolute bottom-0 w-full animate-in fade-in duration-500"></div>
               ) : null}
             </li>
-
-            {/* <li className="ml-auto">
-            <form
-            // action={async () => {
-            //   "use server";
-
-            //   await db.insert(webhookEventTable).values({
-            //     id: `ev_${cuid()}`,
-            //     event: "schedify:test",
-            //     status: "COMPLETED",
-            //     webhookId: webhookId,
-            //     appId: appId,
-            //     scheduledFor: moment().add(2, "day").startOf("day").valueOf(),
-            //     payload: {
-            //       name: "Schedify",
-            //       active: true,
-            //       count: 42,
-            //       description: null,
-            //       data: {
-            //         items: ["webhook1", "webhook2"],
-            //         timestamp: "2024-12-12T10:00:00Z",
-            //       },
-            //     },
-            //     isTest: true,
-            //   });
-
-            //   revalidatePath("/");
-            // }}
-            >
-              <Button type="submit" size="sm" variant="ghost">
-                Simulate
-              </Button>
-            </form>
-          </li> */}
           </ul>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-3">
             {logsRes.events.length === 0 ? (
               <p className="text-sm flex-1 text-muted-foreground text-center inline-flex items-center mx-auto gap-3">
                 Looks empty here <LucideCat size={18} />
@@ -223,10 +186,12 @@ const Logs = async ({
                     key={log.id}
                     className={cn(
                       "flex flex-row items-center gap-3 cursor-pointer duration-100 p-1 rounded-lg hover:bg-secondary/50",
-                      log.id === params.eventId ||
-                        (!params.eventId && index === 0)
-                        ? "bg-secondary/50 shadow"
-                        : "",
+                      params.eventId === log.id && "bg-secondary/50 shadow",
+
+                      // log.id === params.eventId ||
+                      //   (!params.eventId && index === 0)
+                      //
+                      //   : "",
                     )}
                   >
                     {log.status === "ERRORED" ? (
@@ -283,13 +248,6 @@ const Logs = async ({
                 logsRes.events.find((log) => log.id === params.eventId)
                   ?.payload || ""
               }
-            />
-          ) : null}
-
-          {/* if we dont have any event id, show the first payload */}
-          {!params.eventId && logsRes.events.at(0) ? (
-            <WebhookEventPayload
-              payload={logsRes.events.at(0)?.payload || ""}
             />
           ) : null}
         </div>

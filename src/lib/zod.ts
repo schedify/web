@@ -38,10 +38,4 @@ export const validateScheduleBody = z.object({
       },
       { message: "Payload must be a valid JSON string" },
     ),
-
-  destination: z
-    .string({ invalid_type_error: "Destination must be a string" })
-    .nonempty({
-      message: "Destination is required",
-    }),
 });
