@@ -12,7 +12,7 @@ import Link from "next/link";
 
 export default async function Header() {
   return (
-    <div className="px-5 border-b-2 border-black flex flex-col sticky top-0 gap-3 z-50 bg-background dark:bg-background py-3">
+    <div className="px-10 container flex flex-col sticky top-0 rounded-b-3xl gap-3 z-50 backdrop-blur-lg py-5">
       <div className="flex flex-row items-center justify-between">
         <div className="inline-flex items-center font-inconsolata">
           <Link
