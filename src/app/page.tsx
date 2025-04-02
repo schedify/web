@@ -32,11 +32,11 @@ export default async function HomePageRoute() {
   return (
     <>
       <section className="hero py-[15vh] flex flex-col items-center gap-5 hero-gradient">
-        <div className="font-geist-mono rounded-full border text-sm px-3 py-1">
+        <div className="font-geist-mono text-sm">
           Supported by{" "}
           <Link
+            className="border-b border-black py-0.5"
             href="https://www.microsoft.com/en-us/startups"
-            className="underline underline-offset-4"
             passHref
           >
             <b>Microsoft for Startups</b>
