@@ -1,4 +1,14 @@
+import { Metadata } from "next";
 import React, { FC } from "react";
+
+export const metadata: Metadata = {
+  title: "Privacy Policies - Schedify",
+  icons: [
+    {
+      url: "https://schedify.dev/schedify.png",
+    },
+  ],
+};
 
 const PrivacyPolicy = () => {
   return (

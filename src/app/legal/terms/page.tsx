@@ -2,6 +2,11 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms of Service - Schedify",
+  icons: [
+    {
+      url: "https://schedify.dev/schedify.png",
+    },
+  ],
 };
 
 export default function TermsAndServicesPage() {

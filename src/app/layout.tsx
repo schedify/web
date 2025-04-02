@@ -60,6 +60,11 @@ export const metadata: Metadata = {
     description: "The scheduling system your apps can depend on",
     images: ["https://schedify.dev/schedify.png"],
   },
+  icons: [
+    {
+      url: "https://schedify.dev/schedify.png",
+    },
+  ],
 };
 
 // import "ace-builds/src-noconflict/mode-json";
