@@ -64,8 +64,32 @@ export const metadata: Metadata = {
     {
       url: "https://schedify.dev/schedify.png",
     },
+    {
+      sizes: "32x32",
+      url: "/favicon-32x32.png",
+      type: "image/png",
+      rel: "icon",
+    },
+    {
+      sizes: "16x16",
+      url: "/favicon-16x16.png",
+      type: "image/png",
+      rel: "icon",
+    },
+    {
+      sizes: "180x180",
+      url: "/apple-touch-icon.png",
+      type: "image/png",
+      rel: "apple-touch-icon",
+    },
   ],
+  manifest: "/site.webmanifest",
 };
+
+// <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+// <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+// <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+// <link rel="manifest" href="/site.webmanifest">
 
 // import "ace-builds/src-noconflict/mode-json";
 // import "ace-builds/src-noconflict/theme-xcode";

@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { fetchMe } from "../utils/get-apps";
 import DashboardNav from "../components/DashboardNav";
 
-export default async function Configure({
+export default async function Settings({
   params,
 }: {
   params: Promise<{ [key: string]: string }>;
