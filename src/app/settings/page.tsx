@@ -5,17 +5,13 @@ import { redirect } from "next/navigation";
 import { fetchMe } from "../utils/get-apps";
 import DashboardNav from "../components/DashboardNav";
 
-export default async function Settings({
-  params,
-}: {
-  params: Promise<{ [key: string]: string }>;
-}) {
+export default async function Settings() {
   const user = await currentUser();
   if (!user) throw redirect("/");
 
   const meResp = await fetchMe();
   if (meResp.status === 0) {
-    return <div>{meResp.message}</div>;
+    throw new Error(meResp.message);
   }
 
   return (

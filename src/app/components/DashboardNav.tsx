@@ -20,7 +20,7 @@ export default function DashboardNav() {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-row items-center gap-5 px-5 text-sm font-[family-name:var(--font-geist-mono)] relative">
+    <div className="flex flex-row items-center gap-5 px-5 container text-sm font-[family-name:var(--font-geist-mono)] relative">
       {TABS.map((tab) => {
         const isActive = tab.links.some((link) =>
           typeof link === "string" ? link === pathname : link.test(pathname),

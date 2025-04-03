@@ -80,12 +80,14 @@ export const CreateWebhookModel = ({
     <Form {...form}>
       <Dialog>
         <DialogTrigger asChild>
-          <div className="flex flex-col items-center justify-center border border-dashed gap-3 rounded-lg min-h-[200px] bg-primary dark:bg-neutral-900 text-secondary cursor-pointer border-primary group hover:shadow-xl duration-100">
+          <div className="flex flex-col items-center justify-center shadow-2xl gap-3 rounded-lg min-h-[200px] hero-gradient text-primary cursor-pointer border-primary group hover:shadow-xl duration-100">
             <LucidePlus
               className="group-hover:rotate-180 duration-150"
-              size={18}
+              size={24}
             />
-            <span>Create webhook</span>
+            <span className="text-xl font-geist-sans font-semibold">
+              Setup webhook
+            </span>
           </div>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">

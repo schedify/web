@@ -38,7 +38,7 @@ export default async function WebhookPage({ searchParams, params }: PageProps) {
 
   const webhookRes = await fetchWebhook(webhookIdParams);
   if (!webhookRes.status) {
-    return <div>{webhookRes.message}</div>;
+    throw new Error(webhookRes.message);
   }
 
   return (

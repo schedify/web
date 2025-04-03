@@ -6,13 +6,15 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
+  SignUpButton,
   UserButton,
 } from "@clerk/nextjs";
+import { DotIcon } from "lucide-react";
 import Link from "next/link";
 
 export default async function Header() {
   return (
-    <div className="px-10 container flex flex-col sticky top-0 rounded-b-3xl gap-3 z-50 backdrop-blur-lg py-5">
+    <div className="container flex flex-col sticky top-0 rounded-b-3xl gap-3 z-50 backdrop-blur-lg py-5">
       <div className="flex flex-row items-center justify-between">
         <div className="inline-flex items-center font-inconsolata">
           <Link
@@ -25,7 +27,7 @@ export default async function Header() {
         </div>
 
         <div className="inline-flex items-center gap-5">
-          <Link
+          {/* <Link
             href="https://docs.schedify.dev/docs/introduction"
             passHref
             target="_blank"
@@ -41,20 +43,24 @@ export default async function Header() {
             className=" text-sm font-inconsolata hover:text-blue-500 hover:underline underline-offset-4"
           >
             GitHub
-          </Link>
+          </Link> */}
 
           <ClerkLoading>
             <Skeleton className="min-h-[28px] min-w-[28px] rounded-full" />
           </ClerkLoading>
           <ClerkLoaded>
             <SignedOut>
-              <SignInButton mode="modal">
+              <SignUpButton mode="modal">
                 <Button className="rounded-full font-semibold">
                   Join Now!
                 </Button>
-              </SignInButton>
+              </SignUpButton>
             </SignedOut>
             <SignedIn>
+              <Link href="/settings">
+                <Button variant="link">Settings</Button>
+              </Link>
+
               <UserButton userProfileMode="modal" />
             </SignedIn>
           </ClerkLoaded>

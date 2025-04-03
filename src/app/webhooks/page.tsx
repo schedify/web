@@ -46,7 +46,7 @@ import { CreateWebhookModel } from "./_components/CreateWebhookModel";
 const UserWebhooks = async () => {
   const webhookRes = await fetchWebhooks();
   if (!webhookRes.status) {
-    return <div>{webhookRes.message}</div>;
+    throw new Error(webhookRes.message);
   }
 
   return webhookRes.webhooks.map((webhook) => (
