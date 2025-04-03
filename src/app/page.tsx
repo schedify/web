@@ -4,7 +4,12 @@ import { EnhancedButton } from "@/components/ui/enhanced-btn";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { TextLoop } from "@/components/ui/text-loop";
 import { cn, highlightCode } from "@/lib/utils";
-import { ClerkLoaded, ClerkLoading, SignInButton } from "@clerk/nextjs";
+import {
+  ClerkLoaded,
+  ClerkLoading,
+  SignInButton,
+  SignUpButton,
+} from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import {
   LucideArrowUpRight,
@@ -330,7 +335,11 @@ const JoinNowButton = async () => {
         </EnhancedButton>
       </ClerkLoading>
       <ClerkLoaded>
-        <SignInButton mode="modal" fallbackRedirectUrl="/" forceRedirectUrl="/">
+        <SignUpButton
+          mode="modal"
+          fallbackRedirectUrl="/webhooks"
+          signInFallbackRedirectUrl="/webhooks"
+        >
           <EnhancedButton
             size="lg"
             className="rounded-full font-semibold hover:bg-blue-500"
@@ -340,7 +349,7 @@ const JoinNowButton = async () => {
           >
             Join now!
           </EnhancedButton>
-        </SignInButton>
+        </SignUpButton>
       </ClerkLoaded>
     </>
   );
