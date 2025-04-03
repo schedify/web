@@ -50,7 +50,7 @@ export default async function WebhookPage({ searchParams, params }: PageProps) {
   }
 
   return (
-    <div className="container my-10 space-y-10">
+    <div className="container my-10 space-y-10 pt-20">
       <div className="space-y-5">
         <div className="flex flex-col md:flex-row text-center md:text-left justify-between items-stretch md:items-start gap-5 md:gap-0">
           <div className="self-center">

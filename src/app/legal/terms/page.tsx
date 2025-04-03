@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function TermsAndServicesPage() {
   return (
-    <div className="container py-10  font-geist-sans">
+    <div className="container py-10 pt-20 font-geist-sans">
       <h1 className="text-3xl font-bold uppercase">
         Schedify Terms of Service
       </h1>

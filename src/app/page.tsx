@@ -38,7 +38,7 @@ import AceEditor from "react-ace";
 export default async function HomePageRoute() {
   return (
     <>
-      <section className="hero py-[15vh] flex flex-col items-center gap-5 relative container">
+      <section className="hero py-[15vh] pt-[25vh] flex flex-col items-center gap-5 relative container">
         <div className="font-geist-mono text-sm">
           Supported by{" "}
           <Link

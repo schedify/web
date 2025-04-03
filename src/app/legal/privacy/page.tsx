@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const PrivacyPolicy = () => {
   return (
-    <div className="container py-10 space-y-0 font-geist-sans">
+    <div className="container py-10 pt-20 space-y-0 font-geist-sans">
       <h1 className="text-3xl font-bold uppercase">Schedify Privacy Policy</h1>
 
       <p className="text-zinc-700 text-sm py-2">
