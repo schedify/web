@@ -1,4 +1,5 @@
 import { CodeBlock } from "@/components/code-block";
+import { LandingAnimation } from "@/components/landing/Animation";
 import { Button } from "@/components/ui/button";
 import { EnhancedButton } from "@/components/ui/enhanced-btn";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
@@ -29,6 +30,7 @@ import {
   LucideWebhook,
   LucideZap,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import AceEditor from "react-ace";
@@ -36,7 +38,7 @@ import AceEditor from "react-ace";
 export default async function HomePageRoute() {
   return (
     <>
-      <section className="hero py-[15vh] flex flex-col items-center gap-5 ">
+      <section className="hero py-[15vh] flex flex-col items-center gap-5 relative container">
         <div className="font-geist-mono text-sm">
           Supported by{" "}
           <Link
@@ -76,7 +78,19 @@ export default async function HomePageRoute() {
             <JoinNowButton />
           </Suspense>
         </div>
+
+        <Image
+          src="/landing.png"
+          height={300}
+          width={900}
+          className="mt-10 rounded-2xl shadow-2xl ring-4 ring-offset-4 ring-black"
+          alt=""
+          quality={100}
+          loading="eager"
+        />
       </section>
+
+      {/* <LandingAnimation /> */}
 
       <section className="container mt-32 ">
         <h2 className="my-10 text-5xl font-geist-mono text-center font-bold tracking-tight transition-colors first:mt-0">

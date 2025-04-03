@@ -22,6 +22,14 @@ import { ScheduleEventDialog } from "./_component/ScheduleEventDialog";
 import { getAccessToken } from "@/app/utils/get-apps";
 import { StatusFilter, StatusTimeFilter } from "./_component/DateAndTimeFilter";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Label } from "@/components/ui/label";
+
 export default async function WebhookPage({ searchParams, params }: PageProps) {
   const [p, s] = await Promise.all([params, searchParams]);
 
@@ -54,11 +62,7 @@ export default async function WebhookPage({ searchParams, params }: PageProps) {
             </p>
             {/* <div className="inline-flex items-center gap-0.5 italic text-sm">
               <span className="font-bold">Secret:</span>
-              <CopyTextComponent
-                className="cursor-pointer hover:bg-blue-50 px-1 py-0.5 rounded-md underline-offset-4 font-geist-mono hover:text-blue-500 "
-                text={webhookRes.webhook.secret}
-                hidden
-              />
+
             </div> */}
           </div>
 
@@ -147,74 +151,88 @@ const Logs = async ({
           <StatusTimeFilter />
         </ul>
 
-        <div className="flex flex-col gap-3">
-          {logsRes.events.length === 0 ? (
-            <p className="text-sm flex-1 text-muted-foreground text-center inline-flex items-center mx-auto gap-3">
-              Looks empty here <LucideCat size={18} />
-            </p>
-          ) : null}
+        <Accordion type="single" collapsible>
+          <div className="flex flex-col gap-3">
+            {logsRes.events.length === 0 ? (
+              <p className="text-sm flex-1 text-muted-foreground text-center inline-flex items-center mx-auto gap-3">
+                Looks empty here <LucideCat size={18} />
+              </p>
+            ) : null}
 
-          {Array.from(grouped.entries()).map(([time, logs]) => (
-            <div className="space-y-3" key={time}>
-              <span className="font-semibold text-xs">
-                {moment().format("YYYY-MM-DD") === time
-                  ? "Today"
-                  : moment().subtract(1, "day").format("YYYY-MM-DD") === time
-                    ? "Yesterday"
-                    : formatTime(time)}
-              </span>
+            {Array.from(grouped.entries()).map(([time, logs]) => (
+              <div className="space-y-3" key={time}>
+                <span className="font-semibold text-xs">
+                  {moment().format("YYYY-MM-DD") === time
+                    ? "Today"
+                    : moment().subtract(1, "day").format("YYYY-MM-DD") === time
+                      ? "Yesterday"
+                      : formatTime(time)}
+                </span>
 
-              {logs.map((log: WebhookEvent) => (
-                <Link
-                  href={`?eventId=${log.id}`}
-                  key={log.id}
-                  className={cn(
-                    "flex flex-row items-center gap-3 cursor-pointer duration-100 p-1 rounded-lg hover:bg-secondary/50",
-                    params.eventId === log.id && "bg-secondary/50 shadow",
-                  )}
-                >
-                  {log.status === "ERRORED" ? (
-                    <LucideCircleSlash size={18} />
-                  ) : log.status === "CANCELLED" ? (
-                    <LucideCircleAlert
-                      size={18}
-                    /> /*: (log.retryCount ?? 0) > 0 ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="size-5"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M15.312 11.424a5.5 5.5 0 0 1-9.201 2.466l-.312-.311h2.433a.75.75 0 0 0 0-1.5H3.989a.75.75 0 0 0-.75.75v4.242a.75.75 0 0 0 1.5 0v-2.43l.31.31a7 7 0 0 0 11.712-3.138.75.75 0 0 0-1.449-.39Zm1.23-3.723a.75.75 0 0 0 .219-.53V2.929a.75.75 0 0 0-1.5 0V5.36l-.31-.31A7 7 0 0 0 3.239 8.188a.75.75 0 1 0 1.448.389A5.5 5.5 0 0 1 13.89 6.11l.311.31h-2.432a.75.75 0 0 0 0 1.5h4.243a.75.75 0 0 0 .53-.219Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    )*/
-                  ) : log.status === "DELIVERED" ? (
-                    <LucideCheckCircle size={16} className="text-green-600" />
-                  ) : log.status === "PENDING" ? (
-                    <LucideDot size={16} />
-                  ) : null}
+                {logs.map((log: WebhookEvent) => (
+                  <AccordionItem value={log.id} key={log.id}>
+                    <AccordionTrigger>
+                      <div
+                        key={log.id}
+                        className="flex flex-row items-center gap-3"
+                      >
+                        {log.status === "ERRORED" ? (
+                          <LucideCircleSlash size={18} />
+                        ) : log.status === "CANCELLED" ? (
+                          <LucideCircleAlert size={18} />
+                        ) : log.status === "DELIVERED" ? (
+                          <LucideCheckCircle
+                            size={16}
+                            className="text-green-600"
+                          />
+                        ) : log.status === "PENDING" ? (
+                          <LucideDot size={16} />
+                        ) : null}
 
-                  <h1
-                    className="text-sm font-karla truncate"
-                    title={log.event_name}
-                  >
-                    {log.event_name}
-                  </h1>
+                        <h1
+                          className="text-sm font-karla truncate"
+                          title={log.event_name}
+                        >
+                          {log.event_name}
+                        </h1>
+                      </div>
+                    </AccordionTrigger>
 
-                  <p className="ml-auto text-xs text-neutral-500 font-poppins">
-                    {moment(log.scheduled_for * 1000).format(
-                      "HH:mm / DD.MM.YYYY",
-                    )}
-                  </p>
-                </Link>
-              ))}
-            </div>
-          ))}
-        </div>
+                    <AccordionContent>
+                      <div className="flex flex-col gap-3">
+                        <Label>
+                          Status: <b>{log.status}</b>
+                        </Label>
+
+                        <Label>
+                          Scheduled:{" "}
+                          <b>
+                            {new Date(
+                              log.scheduled_for * 1000,
+                            ).toLocaleString()}
+                          </b>
+                        </Label>
+
+                        {log.processed_at > 0 ? (
+                          <Label>
+                            Processed at:{" "}
+                            <b>
+                              {new Date(
+                                log.processed_at * 1000,
+                              ).toLocaleString()}
+                            </b>
+                          </Label>
+                        ) : null}
+
+                        <WebhookEventPayload payload={log.payload} />
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </div>
+            ))}
+          </div>
+        </Accordion>
       </div>
 
       <div>
@@ -254,7 +272,7 @@ const WebhookEventPayload: FC<{ payload: string }> = async ({ payload }) => {
   };
 
   return (
-    <div className="p-5 break-all flex flex-col h-full">
+    <div className="py-5 break-all flex flex-col h-full">
       {payload == null || payload === "" ? (
         <p className="text-sm flex-1 text-muted-foreground text-center inline-flex items-center mx-auto gap-3 m-auto">
           No Payload <LucideCat size={18} />
