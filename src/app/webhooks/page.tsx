@@ -12,11 +12,16 @@ export default async function WebhooksRoute() {
 
   return (
     <div className="container space-y-10">
-      <h3 className="mt-8 scroll-m-20 text-2xl font-[family-name:var(--font-geist-sans)] text-primary font-semibold tracking-tight">
-        Webhooks
-      </h3>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 font-[family-name:var(--font-geist-mono)] ">
+      <div className="mt-8">
+        <h3 className="scroll-m-20 text-2xl font-poppins font-semibold tracking-tight text-primary">
+          Webhooks
+        </h3>
+        <p className="mt-2 text-gray-600">
+          A webhook sends real-time notifications to a URL when an event happens
+          in your app.
+        </p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 font-geist-mono">
         <CreateWebhookModel accessToken={(await getAccessToken()) || ""} />
 
         <Suspense

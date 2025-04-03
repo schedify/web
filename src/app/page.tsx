@@ -36,7 +36,7 @@ import AceEditor from "react-ace";
 export default async function HomePageRoute() {
   return (
     <>
-      <section className="hero py-[15vh] flex flex-col items-center gap-5 hero-gradient">
+      <section className="hero py-[15vh] flex flex-col items-center gap-5 ">
         <div className="font-geist-mono text-sm">
           Supported by{" "}
           <Link
@@ -159,7 +159,7 @@ export default async function HomePageRoute() {
                 </div>
               </Link>
 
-              <Link
+              {/* <Link
                 href="https://github.com/standard-webhooks/standard-webhooks"
                 passHref
                 target="_blank"
@@ -173,7 +173,7 @@ export default async function HomePageRoute() {
 
                   <p>Read the Standard Webhooks spec</p>
                 </div>
-              </Link>
+              </Link> */}
             </div>
 
             <div className="col-span-3 space-y-4 flex flex-col">
@@ -187,7 +187,7 @@ await client.createTask("WEBHOOK_ID", {
     username: "new_user",
     email: "new_user@example.com",
   },
-  scheduled_for: "ISO_STRING"
+  scheduledFor: "ISO_STRING"
 });`}
                 </CodeBlock>
               </div>
@@ -241,7 +241,7 @@ await client.createTask("WEBHOOK_ID", {
             </a>
 
             <a
-              href="https://schedify.canny.io/feature-requests"
+              href="https://insigh.to/b/schedify"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-white border border-white px-5 py-2 rounded-lg shadow-md hover:bg-white hover:text-indigo-900 transition"

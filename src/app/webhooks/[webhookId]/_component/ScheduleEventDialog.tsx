@@ -104,8 +104,11 @@ export const ScheduleEventDialog = ({
     <Form {...form}>
       <Dialog open={dialogOpen} onOpenChange={(o) => setDialogOpen(o)}>
         <DialogTrigger asChild>
-          <Button size={"sm"} variant={"secondary"}>
-            <LucidePlus />
+          <Button
+            variant={"default"}
+            className="rounded-full bg-blue-600 hover:bg-blue-500 font-bold max-md:self-end"
+          >
+            <LucidePlus className="stroke-[3px]" />
             Schedule Event
           </Button>
         </DialogTrigger>

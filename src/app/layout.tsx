@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -28,7 +28,7 @@ const fontKarla = FontKarla({
 });
 
 const fontPoppins = FontPoppins({
-  weight: ["400", "700", "800"],
+  weight: ["400", "500", "700", "800"],
   subsets: ["latin"],
   variable: "--font-poppins",
 });
@@ -39,10 +39,24 @@ const fontInconsolata = FontInconsolata({
   variable: "--font-inconsolata",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#2B7FFF",
+};
+
 export const metadata: Metadata = {
   title: "Scheduling made easier.",
   description: "The scheduling system your apps can depend on",
+  keywords: [
+    "scheduling system",
+    "task automation",
+    "Schedify",
+    "workflow management",
+    "calendar API",
+    "task scheduler",
+    "event automation",
+  ],
   openGraph: {
+    siteName: "Schedify",
     title: "Scheduling made easier.",
     description: "The scheduling system your apps can depend on",
     images: [
@@ -61,8 +75,14 @@ export const metadata: Metadata = {
     images: ["https://schedify.dev/schedify.png"],
   },
   icons: [
+    // {
+    //   url: "https://schedify.dev/schedify.png",
+    // },
     {
-      url: "https://schedify.dev/schedify.png",
+      sizes: "any",
+      url: "/favicon-32x32.png",
+      type: "image/png",
+      rel: "icon",
     },
     {
       sizes: "32x32",
@@ -84,6 +104,14 @@ export const metadata: Metadata = {
     },
   ],
   manifest: "/site.webmanifest",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  authors: {
+    name: "Samir Kumar Gupta",
+    url: "https://ksamir.dev",
+  },
 };
 
 // <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -109,7 +137,7 @@ export default function RootLayout({
       <QueryProvider>
         <html lang="en">
           <body
-            className={`${geistSans.variable} ${geistMono.variable} ${fontKarla.variable} ${fontPoppins.variable} ${fontInconsolata.variable} antialiased bg-background`}
+            className={`${geistSans.variable} ${geistMono.variable} ${fontKarla.variable} ${fontPoppins.variable} ${fontInconsolata.variable} antialiased bg-background hero-gradient bg-no-repeat min-h-screen`}
           >
             <ProgressBarProvider>
               {header}

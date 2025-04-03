@@ -40,11 +40,6 @@ export default async function WebhookPage() {
             </li>
           </ul>
 
-          <div className="flex flex-row items-center gap-3 pb-3">
-            <Skeleton className="min-w-[60px] min-h-[16px] rounded-full" />
-            <Skeleton className="min-w-[60px] min-h-[16px] rounded-full" />
-          </div>
-
           <div className="flex flex-col">
             <div className="space-y-3">
               {new Array(5).fill(1).map((_, i) => (

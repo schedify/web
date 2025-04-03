@@ -27,7 +27,6 @@ export const CopyTextComponent: FC<{
         navigator.clipboard.writeText(text);
         toast({
           title: "Copied to clipboard",
-          // description: "",
           variant: "default",
         });
       }}
@@ -35,7 +34,7 @@ export const CopyTextComponent: FC<{
       {hidden && !reveal ? "-".repeat(text.length) : text}
 
       {hidden && !reveal && isHovering ? (
-        <span className="absolute  left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 text-center font-semibold bg-secondary px-2 text-xs">
+        <span className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 text-center font-semibold bg-secondary px-2 text-xs">
           Click to reveal
         </span>
       ) : null}

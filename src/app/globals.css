@@ -118,6 +118,7 @@ body {
 .hero-gradient {
     /* margin-top: 3rem;
     margin-inline: 3rem; */
+    max-height: 10vh;
     border-radius: 1rem;
     background-color: hsla(333, 0%, 100%, 1);
     background-image: radial-gradient(

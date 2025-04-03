@@ -14,9 +14,9 @@ import Link from "next/link";
 
 export default async function Header() {
   return (
-    <div className="container flex flex-col sticky top-0 rounded-b-3xl gap-3 z-50 backdrop-blur-lg py-5">
+    <div className="container flex flex-col sticky top-1 rounded-b-3xl gap-3 z-50 backdrop-blur-lg py-5">
       <div className="flex flex-row items-center justify-between">
-        <div className="inline-flex items-center font-inconsolata">
+        <div className="inline-flex items-center font-geist-mono">
           <Link
             href="/"
             className="flex flex-row items-center gap-2 hover:bg-secondary px-2 py-1 rounded-xl cursor-pointer duration-150"
@@ -57,9 +57,14 @@ export default async function Header() {
               </SignUpButton>
             </SignedOut>
             <SignedIn>
-              <Link href="/settings">
-                <Button variant="link">Settings</Button>
+              <Link
+                href="/settings"
+                className="text-sm hover:underline underline-offset-2"
+              >
+                Settings
               </Link>
+
+              <hr className="border-r-2 border-neutral-950 min-h-[24px]" />
 
               <UserButton userProfileMode="modal" />
             </SignedIn>

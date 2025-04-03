@@ -13,7 +13,7 @@ export const fetchWebhook = cache(async (webhookId: string) => {
       }
     | {
         status: 1;
-        data: Webhook;
+        webhook: Webhook;
       };
 });
 

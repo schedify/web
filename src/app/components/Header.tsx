@@ -9,31 +9,12 @@ import {
   SignedOut,
   SignInButton,
   UserButton,
-  useUser,
 } from "@clerk/nextjs";
-import {
-  LucideArrowRight,
-  LucideCalendarRange,
-  LucideChevronsUpDown,
-  LucideClock12,
-  LucidePlusCircle,
-  LucideSettings,
-} from "lucide-react";
-import { useParams } from "next/navigation";
-import { FC, useMemo, useState } from "react";
-
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { App } from "../types";
 
 export const Header = () => {
   return (
-    <div className="container flex flex-col sticky top-0 rounded-b-3xl gap-3 z-50 backdrop-blur-lg py-5">
+    <div className="container flex flex-col sticky top-1 rounded-b-3xl gap-3 z-50 backdrop-blur-lg py-5">
       <div className="flex flex-row items-center justify-between">
         <div className="inline-flex items-center font-inconsolata">
           <Link

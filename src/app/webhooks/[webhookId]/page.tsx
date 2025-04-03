@@ -6,14 +6,13 @@ import { Button } from "@/components/ui/button";
 import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
 import { cn } from "@/lib/utils";
 import {
+  LucideCalendar,
   LucideCat,
   LucideCheckCircle,
-  LucideChevronLeft,
   LucideCircleAlert,
   LucideCircleSlash,
   LucideDot,
-  LucideEllipsis,
-  LucidePlus,
+  LucidePlusCircle,
 } from "lucide-react";
 import moment from "moment";
 import Link from "next/link";
@@ -21,6 +20,7 @@ import { redirect } from "next/navigation";
 import { type FC } from "react";
 import { ScheduleEventDialog } from "./_component/ScheduleEventDialog";
 import { getAccessToken } from "@/app/utils/get-apps";
+import { StatusFilter, StatusTimeFilter } from "./_component/DateAndTimeFilter";
 
 export default async function WebhookPage({ searchParams, params }: PageProps) {
   const [p, s] = await Promise.all([params, searchParams]);
@@ -43,29 +43,23 @@ export default async function WebhookPage({ searchParams, params }: PageProps) {
 
   return (
     <div className="container my-10 space-y-10">
-      <Link href={`/webhooks`}>
-        <Button variant="link" size="sm">
-          <LucideChevronLeft /> Back
-        </Button>
-      </Link>
-
       <div className="space-y-5">
         <div className="flex flex-col md:flex-row text-center md:text-left justify-between items-stretch md:items-start gap-5 md:gap-0">
           <div className="self-center">
             <h3 className="scroll-m-20 text-2xl font-geist-sans text-primary font-semibold tracking-tight">
-              {webhookRes.data.name}
+              {webhookRes.webhook.name}
             </h3>
             <p className="text-muted-foreground italic text-sm">
-              {webhookRes.data.url}
+              {webhookRes.webhook.url}
             </p>
-            <div className="inline-flex items-center gap-0.5 italic text-sm">
+            {/* <div className="inline-flex items-center gap-0.5 italic text-sm">
               <span className="font-bold">Secret:</span>
               <CopyTextComponent
                 className="cursor-pointer hover:bg-blue-50 px-1 py-0.5 rounded-md underline-offset-4 font-geist-mono hover:text-blue-500 "
-                text={webhookRes.data.secret}
+                text={webhookRes.webhook.secret}
                 hidden
               />
-            </div>
+            </div> */}
           </div>
 
           <ScheduleEventDialog
@@ -120,86 +114,71 @@ const Logs = async ({
 
   return (
     <>
-      <div className="grid grid-cols-3 p-5 border rounded-xl gap-3 text-sm w-full divide-x shadow-md">
-        <div className="col-span-2">
-          <ul className="flex flex-row items-center gap-3 pb-3">
-            <li
-              className={cn(
-                "pb-1 font-[500] font-poppins relative",
-                params.status === null || params.status === "all"
-                  ? "border-black text-black"
-                  : "text-gray-500",
-              )}
+      <div className="flex flex-col bg-white p-5 border rounded-xl gap-3 text-sm w-full shadow-md">
+        <ul className="grid grid-cols-[repeat(2,80px)] border-b gap-5">
+          <li className="font-[500] font-poppins relative text-center pb-3">
+            <Link
+              href={`/webhooks/${params.webhookId}/`}
+              className="font-medium"
             >
-              <Link href="?">All</Link>
+              Events
+            </Link>
 
-              {params.status === null || params.status === "all" ? (
-                <div className="h-[2px] bg-black absolute bottom-0 w-full animate-in fade-in duration-500"></div>
-              ) : null}
-            </li>
-            <li
-              className={cn(
-                "pb-1 font-[500] font-poppins relative",
-                params.status === "success" ? "text-black" : "text-gray-500",
-              )}
-            >
-              <Link href="?status=success">Succeeded</Link>
-
-              {params.status === "success" ? (
-                <div className="h-[2px] bg-black absolute bottom-0 w-full animate-in fade-in duration-500"></div>
-              ) : null}
-            </li>
-            <li
-              className={cn(
-                "pb-1 font-[500] font-poppins relative ",
-                params.status === "error" ? "text-black" : "text-gray-500",
-              )}
-            >
-              <Link href="?status=error">Error</Link>
-
-              {params.status === "error" ? (
-                <div className="h-[2px] bg-black absolute bottom-0 w-full animate-in fade-in duration-500"></div>
-              ) : null}
-            </li>
-          </ul>
-
-          <div className="flex flex-col gap-3">
-            {logsRes.events.length === 0 ? (
-              <p className="text-sm flex-1 text-muted-foreground text-center inline-flex items-center mx-auto gap-3">
-                Looks empty here <LucideCat size={18} />
-              </p>
+            {params.status === null || params.status === "all" ? (
+              <div className="h-[2px] bg-black absolute bottom-0 w-full animate-in fade-in duration-500"></div>
             ) : null}
+          </li>
 
-            {Array.from(grouped.entries()).map(([time, logs]) => (
-              <div className="space-y-3" key={time}>
-                <span className="font-semibold text-xs">
-                  {moment().format("YYYY-MM-DD") === time
-                    ? "Today"
-                    : moment().subtract(1, "day").format("YYYY-MM-DD") === time
-                      ? "Yesterday"
-                      : formatTime(time)}
-                </span>
+          <li className="pb-3 font-poppins relative text-gray-500 text-center">
+            <Link href={`${params.webhookId}/settings`} className="">
+              Settings
+            </Link>
 
-                {logs.map((log: WebhookEvent, index: number) => (
-                  <Link
-                    href={`?eventId=${log.id}`}
-                    key={log.id}
-                    className={cn(
-                      "flex flex-row items-center gap-3 cursor-pointer duration-100 p-1 rounded-lg hover:bg-secondary/50",
-                      params.eventId === log.id && "bg-secondary/50 shadow",
+            {/* {params.status === null || params.status === "all" ? (
+              <div className="h-[2px] bg-black absolute bottom-0 w-full animate-in fade-in duration-500"></div>
+            ) : null} */}
+          </li>
+        </ul>
 
-                      // log.id === params.eventId ||
-                      //   (!params.eventId && index === 0)
-                      //
-                      //   : "",
-                    )}
-                  >
-                    {log.status === "ERRORED" ? (
-                      <LucideCircleSlash size={18} />
-                    ) : log.status === "CANCELLED" ? (
-                      <LucideCircleAlert
-                        size={18}
-                      /> /*: (log.retryCount ?? 0) > 0 ? (
+        <div />
+
+        <ul className="flex flex-row items-center gap-3 pb-3">
+          <StatusFilter />
+          <StatusTimeFilter />
+        </ul>
+
+        <div className="flex flex-col gap-3">
+          {logsRes.events.length === 0 ? (
+            <p className="text-sm flex-1 text-muted-foreground text-center inline-flex items-center mx-auto gap-3">
+              Looks empty here <LucideCat size={18} />
+            </p>
+          ) : null}
+
+          {Array.from(grouped.entries()).map(([time, logs]) => (
+            <div className="space-y-3" key={time}>
+              <span className="font-semibold text-xs">
+                {moment().format("YYYY-MM-DD") === time
+                  ? "Today"
+                  : moment().subtract(1, "day").format("YYYY-MM-DD") === time
+                    ? "Yesterday"
+                    : formatTime(time)}
+              </span>
+
+              {logs.map((log: WebhookEvent) => (
+                <Link
+                  href={`?eventId=${log.id}`}
+                  key={log.id}
+                  className={cn(
+                    "flex flex-row items-center gap-3 cursor-pointer duration-100 p-1 rounded-lg hover:bg-secondary/50",
+                    params.eventId === log.id && "bg-secondary/50 shadow",
+                  )}
+                >
+                  {log.status === "ERRORED" ? (
+                    <LucideCircleSlash size={18} />
+                  ) : log.status === "CANCELLED" ? (
+                    <LucideCircleAlert
+                      size={18}
+                    /> /*: (log.retryCount ?? 0) > 0 ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -213,43 +192,28 @@ const Logs = async ({
                       />
                     </svg>
                     )*/
-                    ) : log.status === "DELIVERED" ? (
-                      <LucideCheckCircle size={16} className="text-green-600" />
-                    ) : log.status === "PENDING" ? (
-                      <LucideDot size={16} />
-                    ) : null}
+                  ) : log.status === "DELIVERED" ? (
+                    <LucideCheckCircle size={16} className="text-green-600" />
+                  ) : log.status === "PENDING" ? (
+                    <LucideDot size={16} />
+                  ) : null}
 
-                    <h1
-                      className="text-sm font-karla truncate"
-                      title={log.event_name}
-                    >
-                      {log.event_name}
-                    </h1>
+                  <h1
+                    className="text-sm font-karla truncate"
+                    title={log.event_name}
+                  >
+                    {log.event_name}
+                  </h1>
 
-                    <p className="ml-auto text-xs text-neutral-500 font-poppins">
-                      {moment(log.updated_at).format("HH:mm:ss")}
-                    </p>
-                    {/*
-                    <Button size="icon" variant="ghost">
-                      <LucideEllipsis className="h-3 w-3" />
-                    </Button> */}
-                  </Link>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="relative">
-          {/* if we have event ud, show its payload */}
-          {params.eventId ? (
-            <WebhookEventPayload
-              payload={
-                logsRes.events.find((log) => log.id === params.eventId)
-                  ?.payload || ""
-              }
-            />
-          ) : null}
+                  <p className="ml-auto text-xs text-neutral-500 font-poppins">
+                    {moment(log.scheduled_for * 1000).format(
+                      "HH:mm / DD.MM.YYYY",
+                    )}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
 
