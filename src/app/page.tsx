@@ -58,9 +58,12 @@ export default async function HomePageRoute() {
           The one and only scheduling solution you can rely on.
         </p>
         <div className="flex flex-row items-center">
-          <Button variant="link" size="lg" disabled>
-            5-Min Guide <LucideChevronRight />
-          </Button>
+          <Link href="/5-min-guide">
+            <Button variant="link" size="lg">
+              5-Min Guide <LucideChevronRight />
+            </Button>
+          </Link>
+
           <Suspense
             fallback={
               <>
@@ -353,6 +356,7 @@ const JoinNowButton = async () => {
           mode="modal"
           fallbackRedirectUrl="/webhooks"
           signInFallbackRedirectUrl="/webhooks"
+          forceRedirectUrl="/webhooks"
         >
           <EnhancedButton
             size="lg"
