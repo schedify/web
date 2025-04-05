@@ -96,7 +96,7 @@ export default async function HomePageRoute() {
 
       {/* <LandingAnimation /> */}
 
-      <section className="container mt-32 ">
+      <section className="container mt-20 ">
         <h2 className="my-10 text-5xl font-geist-mono text-center font-bold tracking-tight transition-colors first:mt-0">
           Features
         </h2>
@@ -134,6 +134,90 @@ export default async function HomePageRoute() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="container mt-32">
+        <h2 className="my-10 text-5xl font-geist-mono text-center font-bold tracking-tight transition-colors first:mt-0">
+          Use cases
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+          {/* 1. Scheduled Notifications */}
+          <div className="flex flex-col items-center text-center p-6 border rounded-lg shadow-sm hover:shadow-md transition">
+            <i className="fas fa-bell text-4xl text-indigo-500 mb-4"></i>
+            <h3 className="text-xl font-semibold mb-2">
+              Scheduled Notifications
+            </h3>
+            <p className="text-gray-600">
+              Send reminders, alerts, or emails at a specific time. <br />
+              <span className="text-sm text-gray-500 italic">
+                e.g., Send appointment reminders 24 hours in advance.
+              </span>
+            </p>
+          </div>
+
+          {/* 2. Delayed Webhooks */}
+          <div className="flex flex-col items-center text-center p-6 border rounded-lg shadow-sm hover:shadow-md transition">
+            <i className="fas fa-clock text-4xl text-green-500 mb-4"></i>
+            <h3 className="text-xl font-semibold mb-2">Delayed Webhooks</h3>
+            <p className="text-gray-600">
+              Trigger webhooks after a delay. <br />
+              <span className="text-sm text-gray-500 italic">
+                e.g., Trigger a payment retry webhook 12 hours after failure.
+              </span>
+            </p>
+          </div>
+
+          {/* 3. Subscription Expiry Reminders */}
+          <div className="flex flex-col items-center text-center p-6 border rounded-lg shadow-sm hover:shadow-md transition">
+            <i className="fas fa-hourglass-end text-4xl text-yellow-500 mb-4"></i>
+            <h3 className="text-xl font-semibold mb-2">
+              Subscription Reminders
+            </h3>
+            <p className="text-gray-600">
+              Notify users when subscriptions are about to expire. <br />
+              <span className="text-sm text-gray-500 italic">
+                e.g., Notify users 3 days before their subscription ends.
+              </span>
+            </p>
+          </div>
+
+          {/* 4. Drip Campaigns */}
+          <div className="flex flex-col items-center text-center p-6 border rounded-lg shadow-sm hover:shadow-md transition">
+            <i className="fas fa-envelope-open-text text-4xl text-pink-500 mb-4"></i>
+            <h3 className="text-xl font-semibold mb-2">Drip Campaigns</h3>
+            <p className="text-gray-600">
+              Automate onboarding or marketing emails in a sequence. <br />
+              <span className="text-sm text-gray-500 italic">
+                e.g., Send "Welcome", "Getting Started", and "Tips" emails over
+                7 days.
+              </span>
+            </p>
+          </div>
+
+          {/* 5. Task Scheduling */}
+          <div className="flex flex-col items-center text-center p-6 border rounded-lg shadow-sm hover:shadow-md transition">
+            <i className="fas fa-tasks text-4xl text-blue-500 mb-4"></i>
+            <h3 className="text-xl font-semibold mb-2">Task Scheduling</h3>
+            <p className="text-gray-600">
+              Queue backend tasks for future execution. <br />
+              <span className="text-sm text-gray-500 italic">
+                e.g., Schedule a data cleanup job at midnight.
+              </span>
+            </p>
+          </div>
+
+          {/* 6. Event Follow-Ups */}
+          <div className="flex flex-col items-center text-center p-6 border rounded-lg shadow-sm hover:shadow-md transition">
+            <i className="fas fa-clipboard-check text-4xl text-purple-500 mb-4"></i>
+            <h3 className="text-xl font-semibold mb-2">Event Follow-Ups</h3>
+            <p className="text-gray-600">
+              Send follow-up messages after a user action. <br />
+              <span className="text-sm text-gray-500 italic">
+                e.g., Send feedback form 2 hours after a webinar ends.
+              </span>
+            </p>
+          </div>
         </div>
       </section>
 
