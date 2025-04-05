@@ -1,4 +1,5 @@
 import { Webhook, App } from "@/db/schema";
+import { UserPlan } from "./types";
 
 export {};
 
@@ -13,5 +14,6 @@ declare global {
         updatedAt: number;
       }[];
     })[];
+    plan: UserPlan;
   }
 }

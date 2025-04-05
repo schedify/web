@@ -123,14 +123,13 @@ export default function TermsAndServicesPage() {
       <ul className="list-decimal pl-10 space-y-2">
         <li>
           The <b>Company</b> strives to provide reliable and continuous access
-          to the <b>Services</b>
-          but does not guarantee uninterrupted or error-free operation.
+          to the <b>Services</b> but does not guarantee uninterrupted or
+          error-free operation.
         </li>
         <li>
           Scheduled maintenance or unforeseen technical issues may affect the
           availability of the <b>Services</b>. The <b>Company</b> will make
-          reasonable efforts to notify
-          <b>Users</b> of planned outages.
+          reasonable efforts to notify <b>Users</b> of planned outages.
         </li>
       </ul>
       <h2 className="text-lg font-bold uppercase py-3">6. Termination</h2>
@@ -175,8 +174,7 @@ export default function TermsAndServicesPage() {
         <li>
           To the maximum extent permitted by law, Schedify Inc. shall not be
           liable for indirect, incidental, special, or consequential damages
-          arising from or related to your use of the
-          <b>Services</b>.
+          arising from or related to your use of the <b>Services</b>.
         </li>
       </ul>
       <h2 className="text-lg font-bold uppercase py-3">10. Governing Law</h2>

@@ -1,5 +1,6 @@
 import { CodeBlock } from "@/components/code-block";
 import { LandingAnimation } from "@/components/landing/Animation";
+import { FAQ } from "@/components/landing/FAQ";
 import { Footer } from "@/components/landing/Footer";
 import { Button } from "@/components/ui/button";
 import { EnhancedButton } from "@/components/ui/enhanced-btn";
@@ -354,6 +355,7 @@ await client.createTask("WEBHOOK_ID", {
         </div>
       </section>
 
+      <FAQ />
       <Footer />
     </>
   );

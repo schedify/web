@@ -3,6 +3,8 @@ export type PageProps = {
   searchParams: Promise<{ [key: string]: string | string[] }>;
 };
 
+export type UserPlan = "FREE" | "STARTER" | "GROWTH" | "SCALE";
+
 export type App = {
   id: string;
   name: string;
