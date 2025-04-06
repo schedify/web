@@ -31,10 +31,17 @@ export const CopyTextComponent: FC<{
         });
       }}
     >
-      {hidden && !reveal ? "-".repeat(text.length) : text}
+      <span
+        className={cn(
+          "px-1 py-0.5 rounded-md  underline-offset-4",
+          !reveal ? "blur-sm" : "hover:bg-blue-50 ",
+        )}
+      >
+        {text}
+      </span>
 
-      {hidden && !reveal && isHovering ? (
-        <span className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 text-center font-semibold bg-secondary px-2 text-xs">
+      {hidden && !reveal ? (
+        <span className="absolute left-1/2 top-1/2 -translate-y-1/2 rounded-full -translate-x-1/2 text-center font-semibold bg-secondary px-2 text-xs">
           Click to reveal
         </span>
       ) : null}

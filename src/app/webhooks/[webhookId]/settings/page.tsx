@@ -111,7 +111,8 @@ const Logs = async ({
         <div className="inline-flex items-center justify-between">
           <Label className="font-medium font-poppins">Signing Secret</Label>
           <CopyTextComponent
-            className="cursor-pointer hover:bg-blue-50 px-1 py-0.5 rounded-md underline-offset-4 font-geist-mono hover:text-blue-500 "
+            className="cursor-pointer font-geist-mono"
+            // className="cursor-pointer hover:bg-blue-50 px-1 py-0.5 rounded-md underline-offset-4 font-geist-mono hover:text-blue-500 "
             text={webhook.secret}
             hidden
           />
