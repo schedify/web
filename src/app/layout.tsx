@@ -75,9 +75,6 @@ export const metadata: Metadata = {
     images: ["https://schedify.dev/schedify.png"],
   },
   icons: [
-    // {
-    //   url: "https://schedify.dev/schedify.png",
-    // },
     {
       sizes: "any",
       url: "/favicon-32x32.png",

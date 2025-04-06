@@ -23,16 +23,18 @@ import { getAccessToken } from "../utils/get-apps";
 
 const FEATURES = {
   Free: [
-    { label: "10 events per day (hard limit)", included: true },
+    { label: "1000 events per month", included: true },
+    // { label: "Rate limit: 1 request per 10 seconds", included: true },
     { label: "Rate limit: 1 request per 10 seconds", included: true },
     { label: "RESTful APIs", included: true },
-    { label: "24–48 hrs ahead scheduling", included: true },
+    // { label: "24–48 hrs ahead scheduling", included: true },
+    { label: "6 months ahead scheduling", included: true },
     { label: "50 bytes max payload", included: true },
     { label: "1 API key", included: true },
     { label: "1-day log retention", included: true },
     { label: "Email support", included: true },
-    { label: "No retries", included: false },
-    { label: "Webhook signature (HMAC-SHA256)", included: false },
+    { label: "Webhook signature (HMAC-SHA256)", included: true },
+    { label: "Retries  (Coming Q2 2025)", included: false },
   ],
   Starter: [
     { label: "6,000 events per month", included: true },
@@ -96,7 +98,11 @@ export default async function Pricing() {
                 <span className="text-3xl">$0</span>
                 <span className="text-sm font-medium">/month</span>
               </div>
-              <div className="text-sm self-center">10 events/day included</div>
+              {/* <div className="text-sm self-center">10 events/day included</div> */}
+              <div className="text-sm self-center text-center pt-5">
+                Schedify is currently free for all users while in beta. No
+                payment required.
+              </div>
             </div>
 
             <ClerkLoading>
@@ -155,7 +161,7 @@ export default async function Pricing() {
               ))}
             </div>
           </div>
-          <div className="bg-white flex flex-col gap-7 relative px-5 py-10 p-3 rounded-xl shadow-xl border-t-8 border-black">
+          {/* <div className="bg-white flex flex-col gap-7 relative px-5 py-10 p-3 rounded-xl shadow-xl border-t-8 border-black">
             <div className="absolute top-[-1rem] left-1/2 -translate-x-1/2 font-geist-sans rounded-lg tracking-wide bg-blue-50 font-bold border-2 border-black px-3">
               POPULAR
             </div>
@@ -216,14 +222,6 @@ export default async function Pricing() {
                 </ClerkLoaded>
               </>
             )}
-
-            {/* <Button
-              variant="outline"
-              className="border-2 self-center border-blue-500 focus-visible:ring-blue-500"
-              size="lg"
-            >
-
-            </Button> */}
 
             <div className="flex flex-col gap-2">
               <Label>Features include:</Label>
@@ -329,7 +327,7 @@ export default async function Pricing() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
