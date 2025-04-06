@@ -11,7 +11,7 @@ export default function Loading() {
             Developer
           </h3>
 
-          <div className="p-5 border rounded-xl grid grid-rows-1 gap-2 text-sm w-full shadow-md">
+          <div className="p-5 border bg-white rounded-xl grid grid-rows-1 gap-2 text-sm w-full shadow-md">
             <div className="flex justify-between">
               <span>API Key</span>
               <Skeleton className="h-[12px] w-[100px]" />
