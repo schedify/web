@@ -111,17 +111,6 @@ export default async function HomePageRoute() {
         </div>
 
         <AnimatedSchedifyComponent />
-        <div className="text-end self-end text-sm text-gray-500 mt-6">
-          Animation credit:{" "}
-          <a
-            href="https://x.com/LegionWebDev"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 hover:underline hover:text-blue-700 font-medium"
-          >
-            LegionWebDev
-          </a>
-        </div>
 
         <Image
           src="/landing.png"
