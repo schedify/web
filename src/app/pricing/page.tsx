@@ -75,9 +75,6 @@ const FEATURES = {
 };
 
 export default async function Pricing() {
-  const user = await currentUser();
-  const accessToken = await getAccessToken();
-
   return (
     <>
       <div className="container py-28 space-y-10">

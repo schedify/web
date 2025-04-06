@@ -2,6 +2,7 @@ import { CodeBlock } from "@/components/code-block";
 import { LandingAnimation } from "@/components/landing/Animation";
 import { FAQ } from "@/components/landing/FAQ";
 import { Footer } from "@/components/landing/Footer";
+import AnimatedSchedifyComponent from "@/components/landing/ServerAnimation";
 import { Button } from "@/components/ui/button";
 import { EnhancedButton } from "@/components/ui/enhanced-btn";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
@@ -109,17 +110,29 @@ export default async function HomePageRoute() {
           </Suspense>
         </div>
 
+        <AnimatedSchedifyComponent />
+        <div className="text-end self-end text-sm text-gray-500 mt-6">
+          Animation credit:{" "}
+          <a
+            href="https://x.com/LegionWebDev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline hover:text-blue-700 font-medium"
+          >
+            LegionWebDev
+          </a>
+        </div>
+
         <Image
           src="/landing.png"
           height={300}
           width={900}
-          className="mt-10 rounded-2xl shadow-2xl ring-4 ring-offset-4 ring-black"
+          className="mt-20 rounded-2xl shadow-2xl ring-4 ring-offset-4 ring-black"
           alt=""
           quality={100}
           loading="eager"
         />
       </section>
-
       {/* <LandingAnimation /> */}
 
       <section className="container mt-20 ">
