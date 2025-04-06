@@ -40,7 +40,32 @@ import AceEditor from "react-ace";
 export default async function HomePageRoute() {
   return (
     <>
-      <section className="hero py-[15vh] pt-[25vh] flex flex-col items-center gap-5 relative container">
+      <section className="hero py-[15vh]  flex flex-col items-center gap-5 relative container">
+        <div className="bg-blue-400 text-neutral-900 p-4 rounded-xl font-poppins font-medium text-sm">
+          <p>
+            🚀 <strong>Schedify</strong> is currently in <em>private beta</em> —
+            perfect for devs building things that need to delay, defer, or
+            schedule actions.
+            <br />
+            Want early access? Drop us an email or hop into our Discord — we’d
+            love to have you!
+          </p>
+          <div className="flex flex-row items-center gap-5 justify-center mt-4">
+            <Link
+              href="mailto:email@schedify.dev"
+              className="underline hover:text-neutral-700"
+            >
+              email@schedify.dev
+            </Link>
+            <Link
+              href="https://discord.gg/DYmy6QYUpr"
+              className="underline hover:text-neutral-700"
+            >
+              Join Discord
+            </Link>
+          </div>
+        </div>
+
         <div className="font-geist-mono text-sm">
           Supported by{" "}
           <Link
