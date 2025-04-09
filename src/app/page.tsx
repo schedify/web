@@ -58,7 +58,7 @@ export default async function HomePageRoute() {
           <span className="text-blue-600">Scheduling</span>
         </h1>
         <p className="text-sm md:text-base font-medium text-center text-gray-600 mb-6">
-          The one and only scheduling solution you can rely on.
+          The scheduling system your apps can depend on
         </p>
         <div className="flex flex-row items-center">
           <Link href="/5-min-guide">
