@@ -7,7 +7,7 @@ export const Footer = () => {
       <span
         className={cn(
           "absolute -bottom-20 left-0 right-0 font-bold select-none font-poppins text-center",
-          "text-center text-5xl md:text-9xl lg:text-[12rem] xl:text-[13rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-primary dark:from-neutral-950 to-background dark:to-neutral-800 inset-x-0",
+          "text-center text-5xl md:text-9xl lg:text-[12rem] xl:text-[13rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-primary dark:from-neutral-950 to-background dark:to-neutral-800 inset-x-0"
         )}
       >
         Schedify
@@ -41,7 +41,7 @@ export const Footer = () => {
         </div>
 
         <span className="text-white mt-auto text-sm font-medium font-geist-mono">
-          Crafted with <span className="text-red-500">❤️</span> by{" "}
+          © 2024 Schedify by{" "}
           <a
             href="https://github.com/ksamirdev"
             target="_blank"
@@ -50,7 +50,7 @@ export const Footer = () => {
           >
             Samir
           </a>
-          !
+          . All rights reserved.
         </span>
       </div>
     </footer>
