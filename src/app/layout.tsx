@@ -121,6 +121,7 @@ export const metadata: Metadata = {
 
 import ProgressBarProvider from "./components/ProgressBarProvider";
 import QueryProvider from "./query-provider";
+import ChatwootWidget from "@/components/ChatwootWidget";
 
 export default function RootLayout({
   children,
@@ -140,6 +141,7 @@ export default function RootLayout({
               {header}
               {children}
               <Toaster />
+              <ChatwootWidget />
             </ProgressBarProvider>
           </body>
         </html>
