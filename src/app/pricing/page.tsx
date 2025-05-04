@@ -24,12 +24,12 @@ import Link from "next/link";
 
 const FEATURES = {
   Free: [
-    { label: "1000 events per month", included: true },
+    { label: "10,000 events per month", included: true },
     // { label: "Rate limit: 1 request per 10 seconds", included: true },
-    { label: "Rate limit: 1 request per 10 seconds", included: true },
+    { label: "Rate limit: 1 request per 2 seconds", included: true },
     { label: "RESTful APIs", included: true },
     // { label: "24–48 hrs ahead scheduling", included: true },
-    { label: "6 months ahead scheduling", included: true },
+    { label: "1 year ahead scheduling", included: true },
     { label: "50 bytes max payload", included: true },
     { label: "1 API key", included: true },
     { label: "1-day log retention", included: true },
@@ -150,7 +150,7 @@ export default async function Pricing() {
                     className={cn(
                       v.included
                         ? "fill-blue-500 stroke-white"
-                        : "fill-gray-500 stroke-white",
+                        : "fill-gray-500 stroke-white"
                     )}
                   />
 
