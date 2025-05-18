@@ -1,11 +1,10 @@
-import { CopyTextComponent } from "@/app/components/CopyText";
-import { PageProps, WebhookEvent } from "@/app/types";
-import { fetchWebhook, fetchWebhookLogs } from "@/app/utils/get-webhooks";
-import { extractSearchParam, formatTime } from "@/app/utils/utils";
+import { CopyTextComponent } from "@/components/CopyText";
+import { PageProps } from "@/app/types";
+import { fetchWebhook } from "@/app/utils/get-webhooks";
+import { extractSearchParam } from "@/app/utils/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { type FC } from "react";
 import { ScheduleEventDialog } from "../_component/ScheduleEventDialog";
 import { getAccessToken } from "@/app/utils/get-apps";
 
@@ -23,7 +22,7 @@ export default async function WebhookPage({ searchParams, params }: PageProps) {
   }
 
   const [status, eventId, page] = [s.status, s.eventId, s.page].map(
-    extractSearchParam,
+    extractSearchParam
   );
 
   const webhookRes = await fetchWebhook(webhookIdParams);
@@ -112,7 +111,6 @@ const Logs = async ({
           <Label className="font-medium font-poppins">Signing Secret</Label>
           <CopyTextComponent
             className="cursor-pointer font-geist-mono"
-            // className="cursor-pointer hover:bg-blue-50 px-1 py-0.5 rounded-md underline-offset-4 font-geist-mono hover:text-blue-500 "
             text={webhook.secret}
             hidden
           />

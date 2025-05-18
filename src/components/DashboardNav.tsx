@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const TABS = [
   {
@@ -23,7 +23,7 @@ export default function DashboardNav() {
     <div className="flex flex-row items-center gap-5 px-5 container text-sm font-[family-name:var(--font-geist-mono)] relative">
       {TABS.map((tab) => {
         const isActive = tab.links.some((link) =>
-          typeof link === "string" ? link === pathname : link.test(pathname),
+          typeof link === "string" ? link === pathname : link.test(pathname)
         );
 
         return (

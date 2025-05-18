@@ -1,39 +1,21 @@
 import { CodeBlock } from "@/components/code-block";
-import { LandingAnimation } from "@/components/landing/Animation";
 import { FAQ } from "@/components/landing/FAQ";
 import { Footer } from "@/components/landing/Footer";
 import AnimatedSchedifyComponent from "@/components/landing/ServerAnimation";
 import { Button } from "@/components/ui/button";
 import { EnhancedButton } from "@/components/ui/enhanced-btn";
-import { InfiniteSlider } from "@/components/ui/infinite-slider";
-import { TextLoop } from "@/components/ui/text-loop";
-import { cn, highlightCode } from "@/lib/utils";
-import {
-  ClerkLoaded,
-  ClerkLoading,
-  SignInButton,
-  SignUpButton,
-} from "@clerk/nextjs";
+import { ClerkLoaded, ClerkLoading, SignUpButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import {
   LucideArrowUpRight,
-  LucideBook,
   LucideBookOpen,
   LucideCable,
-  LucideCalendarRange,
   LucideChevronRight,
   LucideClock,
-  LucideCloud,
-  LucideExternalLink,
   LucideLandmark,
-  LucideLink,
   LucideLock,
-  LucideMail,
-  LucideTag,
-  LucideWebhook,
   LucideZap,
 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -41,17 +23,6 @@ export default async function HomePageRoute() {
   return (
     <>
       <section className="hero py-[15vh] pt-[20vh] flex flex-col items-center gap-5 relative container">
-        <div className="font-geist-mono text-sm">
-          Supported by{" "}
-          <Link
-            className="border-b border-black py-0.5"
-            href="https://www.microsoft.com/en-us/startups"
-            passHref
-          >
-            <b>Microsoft for Startups</b>
-          </Link>
-        </div>
-
         <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-center tracking-tight text-gray-900 font-poppins">
           <span className="text-blue-600">Developer-First</span> Task Scheduling
         </h1>
@@ -75,7 +46,7 @@ export default async function HomePageRoute() {
                   Icon={LucideZap}
                   iconPlacement="right"
                 >
-                  Join now!
+                  Start Scheduling - Free Forever
                 </EnhancedButton>
               </>
             }
@@ -83,10 +54,10 @@ export default async function HomePageRoute() {
             <JoinNowButton />
           </Suspense>
         </div>
-
+        <div className="mt-10" />
         <AnimatedSchedifyComponent />
 
-        <Image
+        {/* <Image
           src="/landing.png"
           height={300}
           width={900}
@@ -94,11 +65,11 @@ export default async function HomePageRoute() {
           alt=""
           quality={100}
           loading="eager"
-        />
+        /> */}
       </section>
       {/* <LandingAnimation /> */}
 
-      <section className="container mt-20">
+      <section className="container">
         <h2 className="my-10 text-5xl font-geist-mono text-center font-bold tracking-tight transition-colors first:mt-0 pb-10">
           Why Developers Love Schedify
         </h2>
@@ -142,9 +113,9 @@ export default async function HomePageRoute() {
         <h2 className="my-10 text-5xl font-geist-mono text-center font-bold tracking-tight transition-colors first:mt-0 pb-10">
           Example use cases
         </h2>
-        <div className="grid grid-cols-1 gap-5 mt-10">
-          {/* 1. Scheduled Notifications */}
-          <div className="flex flex-col  p-6 border rounded-lg shadow-sm hover:shadow-md transition">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-10">
+          {/* Use Case 1 */}
+          <div className="flex flex-col p-6 border rounded-lg shadow-sm hover:shadow-md transition">
             <h3 className="text-xl font-semibold mb-2">1. Abandoned Orders</h3>
             <p className="text-gray-600 pb-5 text-sm">
               Cancel unpaid orders <strong>30 minutes after creation</strong>
@@ -159,7 +130,8 @@ schedify.schedule({
             </CodeBlock>
           </div>
 
-          <div className="flex flex-col  p-6 border rounded-lg shadow-sm hover:shadow-md transition">
+          {/* Use Case 2 */}
+          <div className="flex flex-col p-6 border rounded-lg shadow-sm hover:shadow-md transition">
             <h3 className="text-xl font-semibold mb-2">
               2. End-of-Day Reports
             </h3>
@@ -174,13 +146,12 @@ schedify.schedule({
   at: "0 23 * * *" // ← Cron syntax
 });`}
             </CodeBlock>
-
             <i className="mt-3 text-sm text-gray-600">
-              Note: Cron based scheduling is not live yet!
+              Note: Cron-based scheduling is not live yet!
             </i>
           </div>
 
-          {/* Example 3 - Sequence */}
+          {/* Use Case 3 */}
           <div className="flex flex-col p-6 border rounded-lg shadow-sm hover:shadow-md transition">
             <h3 className="text-xl font-semibold mb-2">
               3. Welcome Email Series
@@ -197,13 +168,12 @@ schedify.scheduleMany([
   { event: "offer_email", after: "7d" }     // 4:00PM Jan 8
 ]);`}
             </CodeBlock>
-
             <i className="mt-3 text-sm text-gray-600">
               Note: Sequence scheduling is not live yet!
             </i>
           </div>
 
-          {/* Example 4 - Timezone-Aware */}
+          {/* Use Case 4 */}
           <div className="flex flex-col p-6 border rounded-lg shadow-sm hover:shadow-md transition">
             <h3 className="text-xl font-semibold mb-2">
               4. Morning Notifications
@@ -220,7 +190,7 @@ schedify.schedule({
 });`}
             </CodeBlock>
             <i className="mt-3 text-sm text-gray-600">
-              Note: User based timezone scheduling is not live yet! We convert
+              Note: User-based timezone scheduling is not live yet! We convert
               all time to UTC
             </i>
           </div>
@@ -325,7 +295,7 @@ await schedify.schedule("WEBHOOK_ID", {
         </div>
       </section>
 
-      <section className="container py-[15vh] flex justify-center">
+      {/* <section className="container pt-[10vh] flex justify-center">
         <div className="bg-indigo-900 w-full max-w-3xl min-h-[250px] md:min-h-[350px] rounded-xl flex flex-col items-center justify-center shadow-lg shadow-blue-500/50 px-6 py-8 text-center space-y-6">
           <h1 className="text-white font-bold font-poppins text-3xl md:text-5xl">
             Help Us Improve
@@ -363,9 +333,39 @@ await schedify.schedule("WEBHOOK_ID", {
             </a>
           </div>
         </div>
+      </section> */}
+
+      <section className="container py-[10vh] flex justify-center">
+        <div className="bg-indigo-950 w-full max-w-4xl rounded-2xl px-8 py-12 text-center text-white shadow-lg space-y-6">
+          <h2 className="text-3xl md:text-4xl font-bold font-poppins">
+            Ready to fast-track your backend?
+          </h2>
+          <p className="text-white/80 text-md md:text-lg">
+            Get started in minutes with zero infrastructure. No cron, no stress
+            — just reliable task scheduling, built for developers.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/webhooks">
+              <EnhancedButton
+                size="lg"
+                className="rounded-full font-semibold bg-blue-500 hover:bg-blue-600 text-white"
+                variant="expandIcon"
+                Icon={LucideZap}
+                iconPlacement="right"
+              >
+                Start Scheduling – Free Forever
+              </EnhancedButton>
+            </Link>
+            <Link href="/5-min-guide">
+              <Button className="text-white" size="lg" variant="link">
+                Read the 5-Min Guide <LucideChevronRight />
+              </Button>
+            </Link>
+          </div>
+        </div>
       </section>
 
-      <FAQ />
+      {/* <FAQ /> */}
       <Footer />
     </>
   );
@@ -395,7 +395,7 @@ const JoinNowButton = async () => {
           Icon={LucideZap}
           iconPlacement="right"
         >
-          Join now!
+          Start Scheduling - Free Forever
         </EnhancedButton>
       </ClerkLoading>
       <ClerkLoaded>
@@ -412,7 +412,7 @@ const JoinNowButton = async () => {
             Icon={LucideZap}
             iconPlacement="right"
           >
-            Join now!
+            Start Scheduling - Free Forever
           </EnhancedButton>
         </SignUpButton>
       </ClerkLoaded>

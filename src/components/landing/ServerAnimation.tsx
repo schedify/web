@@ -50,7 +50,7 @@ const AnimatedSchedifyComponent = () => {
     const processSchedifyEvent = async (event: ServerEvent) => {
       // Remove from schedify and add to received events
       setSchedifyServerEvents((prev) =>
-        prev.filter((e) => e.event !== event.event),
+        prev.filter((e) => e.event !== event.event)
       );
       setReceivedEvents((prev) => [...prev, event]);
 
@@ -76,7 +76,7 @@ const AnimatedSchedifyComponent = () => {
           const event = eventData[i];
           setTimeout(() => {
             setUserServerEvents((prev) =>
-              prev.filter((e) => e.event !== event.event),
+              prev.filter((e) => e.event !== event.event)
             );
             setSentEvents((prev) => [...prev, event]);
           }, i * 600);
@@ -84,7 +84,7 @@ const AnimatedSchedifyComponent = () => {
 
         // Wait for all events to be sent (3 seconds animation + 0.5 second delay between each)
         await new Promise((resolve) =>
-          setTimeout(resolve, eventData.length * 800 + 1500),
+          setTimeout(resolve, eventData.length * 800 + 1500)
         );
 
         // Move all events to schedify with 0.8 second delay between each
@@ -101,7 +101,7 @@ const AnimatedSchedifyComponent = () => {
         for (const event of eventData) {
           // Wait for event duration
           await new Promise((resolve) =>
-            setTimeout(resolve, event.duration * 1000),
+            setTimeout(resolve, event.duration * 1000)
           );
           await processSchedifyEvent(event);
         }
@@ -120,7 +120,7 @@ const AnimatedSchedifyComponent = () => {
   }, []);
 
   return (
-    <div className="sm:h-92 container min-h-[400px] flex flex-col sm:flex-row items-center ">
+    <div className="sm:h-92 container min-h-[400px]  flex flex-col sm:flex-row items-center ">
       {/* User Server */}
       <div className="shrink-0 h-92 min-h-[400px] w-64 border rounded-lg flex flex-col relative z-30 bg-white">
         <div className="p-2 border-b text-sm font-medium flex flex-row items-center gap-2">
@@ -254,7 +254,7 @@ const ServerRequestCard = ({
       className={cn(
         "h-24 w-full rounded flex flex-col justify-between p-2 relative",
         type === "user" && "bg-rose-500/15",
-        type === "schedify" && "bg-blue-500/15",
+        type === "schedify" && "bg-blue-500/15"
       )}
     >
       <div className="flex flex-row text-[10px] items-center justify-between">
@@ -263,14 +263,14 @@ const ServerRequestCard = ({
             className={cn(
               "h-2 w-2 rounded-full",
               type === "user" && "bg-rose-500",
-              type === "schedify" && "bg-blue-500",
+              type === "schedify" && "bg-blue-500"
             )}
           ></div>
           <span
             className={cn(
               "text-rose-500",
               type === "user" && "text-rose-500",
-              type === "schedify" && "text-blue-500",
+              type === "schedify" && "text-blue-500"
             )}
           >
             {event.event}

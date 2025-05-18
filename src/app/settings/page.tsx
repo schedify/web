@@ -1,9 +1,9 @@
-import { CopyTextComponent } from "@/app/components/CopyText";
+import { CopyTextComponent } from "@/components/CopyText";
 
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { fetchMe } from "../utils/get-apps";
-import DashboardNav from "../components/DashboardNav";
+import DashboardNav from "@/components/DashboardNav";
 
 export default async function Settings() {
   const user = await currentUser();

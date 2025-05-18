@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import DashboardNav from "../components/DashboardNav";
+import DashboardNav from "@/components/DashboardNav";
 
 export default function Loading() {
   return (

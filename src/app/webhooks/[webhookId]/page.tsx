@@ -1,18 +1,13 @@
-import { CopyTextComponent } from "@/app/components/CopyText";
 import { PageProps, WebhookEvent } from "@/app/types";
 import { fetchWebhook, fetchWebhookLogs } from "@/app/utils/get-webhooks";
 import { extractSearchParam, formatTime } from "@/app/utils/utils";
-import { Button } from "@/components/ui/button";
 import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
-import { cn } from "@/lib/utils";
 import {
-  LucideCalendar,
   LucideCat,
   LucideCheckCircle,
   LucideCircleAlert,
   LucideCircleSlash,
   LucideDot,
-  LucidePlusCircle,
 } from "lucide-react";
 import moment from "moment";
 import Link from "next/link";
@@ -41,7 +36,7 @@ export default async function WebhookPage({ searchParams, params }: PageProps) {
   }
 
   const [status, eventId, page] = [s.status, s.eventId, s.page].map(
-    extractSearchParam,
+    extractSearchParam
   );
 
   const webhookRes = await fetchWebhook(webhookIdParams);
@@ -60,10 +55,6 @@ export default async function WebhookPage({ searchParams, params }: PageProps) {
             <p className="text-muted-foreground italic text-sm">
               {webhookRes.webhook.url}
             </p>
-            {/* <div className="inline-flex items-center gap-0.5 italic text-sm">
-              <span className="font-bold">Secret:</span>
-
-            </div> */}
           </div>
 
           <ScheduleEventDialog
@@ -165,8 +156,8 @@ const Logs = async ({
                   {moment().format("YYYY-MM-DD") === time
                     ? "Today"
                     : moment().subtract(1, "day").format("YYYY-MM-DD") === time
-                      ? "Yesterday"
-                      : formatTime(time)}
+                    ? "Yesterday"
+                    : formatTime(time)}
                 </span>
 
                 {logs.map((log: WebhookEvent) => (
@@ -208,7 +199,7 @@ const Logs = async ({
                           Scheduled:{" "}
                           <b>
                             {new Date(
-                              log.scheduled_for * 1000,
+                              log.scheduled_for * 1000
                             ).toLocaleString()}
                           </b>
                         </Label>
@@ -218,7 +209,7 @@ const Logs = async ({
                             Processed at:{" "}
                             <b>
                               {new Date(
-                                log.processed_at * 1000,
+                                log.processed_at * 1000
                               ).toLocaleString()}
                             </b>
                           </Label>
@@ -267,7 +258,7 @@ const WebhookEventPayload: FC<{ payload: string }> = async ({ payload }) => {
           cls = "text-red-600"; // Numbers in orange
         }
         return `<span class="${cls}">${match}</span>`;
-      },
+      }
     );
   };
 
