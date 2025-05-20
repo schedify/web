@@ -1,8 +1,6 @@
 import { CodeBlock } from "@/components/code-block";
-import { FAQ } from "@/components/landing/FAQ";
 import { Footer } from "@/components/landing/Footer";
 import AnimatedSchedifyComponent from "@/components/landing/ServerAnimation";
-import { Button } from "@/components/ui/button";
 import { EnhancedButton } from "@/components/ui/enhanced-btn";
 import { ClerkLoaded, ClerkLoading, SignUpButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
@@ -15,7 +13,6 @@ import {
   LucideLandmark,
   LucideLock,
   LucideWebhook,
-  LucideZap,
 } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -23,19 +20,19 @@ import { Suspense } from "react";
 export default async function HomePageRoute() {
   return (
     <div className="container px-0 border">
-      <section className="hero py-[15vh] pt-[10vh] flex flex-col items-center gap-5 relative mx-10">
-        <h1 className="text-center text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-gray-200 leading-tight relative">
+      <section className="hero py-[15vh] pt-[10vh] flex flex-col items-center gap-5 relative  mx-4 md:mx-10">
+        <h1 className="text-center text-2xl sm:text-6xl md:text-7xl font-bold tracking-tight text-gray-200 leading-tight relative">
           <span className="text-blue-500">Stop</span> writing schedulers
           <br />
           from <i className="italic text-white">scratch!</i>
         </h1>
 
-        <p className="mt-3 mb-10 text-center text-lg sm:text-xl text-gray-400 font-medium mx-auto">
+        <p className="mt-3 mb-10 text-center text-sm sm:text-xl text-gray-400 font-medium mx-auto">
           Just tell us what to do and when — we’ll ping your server right on
           time.
         </p>
 
-        <div className="flex flex-row items-center">
+        <div className="flex flex-col-reverse gap-4 md:flex-row items-center">
           <Link href="/5-min-guide">
             <EnhancedButton variant="linkHover2" size="lg">
               5-Min Guide
@@ -60,7 +57,7 @@ export default async function HomePageRoute() {
           </Suspense>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 place-items-center relative place-content-center w-full border-y py-5 mt-10 ">
+        <div className="grid grid-cols-1 gap-10 md:gap-0 md:grid-cols-3 place-items-center relative place-content-center w-full border-y py-5 mt-10 ">
           <div className="size-[10px] bg-background border border-border rounded-[2px] absolute top-[-5px] left-0"></div>
           <div className="size-[10px] bg-background border border-border rounded-[2px] absolute top-[-5px] right-0"></div>
           <div className="size-[10px] bg-background border border-border rounded-[2px] absolute bottom-[-5px] left-0"></div>
@@ -110,7 +107,7 @@ export default async function HomePageRoute() {
           Example use cases
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 border-t border-l">
-          <div className="flex flex-col p-6 border-b border-r">
+          <div className="flex flex-col p-3 md:p-6 border-b border-r">
             <h3 className="text-xl font-semibold mb-2">Task Schedule</h3>
             <p className="text-gray-300 pb-5 text-sm">
               Cancel unpaid orders <strong>30 minutes after creation</strong>
@@ -125,7 +122,7 @@ schedify.schedule({
             </CodeBlock>
           </div>
 
-          <div className="flex flex-col p-6 border-b border-r">
+          <div className="flex flex-col p-3 md:p-6 border-b border-r">
             <div className="inline-flex items-start justify-between">
               <h3 className="text-xl font-semibold mb-2">Multiple Timezones</h3>
             </div>
@@ -143,7 +140,7 @@ schedify.schedule({
             </CodeBlock>
           </div>
 
-          <div className="flex flex-col p-6 border-b border-r">
+          <div className="flex flex-col p-3 md:p-6 border-b border-r">
             <div className="inline-flex items-start justify-between">
               <h3 className="text-xl font-semibold mb-2">Cron Schedule</h3>
               <div className=" bg-white text-sm text-black font-geist-mono p-2 font-bold">
@@ -164,7 +161,7 @@ schedify.schedule({
             </CodeBlock>
           </div>
 
-          <div className="flex flex-col p-6 border-b border-r">
+          <div className="flex flex-col p-3 md:p-6 border-b border-r">
             <div className="inline-flex items-start justify-between">
               <h3 className="text-xl font-semibold mb-2">Batch Schedules</h3>
               <div className="bg-white text-sm text-black font-geist-mono p-2 font-bold">
@@ -201,11 +198,11 @@ schedify.scheduleMany([
                 passHref
                 target="_blank"
               >
-                <div className="hover:bg-[#0C0C0C]  space-y-5 duration-50 transition-colors cursor-pointer p-3">
+                <div className="hover:bg-[#0C0C0C] space-y-5 duration-50 group transition-colors cursor-pointer p-3">
                   <div className="flex font-semibold flex-row col-span-2 gap-3 items-center">
                     <LucideBookOpen />
                     Documentation
-                    <LucideArrowUpRight className="ml-auto self-end" />
+                    <LucideArrowUpRight className="ml-auto self-end group-hover:translate-x-1 group-hover:-translate-y-1 duration-100 transition-shadow" />
                   </div>
 
                   <p>Read our guides and documentation</p>
@@ -217,11 +214,11 @@ schedify.scheduleMany([
                 passHref
                 target="_blank"
               >
-                <div className="hover:bg-[#0C0C0C]  space-y-5 duration-50 transition-colors cursor-pointer p-3">
+                <div className="hover:bg-[#0C0C0C] group space-y-5 duration-50 transition-colors cursor-pointer p-3">
                   <div className="flex font-semibold flex-row col-span-2 gap-3 items-center">
                     <LucideLandmark />
                     API Reference
-                    <LucideArrowUpRight className="ml-auto self-end" />
+                    <LucideArrowUpRight className="ml-auto self-end group-hover:translate-x-1 group-hover:-translate-y-1 duration-100 " />
                   </div>
 
                   <p>Refer to our API endpoints and schemas</p>
@@ -233,11 +230,11 @@ schedify.scheduleMany([
                 passHref
                 target="_blank"
               >
-                <div className="hover:bg-[#0C0C0C]  space-y-5 duration-50 transition-colors cursor-pointer p-3">
+                <div className="hover:bg-[#0C0C0C] group space-y-5 duration-50 transition-colors cursor-pointer p-3">
                   <div className="flex font-semibold flex-row col-span-2 gap-3 items-center">
                     <LucideWebhook />
                     Standard Webhooks Compliant
-                    <LucideArrowUpRight className="ml-auto self-end" />
+                    <LucideArrowUpRight className="ml-auto self-end group-hover:translate-x-1 group-hover:-translate-y-1 duration-100 " />
                   </div>
 
                   <p>Read the Standard Webhooks spec</p>
@@ -280,7 +277,7 @@ await schedify.schedule("WEBHOOK_ID", {
                 Icon={LucideChevronRight}
                 iconPlacement="right"
               >
-                Start Scheduling — Free Forever
+                Start Scheduling — Its free
               </EnhancedButton>
             </Link>
             <Link href="/5-min-guide">

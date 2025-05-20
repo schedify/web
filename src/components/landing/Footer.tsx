@@ -69,7 +69,7 @@ export const Footer = () => {
         alt=""
         height={500}
         width={300}
-        className="w-[80%] absolute left-1/2 -translate-x-1/2 bottom-[-30%] "
+        className="w-[80%] absolute left-1/2 -translate-x-1/2 bottom-0 md:bottom-[-30%] "
       />
     </footer>
   );

@@ -29,7 +29,7 @@ export const Header = () => {
             href="https://insigh.to/b/schedify"
             passHref
             target="_blank"
-            className="flex flex-row items-center gap-2 font-geist-sans hover:bg-secondary px-2 py-1 rounded-xl cursor-pointer duration-150"
+            className="flex flex-row max-sm:hidden items-center gap-2 font-geist-sans hover:bg-secondary px-2 py-1 rounded-xl cursor-pointer duration-150"
           >
             <h1 className="text-sm">Feature Request</h1>
           </Link>

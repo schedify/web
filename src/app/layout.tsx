@@ -51,21 +51,25 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Scheduling made easier.",
-  description: "The scheduling system your apps can depend on",
+  title: "Stop writing schedulers from scratch!",
+  description:
+    "Just tell us what to do and when — we’ll ping your server right on time. Schedify is the scheduling system your apps can depend on.",
   keywords: [
-    "scheduling system",
-    "task automation",
-    "Schedify",
-    "workflow management",
-    "calendar API",
     "task scheduler",
-    "event automation",
+    "cron job automation",
+    "webhook scheduler",
+    "Schedify",
+    "developer tools",
+    "workflow automation",
+    "serverless scheduling",
+    "calendar API",
+    "job scheduling API",
   ],
   openGraph: {
     siteName: "Schedify",
-    title: "Scheduling made easier.",
-    description: "The scheduling system your apps can depend on",
+    title: "Stop writing schedulers from scratch!",
+    description:
+      "Just tell us what to do and when — we’ll ping your server right on time. Schedify is the scheduling system your apps can depend on.",
     images: [
       {
         url: "https://schedify.dev/schedify.png",
@@ -77,8 +81,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Scheduling made easier.",
-    description: "The scheduling system your apps can depend on",
+    title: "Stop writing schedulers from scratch!",
+    description:
+      "Just tell us what to do and when — we’ll ping your server right on time. Schedify is the scheduling system your apps can depend on.",
     images: ["https://schedify.dev/schedify.png"],
   },
   icons: [
