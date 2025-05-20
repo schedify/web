@@ -78,7 +78,10 @@ export default {
   			],
   			poppins: [
   				'var(--font-poppins)'
-  			]
+  			],
+				quicksand: [
+  				'var(--font-quicksand)'
+				]
   		},
   		keyframes: {
   			'accordion-down': {

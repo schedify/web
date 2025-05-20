@@ -14,15 +14,15 @@ import Link from "next/link";
 
 export const Header = () => {
   return (
-    <div className="container flex flex-col fixed left-1/2 -translate-x-1/2 top-1 rounded-b-3xl gap-3 z-50 backdrop-blur-lg py-5">
+    <div className="flex flex-col sticky left-5 right-5 top-5 mx-5 gap-3 z-50 backdrop-blur-lg p-2 border">
       <div className="flex flex-row items-center justify-between">
-        <div className="inline-flex items-center font-geist-mono gap-5">
+        <div className="inline-flex items-center font-poppins gap-5">
           <Link
             href="/"
             className="flex flex-row items-center gap-2 hover:bg-secondary px-2 py-1 rounded-xl cursor-pointer duration-150"
           >
             <img src="/schedify.png" alt="Schedify" height={24} width={24} />
-            <h1 className="font-bold text-lg">Schedify</h1>
+            <h1 className="font-bold text-[15px]">Schedify</h1>
           </Link>
 
           <Link
@@ -46,14 +46,11 @@ export const Header = () => {
 
         <div className="inline-flex items-center gap-5">
           <ClerkLoading>
-            <Skeleton className="min-h-[28px] min-w-[28px] rounded-full" />
+            <Skeleton className="min-h-[28px] min-w-[28px]" />
           </ClerkLoading>
           <ClerkLoaded>
             <SignedOut>
-              <Link
-                href="https://discord.gg/DYmy6QYUpr"
-                className="inline-flex items-center gap-2 bg-white text-indigo-900 font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-gray-100 transition"
-              >
+              <Link href="https://discord.gg/DYmy6QYUpr" className="fill-white">
                 <svg
                   role="img"
                   viewBox="0 0 24 24"
@@ -66,9 +63,7 @@ export const Header = () => {
               </Link>
 
               <SignInButton mode="modal">
-                <Button className="rounded-full font-semibold">
-                  Join Now!
-                </Button>
+                <Button className="font-semibold">Join Now!</Button>
               </SignInButton>
             </SignedOut>
             <SignedIn>

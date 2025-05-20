@@ -54,7 +54,6 @@ const AnimatedSchedifyComponent = () => {
       );
       setReceivedEvents((prev) => [...prev, event]);
 
-      // Wait 3 seconds for receiving animation
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       // Remove from received and add back to user server
@@ -84,7 +83,7 @@ const AnimatedSchedifyComponent = () => {
 
         // Wait for all events to be sent (3 seconds animation + 0.5 second delay between each)
         await new Promise((resolve) =>
-          setTimeout(resolve, eventData.length * 800 + 1500)
+          setTimeout(resolve, eventData.length * 800 + 100)
         );
 
         // Move all events to schedify with 0.8 second delay between each
@@ -101,7 +100,7 @@ const AnimatedSchedifyComponent = () => {
         for (const event of eventData) {
           // Wait for event duration
           await new Promise((resolve) =>
-            setTimeout(resolve, event.duration * 1000)
+            setTimeout(resolve, event.duration * 500)
           );
           await processSchedifyEvent(event);
         }
@@ -122,7 +121,7 @@ const AnimatedSchedifyComponent = () => {
   return (
     <div className="sm:h-92 container min-h-[400px]  flex flex-col sm:flex-row items-center ">
       {/* User Server */}
-      <div className="shrink-0 h-92 min-h-[400px] w-64 border rounded-lg flex flex-col relative z-30 bg-white">
+      <div className="shrink-0 h-92 min-h-[400px] w-64 border rounded-lg flex flex-col relative z-30 bg-[#0C0C0C]">
         <div className="p-2 border-b text-sm font-medium flex flex-row items-center gap-2">
           <CloudServerIcon />
           <span>User Server</span>
@@ -148,7 +147,7 @@ const AnimatedSchedifyComponent = () => {
         <div className="w-full flex flex-col items-center relative">
           <div className="left-0 absolute bg-border w-1 h-5 -translate-y-1/2 rounded-r z-30" />
           <div className="right-0 absolute bg-border w-1 h-5 -translate-y-1/2 rounded-l z-30" />
-          <hr className="w-full border-dashed border-t border-gray-300" />
+          <hr className="w-full border-dashed border-t border-gray-500" />
           {/* Animation */}
           <AnimatePresence>
             {sentEvents.map((event) => (
@@ -163,7 +162,7 @@ const AnimatedSchedifyComponent = () => {
                   ease: "linear",
                 }}
               >
-                <div className="px-2 py-1 border-dashed bg-white border rounded-md text-[10px]">
+                <div className="px-2 py-1 border-dashed bg-[#0C0C0C] border rounded-md text-[14px]">
                   {event.event}
                 </div>
               </motion.div>
@@ -174,7 +173,7 @@ const AnimatedSchedifyComponent = () => {
         <div className="w-full flex flex-col items-center relative">
           <div className="left-0 absolute bg-border w-1 h-5 -translate-y-1/2 rounded-r z-30" />
           <div className="right-0 absolute bg-border w-1 h-5 -translate-y-1/2 rounded-l z-30" />
-          <hr className="w-full border-dashed border-t border-gray-300" />
+          <hr className="w-full border-dashed border-t border-gray-500" />
           {/* Animation */}
           <AnimatePresence>
             {receivedEvents.map((event) => (
@@ -189,7 +188,7 @@ const AnimatedSchedifyComponent = () => {
                   ease: "linear",
                 }}
               >
-                <div className="px-2 py-1 border-dashed bg-white border rounded-md text-[10px]">
+                <div className="px-2 py-1 border-dashed bg-[#0C0C0C] border rounded-md text-[14px]">
                   {event.event}
                 </div>
               </motion.div>
@@ -198,7 +197,7 @@ const AnimatedSchedifyComponent = () => {
         </div>
       </div>
       {/* Schedify Server */}
-      <div className="shrink-0 min-h-[400px] h-92 w-64 border rounded-lg flex flex-col relative z-30 bg-white">
+      <div className="shrink-0 min-h-[400px] h-92 w-64 border rounded-lg flex flex-col relative z-30 bg-[#0C0C0C]">
         <div className="p-2 border-b text-sm font-medium flex flex-row items-center gap-2">
           <CloudServerIcon />
           <span>Schedify Server</span>
@@ -289,7 +288,7 @@ const ServerRequestCard = ({
       </div>
       {/* if event is schedify, show the icon */}
       {type === "schedify" && (
-        <div className="absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 px-1.5 py-1 rounded-full shadow bg-[#ffffff] flex items-center justify-center">
+        <div className="absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 px-1.5 py-1 rounded-full shadow bg-[#0C0C0C] flex items-center justify-center">
           <div className="flex flex-row gap-1 items-center justify-center">
             <StopwatchIcon height={12} width={12} />
             <span className="text-muted-foreground text-[8px]">

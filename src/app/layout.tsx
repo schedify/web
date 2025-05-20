@@ -7,6 +7,7 @@ import {
   Karla as FontKarla,
   Poppins as FontPoppins,
   Inconsolata as FontInconsolata,
+  Quicksand as FontQuicksand,
 } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -37,6 +38,12 @@ const fontInconsolata = FontInconsolata({
   weight: ["500", "900"],
   subsets: ["latin"],
   variable: "--font-inconsolata",
+});
+
+const fontQuicksand = FontQuicksand({
+  weight: ["300", "400", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-quicksand",
 });
 
 export const viewport: Viewport = {
@@ -127,7 +134,7 @@ export default function RootLayout({
       <QueryProvider>
         <html lang="en">
           <body
-            className={`${geistSans.variable} ${geistMono.variable} ${fontKarla.variable} ${fontPoppins.variable} ${fontInconsolata.variable} antialiased bg-background hero-gradient bg-no-repeat min-h-screen`}
+            className={`${geistSans.variable} ${geistMono.variable} ${fontKarla.variable} ${fontPoppins.variable} ${fontInconsolata.variable} ${fontQuicksand} antialiased bg-background dark bg-no-repeat min-h-screen font-quicksand`}
           >
             <ProgressBarProvider>
               {header}

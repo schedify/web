@@ -1,58 +1,76 @@
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <footer className="bg-primary min-h-[400px] relative flex py-10 overflow-hidden">
-      <span
-        className={cn(
-          "absolute -bottom-20 left-0 right-0 font-bold select-none font-poppins text-center",
-          "text-center text-5xl md:text-9xl lg:text-[12rem] xl:text-[13rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-primary dark:from-neutral-950 to-background dark:to-neutral-800 inset-x-0"
-        )}
-      >
-        Schedify
-      </span>
+    <footer className="min-h-[400px] relative flex flex-col gap-10 py-10 overflow-hidden">
+      <div className="flex flex-row w-full justify-end pr-10 gap-10">
+        <div className="flex flex-col gap-7 self-end">
+          <h1 className="text-gray-300 font-bold">Legal</h1>
 
-      <div className="container h-full">
-        <div className="text-background flex flex-row justify-between">
-          <div className="flex flex-row items-center gap-2">
-            <img src="/schedify.png" alt="Schedify" height={24} width={24} />
-            <h1 className="font-bold font-geist-mono text-lg">Schedify</h1>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <h1 className="text-gray-300 font-geist-sans">Legal</h1>
-
-            <div className="text-sm flex flex-col font-geist-sans gap-1">
-              <Link
-                className="hover:underline underline-offset-2 "
-                href="/legal/terms"
-              >
-                Terms of Service
-              </Link>
-              <Link
-                className="hover:underline underline-offset-2 "
-                href="/legal/privacy"
-              >
-                Privacy Policy
-              </Link>
-            </div>
+          <div className="text-sm flex flex-col gap-3">
+            <Link
+              className="hover:underline underline-offset-2 "
+              href="/legal/terms"
+            >
+              Terms of Service
+            </Link>
+            <Link
+              className="hover:underline underline-offset-2 "
+              href="/legal/privacy"
+            >
+              Privacy Policy
+            </Link>
           </div>
         </div>
 
-        <span className="text-white mt-auto text-sm font-medium font-geist-mono">
-          © 2024 Schedify by{" "}
-          <a
-            href="https://github.com/ksamirdev"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-400 hover:text-blue-600 transition-colors duration-300"
-          >
-            Samir
-          </a>
-          . All rights reserved.
-        </span>
+        <div className="flex relative">
+          <div className="size-[10px] bg-background border border-border rounded-[2px] absolute top-[-5px] left-[-4.5px]"></div>
+          <div className="w-px bg-border min-h-[70px]"></div>
+          <div className="size-[10px] bg-background border border-border rounded-[2px] absolute bottom-[-5px] left-[-4.5px]"></div>
+        </div>
+
+        <div className="flex flex-col gap-7 self-end">
+          <h1 className="text-gray-300 font-bold">Company</h1>
+
+          <div className="text-sm flex flex-col gap-3">
+            <Link
+              className="hover:underline underline-offset-2 "
+              href="/legal/terms"
+            >
+              Contact us
+            </Link>
+            <Link
+              className="hover:underline underline-offset-2 "
+              href="/legal/privacy"
+            >
+              About
+            </Link>
+          </div>
+        </div>
       </div>
+
+      <span className="text-white self-center text-sm font-medium">
+        © 2025 Schedify by{" "}
+        <a
+          href="https://github.com/ksamirdev"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-400 hover:text-blue-600 transition-colors duration-300"
+        >
+          Samir
+        </a>
+        . All rights reserved.
+      </span>
+
+      <Image
+        src="/schedify-text-mask.svg"
+        alt=""
+        height={500}
+        width={300}
+        className="w-[80%] absolute left-1/2 -translate-x-1/2 bottom-[-30%] "
+      />
     </footer>
   );
 };
