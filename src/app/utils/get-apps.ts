@@ -14,7 +14,7 @@ type Pagination = {
 export const makeRequest = async <T extends unknown>(
   url: string,
   method: string,
-  query: Record<string, string> = {},
+  query: Record<string, string> = {}
 ): Promise<T> => {
   const tkn = await getAccessToken();
   if (!tkn) throw redirect("/login");
@@ -120,5 +120,5 @@ export const fetchAppWebhooks = cache(
           count: number;
         }
     >(`/apps/${appId}/webhooks?page=${page}&limit=${limit}`, "GET");
-  },
+  }
 );

@@ -34,7 +34,7 @@ export const CopyTextComponent: FC<{
       <span
         className={cn(
           "px-1 py-0.5 rounded-md select-none underline-offset-4",
-          !reveal ? "blur-sm" : "hover:bg-blue-50 ",
+          !reveal ? "blur-sm" : "hover:bg-neutral-900 "
         )}
       >
         {text}

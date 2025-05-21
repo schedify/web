@@ -92,7 +92,7 @@ const Logs = async ({
 }) => {
   return (
     <>
-      <div className="flex flex-col bg-white p-5 border rounded-xl gap-3 text-sm w-full shadow-md">
+      <div className="flex flex-col bg-[#131313] p-5 border rounded-xl gap-3 text-sm w-full shadow-md">
         <ul className="grid grid-cols-[repeat(2,80px)] border-b gap-5">
           <li className="pb-3 font-poppins relative text-center text-gray-500">
             <Link href={`/webhooks/${params.webhookId}/`}>Events</Link>

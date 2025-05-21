@@ -40,6 +40,7 @@ import { cn } from "@/lib/utils";
 import moment from "moment";
 import { Calendar } from "@/components/ui/calendar";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { EnhancedButton } from "@/components/ui/enhanced-btn";
 
 export const ScheduleEventDialog = ({
   accessToken,
@@ -78,7 +79,7 @@ export const ScheduleEventDialog = ({
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
-      },
+      }
     );
     const res = await resp.json();
     if (!res.status) {
@@ -104,13 +105,18 @@ export const ScheduleEventDialog = ({
     <Form {...form}>
       <Dialog open={dialogOpen} onOpenChange={(o) => setDialogOpen(o)}>
         <DialogTrigger asChild>
-          <Button
-            variant={"default"}
-            className="rounded-full bg-blue-600 hover:bg-blue-500 font-bold max-md:self-end"
-          >
-            <LucidePlus className="stroke-[3px]" />
+          <Button size="lg">
+            <LucidePlus className="stroke-[3px] size-4 mr-2" />
             Schedule Event
           </Button>
+
+          {/* <Button
+            variant={"default"}
+            className="bg-blue-600 hover:bg-blue-500 font-bold max-md:self-end"
+          >
+            <LucidePlus className="stroke-[3px]" />
+            
+          </Button> */}
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
@@ -148,7 +154,7 @@ export const ScheduleEventDialog = ({
                           variant={"outline"}
                           className={cn(
                             "pl-3 text-left font-normal w-full",
-                            !field.value && "text-muted-foreground",
+                            !field.value && "text-muted-foreground"
                           )}
                         >
                           {field.value ? (
@@ -171,7 +177,7 @@ export const ScheduleEventDialog = ({
                               return form.setValue("scheduledFor", date);
                             form.setValue(
                               "scheduledFor",
-                              moment().add(1, "d").toDate(),
+                              moment().add(1, "d").toDate()
                             );
                           }}
                           disabled={(date) => date < new Date()}
@@ -205,7 +211,7 @@ export const ScheduleEventDialog = ({
                                         "scheduledFor",
                                         moment(field.value)
                                           .set("hour", i + 1)
-                                          .toDate(),
+                                          .toDate()
                                       );
                                     }}
                                   >
@@ -244,7 +250,7 @@ export const ScheduleEventDialog = ({
                                         "scheduledFor",
                                         moment(field.value)
                                           .set("minute", i)
-                                          .toDate(),
+                                          .toDate()
                                       );
                                     }}
                                   >
@@ -275,9 +281,9 @@ export const ScheduleEventDialog = ({
                                   moment(field.value)
                                     .set(
                                       "hour",
-                                      moment(field.value).hour() % 12,
+                                      moment(field.value).hour() % 12
                                     )
-                                    .toDate(),
+                                    .toDate()
                                 );
                               }}
                             >
@@ -297,9 +303,9 @@ export const ScheduleEventDialog = ({
                                   moment(field.value)
                                     .set(
                                       "hour",
-                                      (moment(field.value).hour() % 12) + 12,
+                                      (moment(field.value).hour() % 12) + 12
                                     )
-                                    .toDate(),
+                                    .toDate()
                                 );
                               }}
                             >

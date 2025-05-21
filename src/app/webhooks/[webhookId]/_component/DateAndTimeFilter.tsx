@@ -12,9 +12,14 @@ export const StatusFilter: FC = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="inline-flex items-center select-none gap-2 border border-dashed border-neutral-400 hover:bg-neutral-100 duration-150 px-2 py-0.5 rounded-full cursor-pointer">
-          <LucidePlusCircle size={12} className="stroke-neutral-700" />
-          <span className="text-xs font-poppins text-neutral-700">Status</span>
+        <div className="inline-flex items-center select-none gap-2 border border-dashed border-neutral-400 dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-800 duration-150 px-2 py-0.5 rounded-full cursor-pointer">
+          <LucidePlusCircle
+            size={12}
+            className="stroke-neutral-700 dark:stroke-neutral-200"
+          />
+          <span className="text-xs font-poppins text-neutral-700 dark:text-neutral-200">
+            Status
+          </span>
         </div>
       </PopoverTrigger>
       <PopoverContent className="space-y-5">

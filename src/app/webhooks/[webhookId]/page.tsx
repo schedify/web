@@ -109,8 +109,8 @@ const Logs = async ({
 
   return (
     <>
-      <div className="flex flex-col bg-white p-5 border rounded-xl gap-3 text-sm w-full shadow-md">
-        <ul className="grid grid-cols-[repeat(2,80px)] border-b gap-5">
+      <div className="flex flex-col bg-[#131313] p-5 border rounded-xl gap-3 text-sm w-full shadow-md">
+        <ul className="grid grid-cols-[repeat(2,80px)] border-b  gap-5">
           <li className="font-[500] font-poppins relative text-center pb-3">
             <Link
               href={`/webhooks/${params.webhookId}/`}
@@ -120,7 +120,7 @@ const Logs = async ({
             </Link>
 
             {params.status === null || params.status === "all" ? (
-              <div className="h-[2px] bg-black absolute bottom-0 w-full animate-in fade-in duration-500"></div>
+              <div className="h-[2px] bg-blue-500 absolute bottom-0 w-full animate-in fade-in duration-500"></div>
             ) : null}
           </li>
 
@@ -139,7 +139,7 @@ const Logs = async ({
 
         <ul className="flex flex-row items-center gap-3 pb-3">
           <StatusFilter />
-          <StatusTimeFilter />
+          {/* <StatusTimeFilter /> */}
         </ul>
 
         <Accordion type="single" collapsible>

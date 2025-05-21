@@ -16,12 +16,12 @@ export default async function WebhooksRoute() {
         <h3 className="scroll-m-20 text-2xl font-poppins font-semibold tracking-tight text-primary">
           Webhooks
         </h3>
-        <p className="mt-2 text-gray-600">
+        <p className="mt-2 text-muted-foreground">
           A webhook sends real-time notifications to a URL when an event happens
           in your app.
         </p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 font-geist-mono">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 ">
         <CreateWebhookModel accessToken={(await getAccessToken()) || ""} />
 
         <Suspense
@@ -58,21 +58,26 @@ const UserWebhooks = async () => {
     <Link
       href={`/webhooks/${webhook.id}`}
       key={webhook.id}
-      className="flex flex-col border rounded-lg min-h-[200px] bg-primary  cursor-pointer border-neutral-100 dark:border-neutral-700 group p-1 gap-1 hover:shadow-xl duration-100"
+      className="flex flex-col border rounded-lg min-h-[200px] bg-[#202020] cursor-pointer border-neutral-900 group p-1 gap-1 hover:shadow-xl duration-100"
     >
-      <div className="flex-1 bg-white dark:bg-neutral-950 flex flex-col rounded-md  shadow">
+      <div className="flex-1 bg-[#0C0C0C] flex flex-col rounded-md  shadow">
         <h1 className="text-sm font-bold mt-auto p-3 text-primary">
           {webhook.name}
         </h1>
       </div>
 
       <div className="px-2 py-1 text-[10px] flex flex-row items-center justify-between">
-        <div className=" font-medium text-secondary">
+        <div />
+        {/* <div className="font-medium">
           Updated {formatTime(webhook.updated_at * 1000)}
-        </div>
+        </div> */}
 
-        <div className="inline-flex items-center  gap-2">
-          <span>Go to app</span> <LucideArrowRight size={10} />
+        <div className="inline-flex items-center group gap-2">
+          <span>Go to app</span>{" "}
+          <LucideArrowRight
+            className="group-hover:translate-x-1 duration-100"
+            size={10}
+          />
         </div>
       </div>
     </Link>

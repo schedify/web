@@ -14,16 +14,13 @@ export default async function WebhookPage() {
             <Skeleton className="min-h-[20px] min-w-[40px]" />
           </div>
 
-          <Button
-            variant={"default"}
-            className="rounded-full bg-blue-600 hover:bg-blue-500 font-bold max-md:self-end"
-          >
-            <LucidePlus className="stroke-[3px]" />
+          <Button size="lg">
+            <LucidePlus className="stroke-[3px] size-4 mr-2" />
             Schedule Event
           </Button>
         </div>
 
-        <div className="flex flex-col bg-white p-5 border rounded-xl gap-3 text-sm w-full shadow-md">
+        <div className="flex flex-col bg-white dark:bg-[#131313] p-5 border rounded-xl gap-3 text-sm w-full shadow-md">
           <ul className="grid grid-cols-[repeat(2,80px)] border-b gap-5">
             <li className="pb-3 font-poppins relative text-center text-gray-500">
               <Link href="" className="font-medium">

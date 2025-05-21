@@ -12,18 +12,23 @@ export default function FiveMinGuide() {
           Simple Integration Guide
         </h1>
 
-        {/* <div className="grid grid-cols-6">
+        <div className="grid grid-cols-6">
           <div />
           <div className="col-span-4 grid grid-cols-2 border-2 border-[#282828] bg-[#191919]">
-            <button className="py-3 bg-[#FAFAFA] text-[#191919] font-bold text-lg">
+            <button className="py-3 font-bold text-lg inline-flex items-center justify-center gap-5">
               No Auth guide
+              <div className="bg-white text-sm font-bold text-background px-3 py-1 rounded-full">
+                COMING SOON
+              </div>
             </button>
-            <button className="py-3 font-bold text-lg">Auth Guide</button>
+            <button className="py-3 bg-[#FAFAFA] text-[#191919]  font-bold text-lg">
+              Auth Guide
+            </button>
           </div>
           <div />
-        </div> */}
+        </div>
 
-        <div className="grid gap-5 divide-y border-y">
+        {/* <div className="grid gap-5 divide-y border-y">
           <div className="space-y-4 p-5">
             <div className="size-[30px] rounded-full text-center text-black bg-white text-lg font-bold">
               1
@@ -156,14 +161,16 @@ X-Webhook-ID: <Webhook ID>`}
               replay attacks.
             </p>
           </div>
-        </div>
+        </div> */}
 
-        {/* <ol className="space-y-12 text-lg mt-12">
-          <li>
-            <h2 className="text-2xl font-semibold mb-2">
-              1. Create an account
-            </h2>
-            <p>
+        <div className="grid gap-5 divide-y border-y">
+          <div className="space-y-4 p-5">
+            <div className="size-[30px] rounded-full text-center text-black bg-white text-lg font-bold">
+              1
+            </div>
+            <div className="text-xl font-bold">Create an account</div>
+
+            <p className="text-muted-foreground">
               Start by signing up. It's free, fast, and gets you API keys +
               dashboard access.
             </p>
@@ -186,13 +193,15 @@ X-Webhook-ID: <Webhook ID>`}
                 </EnhancedButton>
               </SignUpButton>
             </ClerkLoaded>
-          </li>
+          </div>
 
-          <li>
-            <h2 className="text-2xl font-semibold mb-2">
-              2. Register your webhook
-            </h2>
-            <p className="mb-2">
+          <div className="space-y-4 p-5">
+            <div className="size-[30px] rounded-full text-center text-black bg-white text-lg font-bold">
+              2
+            </div>
+            <div className="text-xl font-bold">Register your webhook</div>
+
+            <p className="text-muted-foreground">
               Head over to the{" "}
               <Link
                 href="/webhooks"
@@ -200,38 +209,43 @@ X-Webhook-ID: <Webhook ID>`}
               >
                 Webhooks section
               </Link>{" "}
-              in your dashboard and click “Setup Webhook”.
+              in your dashboard and click "Setup Webhook”.
             </p>
+
             <ul className="list-disc list-inside pl-4 mb-4 text-base">
               <li>
                 <strong>Name:</strong> Anything you like (e.g., "My Server")
               </li>
               <li>
                 <strong>URL:</strong>{" "}
-                <code className="bg-gray-200 px-1 rounded">
+                <code className="bg-gray-800 px-1 rounded">
                   https://yourdomain.com/webhook
                 </code>
               </li>
             </ul>
-            <p>
+            <p className="text-muted-foreground">
               Need more details? Check out the{" "}
               <a
-                href="https://docs.schedify.dev/docs/schedify-webhook/overview"
+                href="https://docs.schedify.dev/docs/"
                 className="text-blue-600 underline font-medium"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                webhook docs
+                docs
               </a>
               .
             </p>
-          </li>
+          </div>
 
-          <li>
-            <h2 className="text-2xl font-semibold mb-2">
-              3. Schedule your first task
-            </h2>
-            <p className="mb-2">Trigger notifications at specific times via:</p>
+          <div className="space-y-4 p-5">
+            <div className="size-[30px] rounded-full text-center text-black bg-white text-lg font-bold">
+              3
+            </div>
+            <div className="text-xl font-bold">Schedule your first task</div>
+
+            <p className="text-muted-foreground">
+              Trigger notifications at specific times via
+            </p>
             <ul className="list-disc list-inside pl-4 text-base space-y-1">
               <li>
                 <Link
@@ -253,30 +267,29 @@ X-Webhook-ID: <Webhook ID>`}
                 </Link>
               </li>
               <li>
-                <Link
-                  href="https://docs.schedify.dev/docs/schedify-api/overview"
-                  className="text-blue-600 underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  📦 SDK (Node, Python, etc.)
-                </Link>
+                <div className="inline-flex items-center gap-2">
+                  <span>📦 SDK (Node, Python, etc.) </span>
+                  <div className="bg-white text-sm font-bold text-background px-3 py-1">
+                    COMING SOON
+                  </div>
+                </div>
               </li>
             </ul>
-          </li>
+          </div>
 
-          <li>
-            <h2 className="text-2xl font-semibold mb-2">
-              4. Handle incoming events
-            </h2>
-            <p className="mb-4">
+          <div className="space-y-4 p-5">
+            <div className="size-[30px] rounded-full text-center text-black bg-white text-lg font-bold">
+              4
+            </div>
+            <div className="text-xl font-bold">Handle incoming events</div>
+
+            <p className="text-muted-foreground">
               When it’s time, we’ll send a signed HTTP POST to your webhook like
               this:
             </p>
 
-            <pre className="bg-gray-100 rounded-md p-4 text-sm overflow-x-auto">
-              <CodeBlock lang="bash">
-                {`POST /webhook HTTP/2
+            <CodeBlock lang="bash">
+              {`POST /webhook HTTP/2
 Content-Type: application/json
 X-Schedify-Signature: sha256=...
 
@@ -286,18 +299,17 @@ X-Schedify-Signature: sha256=...
     "customData": "your data here"
   }
 }`}
-              </CodeBlock>
-            </pre>
+            </CodeBlock>
 
-            <p className="mt-4">
+            <p className="mt-4 text-muted-foreground">
               🛡️ <strong>Pro tip:</strong> Always verify the{" "}
-              <code className="bg-gray-200 px-1 rounded">
+              <code className="bg-gray-900 px-1 rounded">
                 X-Schedify-Signature
               </code>{" "}
               using your webhook secret to ensure authenticity.
             </p>
 
-            <p className="mt-4">
+            {/* <p className="mt-4">
               Want full code samples? Check out the{" "}
               <a
                 href="https://github.com/schedify/webhook-examples"
@@ -308,9 +320,9 @@ X-Schedify-Signature: sha256=...
                 webhook examples repo
               </a>
               .
-            </p>
-          </li>
-        </ol> */}
+            </p> */}
+          </div>
+        </div>
       </section>
     </div>
   );
