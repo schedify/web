@@ -10,54 +10,60 @@ import {
   LucideCable,
   LucideChevronRight,
   LucideClock,
+  LucideCode,
   LucideLandmark,
   LucideLock,
+  LucideRotateCcw,
   LucideWebhook,
+  LucideZap,
 } from "lucide-react";
 import Link from "next/link";
-import { Suspense } from "react";
+import { memo, Suspense } from "react";
+// import { LandingCodeBlock } from "./client-code-block";
+import { highlightCode } from "@/lib/utils";
+
+const AnimatedSchedifyComponentMemo = memo(AnimatedSchedifyComponent);
 
 export default async function HomePageRoute() {
   return (
     <div className="container px-0 border">
-      <section className="hero py-[15vh] pt-[10vh] flex flex-col items-center gap-5 relative  mx-4 md:mx-10">
+      <section className="hero py-[10vh] flex flex-col items-center gap-5 relative  mx-4 md:mx-10">
         <h1 className="text-center text-2xl sm:text-6xl md:text-7xl font-bold tracking-tight text-gray-200 leading-tight relative">
-          <span className="text-blue-500">Stop</span> writing schedulers
+          <span className="text-xl sm:text-5xl md:text-6xl">
+            Scheduling Tasks
+          </span>
           <br />
-          from <i className="italic text-white">scratch!</i>
+          <span className="text-blue-500">Shouldn't Be Hard!</span>
+          {/* <span className="text-blue-500">Stop</span> writing schedulers
+          <br />
+          from <i className="italic text-white">scratch!</i> */}
         </h1>
 
-        <p className="mt-3 mb-10 text-center text-sm sm:text-xl text-gray-400 font-medium mx-auto">
-          Just tell us what to do and when — we’ll ping your server right on
-          time.
+        <p className="mt-3 mb-5 text-center text-sm sm:text-lg text-gray-400 font-medium mx-auto">
+          No auth required. No infrastructure to manage. Just simple, reliable
+          task scheduling for developers.
         </p>
 
         <div className="flex flex-col-reverse gap-4 md:flex-row items-center">
           <Link href="/5-min-guide">
             <EnhancedButton variant="linkHover2" size="lg">
-              5-Min Guide
+              Read our Simple Integration Guide
             </EnhancedButton>
           </Link>
 
-          <Suspense
-            fallback={
-              <>
-                <EnhancedButton
-                  className="font-semibold "
-                  variant="expandIcon"
-                  Icon={LucideChevronRight}
-                  iconPlacement="right"
-                >
-                  Start Scheduling - It's free
-                </EnhancedButton>
-              </>
-            }
-          >
-            <JoinNowButton />
-          </Suspense>
+          <Link href="/schedules">
+            <EnhancedButton
+              className="font-semibold "
+              variant="expandIcon"
+              Icon={LucideChevronRight}
+              iconPlacement="right"
+            >
+              Start Scheduling - It's free
+            </EnhancedButton>
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-10 md:gap-0 md:grid-cols-3 place-items-center relative place-content-center w-full border-y py-5 mt-10 ">
+        <div className="grid grid-cols-1 gap-10 md:gap-y-10 md:gap-x-0 md:grid-cols-3 place-items-center relative place-content-center w-full border-y py-5 mt-10 ">
           <div className="size-[10px] bg-background border border-border rounded-[2px] absolute top-[-5px] left-0"></div>
           <div className="size-[10px] bg-background border border-border rounded-[2px] absolute top-[-5px] right-0"></div>
           <div className="size-[10px] bg-background border border-border rounded-[2px] absolute bottom-[-5px] left-0"></div>
@@ -67,17 +73,34 @@ export default async function HomePageRoute() {
             {
               icon: <LucideClock className="size-5 stroke-2 stroke-blue-100" />,
               title: "No Login Needed",
-              text: "Start scheduling without signing in.",
+              text: "Start scheduling instantly. No API keys or sign-ups required.",
             },
             {
               icon: <LucideCable className="size-5 stroke-2 stroke-blue-100" />,
-              title: "Simple to Connect",
-              text: "Works easily with our APIs and SDKs.",
+              title: "Timezone Aware",
+              text: 'Use natural language like "tomorrow 9am EST" to schedule tasks anywhere.',
             },
             {
               icon: <LucideLock className="size-5 stroke-2 stroke-blue-100" />,
-              title: "Built-In Security",
-              text: "HMAC signing keeps your data safe.",
+              title: "Secure",
+              text: "HMAC signing ensures your notifications are safe and verified.",
+            },
+            {
+              icon: <LucideZap className="size-5 stroke-2 stroke-blue-100" />,
+              title: "Instant Scheduling",
+              text: "Tasks are created and scheduled with zero delay or queues.",
+            },
+            {
+              icon: <LucideCode className="size-5 stroke-2 stroke-blue-100" />,
+              title: "JSON Native",
+              text: "Send and receive JSON. Perfect for modern APIs and microservices.",
+            },
+            {
+              icon: (
+                <LucideRotateCcw className="size-5 stroke-2 stroke-blue-100" />
+              ),
+              title: "Auto Retries",
+              text: "Failed tasks are retried automatically with exponential backoff.",
             },
           ].map((item, index) => (
             <div
@@ -99,13 +122,43 @@ export default async function HomePageRoute() {
         </div>
 
         <div className="mt-10" />
-        <AnimatedSchedifyComponent />
+
+        <AnimatedSchedifyComponentMemo />
+      </section>
+
+      <section className="flex flex-col border-t py-5 relative">
+        <h2 className="bg-primary p-2 text-black self-center absolute -top-5 text-xl font-quicksand text-center font-bold">
+          Schedule a task in one request & No Auth Required!
+        </h2>
+
+        <div className="mr-[14px] flex overflow-hidden bg-transparent text-white w-full">
+          <div className="flex min-w-0 flex-1 flex-col relative">
+            <div
+              data-rehype-pretty-code-fragment
+              // dangerouslySetInnerHTML={{ __html: file?.highlightedContent ?? "" }}
+              className="relative flex-1 overflow-hidden after:absolute after:inset-y-0 after:left-0 after:w-10 after:bg-transparent [&_.line:before]:sticky [&_.line:before]:left-2 [&_.line:before]:z-10 [&_.line:before]:translate-y-[-1px] [&_.line:before]:pr-1 [&_pre]:overflow-auto [&_pre]:!bg-transparent [&_pre]:pb-5 [&_pre]:pt-4 [&_pre]:font-mono [&_pre]:text-sm [&_pre]:leading-relaxed"
+              dangerouslySetInnerHTML={{
+                __html: await highlightCode(
+                  "sh",
+                  `curl -X POST https://api.schedify.dev/v1/schedules \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "name": "send:email",
+    "url": "https://api.your-app.com/send-emails",
+    "time": "2024-01-20T15:00:00Z",
+    "payload": {
+      "campaign": "welcome"
+      "email": "samir@schedify.dev"
+    }
+  }'`
+                ),
+              }}
+            />
+          </div>
+        </div>
       </section>
 
       <section className="flex flex-col">
-        <h2 className="mb-5 bg-white p-2 text-black self-center text-xl font-quicksand text-center font-extrabold transition-colors">
-          Example use cases
-        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 border-t border-l">
           <div className="flex flex-col p-3 md:p-6 border-b border-r">
             <h3 className="text-xl font-semibold mb-2">Task Schedule</h3>
@@ -185,75 +238,69 @@ schedify.scheduleMany([
         </div>
       </section>
 
-      <section className="mt-20">
-        <div className="flex flex-col">
-          <h2 className="mb-5 bg-white p-2 text-black self-center text-xl font-quicksand text-center font-extrabold transition-colors">
-            Designed for developers
-          </h2>
-
-          <div className="grid grid-cols-1 lg:grid-cols-5 border ">
-            <div className="col-span-2 flex flex-col divide-y border-r">
-              <Link
-                href="https://docs.schedify.dev/docs/introduction"
-                passHref
-                target="_blank"
-              >
-                <div className="hover:bg-[#0C0C0C] space-y-5 duration-50 group transition-colors cursor-pointer p-3">
-                  <div className="flex font-semibold flex-row col-span-2 gap-3 items-center">
-                    <LucideBookOpen />
-                    Documentation
-                    <LucideArrowUpRight className="ml-auto self-end group-hover:translate-x-1 group-hover:-translate-y-1 duration-100 transition-shadow" />
-                  </div>
-
-                  <p>Read our guides and documentation</p>
+      <section className="flex flex-col">
+        <div className="grid grid-cols-1 lg:grid-cols-5 border-b ">
+          <div className="col-span-2 flex flex-col divide-y border-r">
+            <Link
+              href="https://docs.schedify.dev/docs/introduction"
+              passHref
+              target="_blank"
+            >
+              <div className="hover:bg-[#0C0C0C] space-y-5 duration-50 group transition-colors cursor-pointer p-3">
+                <div className="flex font-semibold flex-row col-span-2 gap-3 items-center">
+                  <LucideBookOpen />
+                  Documentation
+                  <LucideArrowUpRight className="ml-auto self-end group-hover:translate-x-1 group-hover:-translate-y-1 duration-100 transition-shadow" />
                 </div>
-              </Link>
 
-              <Link
-                href="https://docs.schedify.dev/docs/schedify-api/overview"
-                passHref
-                target="_blank"
-              >
-                <div className="hover:bg-[#0C0C0C] group space-y-5 duration-50 transition-colors cursor-pointer p-3">
-                  <div className="flex font-semibold flex-row col-span-2 gap-3 items-center">
-                    <LucideLandmark />
-                    API Reference
-                    <LucideArrowUpRight className="ml-auto self-end group-hover:translate-x-1 group-hover:-translate-y-1 duration-100 " />
-                  </div>
+                <p>Read our guides and documentation</p>
+              </div>
+            </Link>
 
-                  <p>Refer to our API endpoints and schemas</p>
+            <Link
+              href="https://docs.schedify.dev/docs/schedify-api/overview"
+              passHref
+              target="_blank"
+            >
+              <div className="hover:bg-[#0C0C0C] group space-y-5 duration-50 transition-colors cursor-pointer p-3">
+                <div className="flex font-semibold flex-row col-span-2 gap-3 items-center">
+                  <LucideLandmark />
+                  API Reference
+                  <LucideArrowUpRight className="ml-auto self-end group-hover:translate-x-1 group-hover:-translate-y-1 duration-100 " />
                 </div>
-              </Link>
 
-              <Link
-                href="https://github.com/standard-webhooks/standard-webhooks"
-                passHref
-                target="_blank"
-              >
-                <div className="hover:bg-[#0C0C0C] group space-y-5 duration-50 transition-colors cursor-pointer p-3">
-                  <div className="flex font-semibold flex-row col-span-2 gap-3 items-center">
-                    <LucideWebhook />
-                    Standard Webhooks Compliant
-                    <LucideArrowUpRight className="ml-auto self-end group-hover:translate-x-1 group-hover:-translate-y-1 duration-100 " />
-                  </div>
+                <p>Refer to our API endpoints and schemas</p>
+              </div>
+            </Link>
 
-                  <p>Read the Standard Webhooks spec</p>
+            <Link
+              href="https://github.com/standard-webhooks/standard-webhooks"
+              passHref
+              target="_blank"
+            >
+              <div className="hover:bg-[#0C0C0C] group space-y-5 duration-50 transition-colors cursor-pointer p-3">
+                <div className="flex font-semibold flex-row col-span-2 gap-3 items-center">
+                  <LucideWebhook />
+                  Standard Webhooks Compliant
+                  <LucideArrowUpRight className="ml-auto self-end group-hover:translate-x-1 group-hover:-translate-y-1 duration-100 " />
                 </div>
-              </Link>
-            </div>
 
-            <div className="col-span-3 space-y-4 flex flex-col p-5">
-              <div>
-                <CodeBlock lang="typescript">
-                  {`const schedify = new SchedifyClient("API_KEY");
+                <p>Read the Standard Webhooks spec</p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="col-span-3 space-y-4 flex flex-col p-5">
+            <div>
+              <CodeBlock lang="typescript">
+                {`const schedify = new SchedifyClient("API_KEY");
 
 await schedify.schedule("WEBHOOK_ID", {
   event: "cancel_order",
   payload: { orderId: "ord_123" },
   after: "30m" // ← Will run at 2:30PM
 });`}
-                </CodeBlock>
-              </div>
+              </CodeBlock>
             </div>
           </div>
         </div>
@@ -262,14 +309,14 @@ await schedify.schedule("WEBHOOK_ID", {
       <section className="py-[10vh] flex justify-center bg-[#0C0C0C]">
         <div className="w-full text-center text-white space-y-6">
           <h2 className="text-3xl md:text-4xl font-bold font-poppins">
-            Launch scheduled tasks in minutes
+            Launch scheduled tasks in seconds
           </h2>
           <p className="text-white/80 text-base">
             Skip the cron jobs, queues, and infrastructure. Use our API to run
             anything later—with guaranteed delivery.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/webhooks">
+            <Link href="/schedules">
               <EnhancedButton
                 size="lg"
                 className="rounded-none font-semibold bg-blue-500 hover:bg-blue-600 text-white"

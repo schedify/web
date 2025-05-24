@@ -19,7 +19,7 @@ export async function CodeBlock(props: Props) {
   });
 
   return (
-    <div className="mr-[14px] flex overflow-hidden rounded-xl bg-[#0C0C0C] text-white group-data-[view=preview]/block-view-wrapper:hidden ">
+    <div className="mr-[14px] flex overflow-hidden rounded-xl bg-[#0C0C0C] text-white ">
       <div className="flex min-w-0 flex-1 flex-col">
         <div
           data-rehype-pretty-code-fragment

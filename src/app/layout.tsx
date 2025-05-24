@@ -51,9 +51,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Stop writing schedulers from scratch!",
+  title: "Scheduling Tasks Shouldn't Be Hard!",
   description:
-    "Just tell us what to do and when — we’ll ping your server right on time. Schedify is the scheduling system your apps can depend on.",
+    "No auth required. No infrastructure to manage. Just simple, reliable task scheduling for developers..",
   keywords: [
     "task scheduler",
     "cron job automation",
@@ -67,9 +67,9 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     siteName: "Schedify",
-    title: "Stop writing schedulers from scratch!",
+    title: "Scheduling Tasks Shouldn't Be Hard!",
     description:
-      "Just tell us what to do and when — we’ll ping your server right on time. Schedify is the scheduling system your apps can depend on.",
+      "No auth required. No infrastructure to manage. Just simple, reliable task scheduling for developers..",
     images: [
       {
         url: "https://schedify.dev/schedify.png",
@@ -81,9 +81,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Stop writing schedulers from scratch!",
+    title: "Scheduling Tasks Shouldn't Be Hard!",
     description:
-      "Just tell us what to do and when — we’ll ping your server right on time. Schedify is the scheduling system your apps can depend on.",
+      "No auth required. No infrastructure to manage. Just simple, reliable task scheduling for developers..",
     images: ["https://schedify.dev/schedify.png"],
   },
   icons: [

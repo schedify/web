@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LucideZap } from "lucide-react";
+import { LucideChevronRight, LucideZap } from "lucide-react";
 import { CodeBlock } from "@/components/code-block";
 import { EnhancedButton } from "@/components/ui/enhanced-btn";
 import { ClerkLoaded, SignUpButton } from "@clerk/nextjs";
@@ -15,25 +15,40 @@ export default function FiveMinGuide() {
         <div className="grid grid-cols-6">
           <div />
           <div className="col-span-4 grid grid-cols-2 border-2 border-[#282828] bg-[#191919]">
-            <button className="py-3 font-bold text-lg inline-flex items-center justify-center gap-5">
+            <button className="py-3 bg-[#FAFAFA] text-[#191919]  font-bold text-lg">
               No Auth guide
+            </button>
+
+            <button className="py-3 font-bold text-lg inline-flex items-center justify-center gap-5">
+              Auth Guide
               <div className="bg-white text-sm font-bold text-background px-3 py-1 rounded-full">
                 COMING SOON
               </div>
-            </button>
-            <button className="py-3 bg-[#FAFAFA] text-[#191919]  font-bold text-lg">
-              Auth Guide
             </button>
           </div>
           <div />
         </div>
 
-        {/* <div className="grid gap-5 divide-y border-y">
-          <div className="space-y-4 p-5">
+        <div className="grid gap-5 divide-y border-y">
+          <div className="space-y-4 p-5 flex flex-col">
             <div className="size-[30px] rounded-full text-center text-black bg-white text-lg font-bold">
               1
             </div>
             <div className="text-xl font-bold">Schedule It.</div>
+
+            <EnhancedButton
+              variant="expandIcon"
+              Icon={LucideChevronRight}
+              iconPlacement="right"
+            >
+              Click here to schedule through UI
+            </EnhancedButton>
+
+            <div className="inline-flex items-center">
+              <div className="bg-border h-px flex-1" />
+              <div className="text-sm">OR</div>
+              <div className="bg-border h-px flex-1" />
+            </div>
 
             <p className="text-muted-foreground">
               Use the following <code>curl</code> command to schedule a task
@@ -42,16 +57,16 @@ export default function FiveMinGuide() {
             </p>
 
             <CodeBlock lang="bash">
-              {`curl -X POST https://api.schedify.dev/v1/scheduleTask \\
+              {`curl -X POST https://api.schedify.dev/v1/schedule \\
   -H "Content-Type: application/json" \\
   -d '{
-    "event_name": "SendWelcomeEmail",
+    "name": "SendWelcomeEmail",
     "payload": {
       "user_id": "12345",
       "email": "user@example.com"
     },
-    "scheduled_for": "2025-05-21T15:00:00Z",
-    "webhook_url": "https://yourdomain.com/webhooks/welcome"
+    "time": "2025-05-21T15:00:00Z",
+    "url": "https://yourdomain.com/webhooks/welcome"
   }'`}
             </CodeBlock>
 
@@ -70,6 +85,7 @@ export default function FiveMinGuide() {
   "message":"Webhook event created successfully!",
   "data": {
     "eventId": "evt_abc123xyz",
+    "webhookId": "b2953cf3-e9b4-4482-a74a-220288df32f0",
     "webhookSecret": "whsec_supersecretkey"
   }
 }`}
@@ -161,9 +177,9 @@ X-Webhook-ID: <Webhook ID>`}
               replay attacks.
             </p>
           </div>
-        </div> */}
+        </div>
 
-        <div className="grid gap-5 divide-y border-y">
+        {/* <div className="grid gap-5 divide-y border-y">
           <div className="space-y-4 p-5">
             <div className="size-[30px] rounded-full text-center text-black bg-white text-lg font-bold">
               1
@@ -308,21 +324,8 @@ X-Schedify-Signature: sha256=...
               </code>{" "}
               using your webhook secret to ensure authenticity.
             </p>
-
-            {/* <p className="mt-4">
-              Want full code samples? Check out the{" "}
-              <a
-                href="https://github.com/schedify/webhook-examples"
-                className="text-blue-600 underline font-medium"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                webhook examples repo
-              </a>
-              .
-            </p> */}
           </div>
-        </div>
+        </div> */}
       </section>
     </div>
   );

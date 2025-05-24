@@ -1,6 +1,6 @@
 "use client";
 
-import React, { SVGProps, useEffect, useState } from "react";
+import React, { memo, SVGProps, useEffect, useState } from "react";
 import { AnimatePresence, motion, LayoutGroup } from "framer-motion";
 import { cn } from "@/lib/utils";
 

@@ -34,3 +34,21 @@ export type WebhookEvent = {
   created_at: number;
   updated_at: number;
 };
+
+export type Event = {
+  id: string;
+  name: string;
+  status: "DELIVERED" | "ERRORED" | "PENDING" | "CANCELLED";
+  payload: any;
+  tries: Array<{
+    attempt: number;
+    at: number;
+    error_reason: string | null;
+    status_code: number | null;
+  }> | null;
+  scheduled_for: number;
+  next_retry_at: number;
+  processed_at: number;
+  created_at: number;
+  updated_at: number;
+};
