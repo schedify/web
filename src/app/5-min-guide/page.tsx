@@ -36,13 +36,15 @@ export default function FiveMinGuide() {
             </div>
             <div className="text-xl font-bold">Schedule It.</div>
 
-            <EnhancedButton
-              variant="expandIcon"
-              Icon={LucideChevronRight}
-              iconPlacement="right"
-            >
-              Click here to schedule through UI
-            </EnhancedButton>
+            <Link href="/schedules" className="w-full">
+              <EnhancedButton
+                variant="expandIcon"
+                Icon={LucideChevronRight}
+                iconPlacement="right"
+              >
+                Click here to schedule through UI
+              </EnhancedButton>
+            </Link>
 
             <div className="inline-flex items-center">
               <div className="bg-border h-px flex-1" />
