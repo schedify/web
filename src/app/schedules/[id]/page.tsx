@@ -135,7 +135,7 @@ const EventsContainer = async ({ id, page }: { id: string; page: number }) => {
                 {event.tries && (
                   <div className="mt-2">
                     <Label className="mb-1 block font-semibold">Tries:</Label>
-                    <ul className="pl-4 list-disc space-y-1 text-sm text-gray-700">
+                    <ul className="pl-4 list-disc space-y-1 text-sm text-muted-foreground">
                       {event.tries.map((t) => (
                         <li key={t.at}>
                           Attempt #{t.attempt} at{" "}
